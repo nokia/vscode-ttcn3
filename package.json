@@ -2,11 +2,27 @@
     "name": "ttcn3",
     "description": "Rich TTCN-3 langauge support for Visual Sutdio Code",
     "version": "0.0.1",
+    "license": "BSD3",
     "engines": {
         "vscode": "^1.30.0"
     },
     "categories": [
-        "Programming Languages"
+        "Programming Languages",
+        "Snippets"
+    ],
+    "repository" : {
+        "type": "git",
+        "url": "https://github.com/nokia/vscode-ttcn3"
+    },
+    "keywords": [
+        "ttcn-3",
+        "ttcn3",
+        "ttcn",
+        "highlighter",
+        "syntax",
+        "snippet",
+        "k3",
+        "ntt"
     ],
     "activationEvents": [
         "workspaceContains:**/*.ttcn*",
@@ -24,8 +40,24 @@
                     "ttcn3"
                 ],
                 "extensions": [
-                    ".ttcn3 .ttcn .ttcnpp"
-                ]
+                    ".ttcn3",
+                    ".ttcn",
+                    ".ttcnpp"
+                ],
+                "configuration" : "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "ttcn3",
+                "scopeName": "source.ttcn",
+                "path": "./syntaxes/ttcn.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "ttcn3",
+                "path": "./snippets/ttcn.tmSnippet.json"
             }
         ],
         "configuration": {

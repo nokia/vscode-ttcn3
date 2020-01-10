@@ -1,0 +1,1409 @@
+{
+    "if-else statement": {
+        "prefix": "if",
+        "body": [
+            "if (${1:booleanExpression}) {",
+            "\t${2}",
+            "} else {",
+            "\t${3}",
+            "}${0}"
+        ],
+        "description": ""
+    },
+    "multiple if statement": {
+        "prefix": "ifelif",
+        "body": [
+            "if (${1:booleanExpression}) {",
+            "\t${2}",
+            "} else if (${3:booleanExpression}) {",
+            "\t${4}",
+            "} ${5:else} {",
+            "\t${6}",
+            "}${0}"
+        ],
+        "description": ""
+    },
+    "else if statement": {
+        "prefix": "elseif",
+        "body": ["else if (${1:booleanExpression}) {", "\t${2}", "} ${0}"],
+        "description": ""
+    },
+    "else statement": {
+        "prefix": "else",
+        "body": ["else {", "\t${1}", "}${0}"],
+        "description": ""
+    },
+    "select statement": {
+        "prefix": "select",
+        "body": ["select (${1:condition}) {", "\t${0:caseStatement}", "}"],
+        "description": ""
+    },
+    "case statement": {
+        "prefix": "case",
+        "body": ["case (${1:condition}) {", "\t${2}", "}"],
+        "description": ""
+    },
+    "case else statement": {
+        "prefix": "case-else",
+        "body": ["case else {", "\t${1}", "}${0}"],
+        "description": ""
+    },
+    "for statement": {
+        "prefix": "for",
+        "body": [
+            "for (${1:start}; ${2:condition}; ${3:iteration}) {",
+            "\t${0}",
+            "}"
+        ],
+        "description": ""
+    },
+    "while statement": {
+        "prefix": "while",
+        "body": ["while (${1:booleanExpression}) {", "\t${0}", "}"],
+        "description": ""
+    },
+    "do-while statement": {
+        "prefix": "do",
+        "body": ["do {", "\t${2}", "} while (${1:booleanExpression});${0}"],
+        "description": ""
+    },
+    "keyword module": {
+        "prefix": "module",
+        "body": ["module ${1:moduleIdentifier} {", "\t${0}", "}"],
+        "description": ""
+    },
+    "keyword altstep": {
+        "prefix": "altstep",
+        "body": [
+            "altstep ${1:altstepIdentifier}(${2:arguments}) ${3:runs on ${4:componentIdentifier}} {",
+            "\t${0}",
+            "}"
+        ],
+        "description": ""
+    },
+    "keyword function": {
+        "prefix": "function",
+        "body": [
+            "function ${1:functionIdentifier}(${2:arguments}) ${3:runs on ${4:componentIdentifier}} {",
+            "\t${0}",
+            "}"
+        ],
+        "description": ""
+    },
+    "keyword testcase": {
+        "prefix": "testcase",
+        "body": [
+            "testcase ${1:testcaseIdentifier}(${2:arguments}) ${3:runs on ${4:componentIdentifier}} {",
+            "\t${0}",
+            "}"
+        ],
+        "description": ""
+    },
+    "keyword signature": {
+        "prefix": "signature",
+        "body": ["signature ${1:signatureIdentifier}(${2:arguments})$0"],
+        "description": ""
+    },
+    "keyword timer": {
+        "prefix": "timer",
+        "body": ["timer ${1:timerIdentifier}$0"],
+        "description": ""
+    },
+    "keyword type": {
+        "prefix": "type",
+        "body": ["type $0"],
+        "description": ""
+    },
+    "keyword var": {
+        "prefix": "var",
+        "body": ["var $0"],
+        "description": ""
+    },
+    "keyword all": {
+        "prefix": "all",
+        "body": ["all;"],
+        "description": ""
+    },
+    "keyword const": {
+        "prefix": "const",
+        "body": ["const"],
+        "description": ""
+    },
+    "keyword address": {
+        "prefix": "address",
+        "body": ["address ${0}"],
+        "description": ""
+    },
+    "keyword alt": {
+        "prefix": "alt",
+        "body": ["alt ${0}"],
+        "description": ""
+    },
+    "keyword any": {
+        "prefix": "any",
+        "body": ["any ${0}"],
+        "description": ""
+    },
+    "keyword anytype": {
+        "prefix": "anytype",
+        "body": ["anytype ${0}"],
+        "description": ""
+    },
+    "keyword apply": {
+        "prefix": "apply",
+        "body": ["apply ${0}"],
+        "description": ""
+    },
+    "keyword assert": {
+        "prefix": "assert",
+        "body": ["assert ${0}"],
+        "description": ""
+    },
+    "keyword at": {
+        "prefix": "at",
+        "body": ["at ${0}"],
+        "description": ""
+    },
+    "keyword bitstring": {
+        "prefix": "bitstring",
+        "body": ["bitstring ${0}"],
+        "description": ""
+    },
+    "keyword boolean": {
+        "prefix": "boolean",
+        "body": ["boolean ${0}"],
+        "description": ""
+    },
+    "keyword break": {
+        "prefix": "break",
+        "body": ["break ${0}"],
+        "description": ""
+    },
+    "keyword char": {
+        "prefix": "char",
+        "body": ["char ${0}"],
+        "description": ""
+    },
+    "keyword charstring": {
+        "prefix": "charstring",
+        "body": ["charstring ${0}"],
+        "description": ""
+    },
+    "keyword class": {
+        "prefix": "class",
+        "body": ["class ${0}"],
+        "description": ""
+    },
+    "keyword component": {
+        "prefix": "component",
+        "body": ["component ${0}"],
+        "description": ""
+    },
+    "keyword configuration": {
+        "prefix": "configuration",
+        "body": ["configuration ${0}"],
+        "description": ""
+    },
+    "keyword conjunct": {
+        "prefix": "conjunct",
+        "body": ["conjunct ${0}"],
+        "description": ""
+    },
+    "keyword cont": {
+        "prefix": "cont",
+        "body": ["cont ${0}"],
+        "description": ""
+    },
+    "keyword continue": {
+        "prefix": "continue",
+        "body": ["continue ${0}"],
+        "description": ""
+    },
+    "keyword control": {
+        "prefix": "control",
+        "body": ["control ${0}"],
+        "description": ""
+    },
+    "keyword deactivate": {
+        "prefix": "deactivate",
+        "body": ["deactivate ${0}"],
+        "description": ""
+    },
+    "keyword decmatch": {
+        "prefix": "decmatch",
+        "body": ["decmatch ${0}"],
+        "description": ""
+    },
+    "keyword default": {
+        "prefix": "default",
+        "body": ["default ${0}"],
+        "description": ""
+    },
+    "keyword delta": {
+        "prefix": "delta",
+        "body": ["delta ${0}"],
+        "description": ""
+    },
+    "keyword disjunct": {
+        "prefix": "disjunct",
+        "body": ["disjunct ${0}"],
+        "description": ""
+    },
+    "keyword display": {
+        "prefix": "display",
+        "body": ["display ${0}"],
+        "description": ""
+    },
+    "keyword duration": {
+        "prefix": "duration",
+        "body": ["duration ${0}"],
+        "description": ""
+    },
+    "keyword encode": {
+        "prefix": "encode",
+        "body": ["encode ${0}"],
+        "description": ""
+    },
+    "keyword enumerated": {
+        "prefix": "enumerated",
+        "body": ["enumerated ${0}"],
+        "description": ""
+    },
+    "keyword except": {
+        "prefix": "except",
+        "body": ["except ${0}"],
+        "description": ""
+    },
+    "keyword extends": {
+        "prefix": "extends",
+        "body": ["extends ${0}"],
+        "description": ""
+    },
+    "keyword extension": {
+        "prefix": "extension",
+        "body": ["extension ${0}"],
+        "description": ""
+    },
+    "keyword external": {
+        "prefix": "external",
+        "body": ["external ${0}"],
+        "description": ""
+    },
+    "keyword finally": {
+        "prefix": "finally",
+        "body": ["finally ${0}"],
+        "description": ""
+    },
+    "keyword finished": {
+        "prefix": "finished",
+        "body": ["finished ${0}"],
+        "description": ""
+    },
+    "keyword float": {
+        "prefix": "float",
+        "body": ["float ${0}"],
+        "description": ""
+    },
+    "keyword friend": {
+        "prefix": "friend",
+        "body": ["friend ${0}"],
+        "description": ""
+    },
+    "keyword from": {
+        "prefix": "from",
+        "body": ["from ${0}"],
+        "description": ""
+    },
+    "keyword getverdict": {
+        "prefix": "getverdict",
+        "body": ["getverdict ${0}"],
+        "description": ""
+    },
+    "keyword goto": {
+        "prefix": "goto",
+        "body": ["goto ${0}"],
+        "description": ""
+    },
+    "keyword group": {
+        "prefix": "group",
+        "body": ["group ${0}"],
+        "description": ""
+    },
+    "keyword hexstring": {
+        "prefix": "hexstring",
+        "body": ["hexstring ${0}"],
+        "description": ""
+    },
+    "keyword history": {
+        "prefix": "history",
+        "body": ["history ${0}"],
+        "description": ""
+    },
+    "keyword ifpresent": {
+        "prefix": "ifpresent",
+        "body": ["ifpresent ${0}"],
+        "description": ""
+    },
+    "keyword implies": {
+        "prefix": "implies",
+        "body": ["implies ${0}"],
+        "description": ""
+    },
+    "keyword import": {
+        "prefix": "import",
+        "body": ["import from ${1:moduleIdentifier} ${2:all;}${0}"],
+        "description": ""
+    },
+    "keyword in": {
+        "prefix": "in",
+        "body": ["in ${0}"],
+        "description": ""
+    },
+    "keyword inout": {
+        "prefix": "inout",
+        "body": ["inout ${0}"],
+        "description": ""
+    },
+    "keyword integer": {
+        "prefix": "integer",
+        "body": ["integer ${0}"],
+        "description": ""
+    },
+    "keyword interleave": {
+        "prefix": "interleave",
+        "body": ["interleave ${0}"],
+        "description": ""
+    },
+    "keyword inv": {
+        "prefix": "inv",
+        "body": ["inv ${0}"],
+        "description": ""
+    },
+    "keyword label": {
+        "prefix": "label",
+        "body": ["label ${0}"],
+        "description": ""
+    },
+    "keyword language": {
+        "prefix": "language",
+        "body": ["language ${0}"],
+        "description": ""
+    },
+    "keyword message": {
+        "prefix": "message",
+        "body": ["message ${0}"],
+        "description": ""
+    },
+    "keyword mixed": {
+        "prefix": "mixed",
+        "body": ["mixed ${0}"],
+        "description": ""
+    },
+    "keyword mode": {
+        "prefix": "mode",
+        "body": ["mode ${0}"],
+        "description": ""
+    },
+    "keyword modifies": {
+        "prefix": "modifies",
+        "body": ["modifies ${0}"],
+        "description": ""
+    },
+    "keyword modulepar": {
+        "prefix": "modulepar",
+        "body": ["modulepar ${0}"],
+        "description": ""
+    },
+    "keyword mtc": {
+        "prefix": "mtc",
+        "body": ["mtc ${0}"],
+        "description": ""
+    },
+    "keyword noblock": {
+        "prefix": "noblock",
+        "body": ["noblock ${0}"],
+        "description": ""
+    },
+    "keyword notinv": {
+        "prefix": "notinv",
+        "body": ["notinv ${0}"],
+        "description": ""
+    },
+    "keyword now": {
+        "prefix": "now",
+        "body": ["now ${0}"],
+        "description": ""
+    },
+    "keyword nowait": {
+        "prefix": "nowait",
+        "body": ["nowait ${0}"],
+        "description": ""
+    },
+    "keyword null": {
+        "prefix": "null",
+        "body": ["null ${0}"],
+        "description": ""
+    },
+    "keyword object": {
+        "prefix": "object",
+        "body": ["object ${0}"],
+        "description": ""
+    },
+    "keyword octetstring": {
+        "prefix": "octetstring",
+        "body": ["octetstring ${0}"],
+        "description": ""
+    },
+    "keyword of": {
+        "prefix": "of",
+        "body": ["of ${0}"],
+        "description": ""
+    },
+    "keyword omit": {
+        "prefix": "omit",
+        "body": ["omit ${0}"],
+        "description": ""
+    },
+    "keyword on": {
+        "prefix": "on",
+        "body": ["on ${0}"],
+        "description": ""
+    },
+    "keyword onentry": {
+        "prefix": "onentry",
+        "body": ["onentry ${0}"],
+        "description": ""
+    },
+    "keyword onexit": {
+        "prefix": "onexit",
+        "body": ["onexit ${0}"],
+        "description": ""
+    },
+    "keyword optional": {
+        "prefix": "optional",
+        "body": ["optional ${0}"],
+        "description": ""
+    },
+    "keyword out": {
+        "prefix": "out",
+        "body": ["out ${0}"],
+        "description": ""
+    },
+    "keyword override": {
+        "prefix": "override",
+        "body": ["override ${0}"],
+        "description": ""
+    },
+    "keyword par": {
+        "prefix": "par",
+        "body": ["par ${0}"],
+        "description": ""
+    },
+    "keyword port": {
+        "prefix": "port",
+        "body": ["port ${0}"],
+        "description": ""
+    },
+    "keyword present": {
+        "prefix": "present",
+        "body": ["present ${0}"],
+        "description": ""
+    },
+    "keyword prev": {
+        "prefix": "prev",
+        "body": ["prev ${0}"],
+        "description": ""
+    },
+    "keyword private": {
+        "prefix": "private",
+        "body": ["private ${0}"],
+        "description": ""
+    },
+    "keyword procedure": {
+        "prefix": "procedure",
+        "body": ["procedure ${0}"],
+        "description": ""
+    },
+    "keyword public": {
+        "prefix": "public",
+        "body": ["public ${0}"],
+        "description": ""
+    },
+    "keyword realtime": {
+        "prefix": "realtime",
+        "body": ["realtime ${0}"],
+        "description": ""
+    },
+    "keyword record": {
+        "prefix": "record",
+        "body": ["record ${0}"],
+        "description": ""
+    },
+    "keyword recursive": {
+        "prefix": "recursive",
+        "body": ["recursive ${0}"],
+        "description": ""
+    },
+    "keyword repeat": {
+        "prefix": "repeat",
+        "body": ["repeat ${0}"],
+        "description": ""
+    },
+    "keyword return": {
+        "prefix": "return",
+        "body": ["return ${0}"],
+        "description": ""
+    },
+    "keyword runs": {
+        "prefix": "runs",
+        "body": ["runs ${0}"],
+        "description": ""
+    },
+    "keyword self": {
+        "prefix": "self",
+        "body": ["self ${0}"],
+        "description": ""
+    },
+    "keyword sender": {
+        "prefix": "sender",
+        "body": ["sender ${0}"],
+        "description": ""
+    },
+    "keyword seq": {
+        "prefix": "seq",
+        "body": ["seq ${0}"],
+        "description": ""
+    },
+    "keyword set": {
+        "prefix": "set",
+        "body": ["set ${0}"],
+        "description": ""
+    },
+    "keyword setstate": {
+        "prefix": "setstate",
+        "body": ["setstate ${0}"],
+        "description": ""
+    },
+    "keyword static": {
+        "prefix": "static",
+        "body": ["static ${0}"],
+        "description": ""
+    },
+    "keyword stepsize": {
+        "prefix": "stepsize",
+        "body": ["stepsize ${0}"],
+        "description": ""
+    },
+    "keyword stream": {
+        "prefix": "stream",
+        "body": ["stream ${0}"],
+        "description": ""
+    },
+    "keyword system": {
+        "prefix": "system",
+        "body": ["system ${0}"],
+        "description": ""
+    },
+    "keyword this": {
+        "prefix": "this",
+        "body": ["this ${0}"],
+        "description": ""
+    },
+    "keyword timestamp": {
+        "prefix": "timestamp",
+        "body": ["timestamp ${0}"],
+        "description": ""
+    },
+    "keyword to": {
+        "prefix": "to",
+        "body": ["to ${0}"],
+        "description": ""
+    },
+    "keyword universal": {
+        "prefix": "universal",
+        "body": ["universal ${0}"],
+        "description": ""
+    },
+    "keyword unmap": {
+        "prefix": "unmap",
+        "body": ["unmap ${0}"],
+        "description": ""
+    },
+    "keyword until": {
+        "prefix": "until",
+        "body": ["until ${0}"],
+        "description": ""
+    },
+    "keyword value": {
+        "prefix": "value",
+        "body": ["value ${0}"],
+        "description": ""
+    },
+    "keyword values": {
+        "prefix": "values",
+        "body": ["values ${0}"],
+        "description": ""
+    },
+    "keyword variant": {
+        "prefix": "variant",
+        "body": ["variant ${0}"],
+        "description": ""
+    },
+    "keyword verdicttype": {
+        "prefix": "verdicttype",
+        "body": ["verdicttype ${0}"],
+        "description": ""
+    },
+    "keyword wait": {
+        "prefix": "wait",
+        "body": ["wait ${0}"],
+        "description": ""
+    },
+    "keyword with": {
+        "prefix": "with",
+        "body": ["with ${0}"],
+        "description": ""
+    },
+    "function action": {
+        "prefix": "action",
+        "body": ["action(${1})${0}"],
+        "description": ""
+    },
+    "function activate": {
+        "prefix": "activate",
+        "body": ["activate(${1})${0}"],
+        "description": ""
+    },
+    "function alive": {
+        "prefix": "alive",
+        "body": ["alive(${1})${0}"],
+        "description": ""
+    },
+    "function any2unistr": {
+        "prefix": ["any2unistr", "2unistr"],
+        "body": ["any2unistr(${1})${0}"],
+        "description": ""
+    },
+    "bit2hex": {
+        "prefix": ["bit2hex", "2hex"],
+        "body": ["bit2hex(${1:invalue})${0}"],
+        "description": [
+            "bit2hex(in bitstring invalue) return hexstring\n\n"
+        ]
+    },
+    "bit2int": {
+        "prefix": ["bit2int", "2int"],
+        "body": ["bit2int(${1:invalue})${0}"],
+        "description": [
+            "bit2int(in bitstring invalue) return integer\n\n"
+        ]
+    },
+    "bit2oct": {
+        "prefix": ["bit2oct", "2oct"],
+        "body": ["bit2oct(${1:invalue})${0}"],
+        "description": [
+            "bit2oct(in bitstring invalue) return octetstring\n\n"
+        ]
+    },
+    "bit2str": {
+        "prefix": ["bit2str", "2str"],
+        "body": ["bit2str(${1:invalue})${0}"],
+        "description": [
+            "bit2str(in bitstring invalue) return charstring\n\n"
+        ]
+    },
+    "function call": {
+        "prefix": "call",
+        "body": ["call(${1})${0}"],
+        "description": ""
+    },
+    "function catch": {
+        "prefix": "catch",
+        "body": ["catch(${1})${0}"],
+        "description": ""
+    },
+    "char2int": {
+        "prefix": ["char2int", "2int"],
+        "body": ["char2int(${1:invalue})${0}"],
+        "description": [
+            "char2inst(in charstring invalue) return integer",
+            "* an error would occur if length of invalue != 1\n\n"
+        ]
+    },
+    "char2oct": {
+        "prefix": ["char2oct", "2oct"],
+        "body": ["char2oct(${1:invalue})${0}"],
+        "description": [
+            "char2oct(in charstring invalue) return octetstring"
+        ]
+    },
+    "function check": {
+        "prefix": "check",
+        "body": ["check(${1})${0}"],
+        "description": ""
+    },
+    "function checkstate": {
+        "prefix": "checkstate",
+        "body": ["checkstate(${1})${0}"],
+        "description": ""
+    },
+    "function clear": {
+        "prefix": "clear",
+        "body": ["clear(${1})${0}"],
+        "description": ""
+    },
+    "function complement": {
+        "prefix": "complement",
+        "body": ["complement(${1})${0}"],
+        "description": ""
+    },
+    "function connect": {
+        "prefix": "connect",
+        "body": ["connect(${1})${0}"],
+        "description": ""
+    },
+    "function create": {
+        "prefix": "create",
+        "body": ["create(${1})${0}"],
+        "description": ""
+    },
+    "function decvalue": {
+        "prefix": "decvalue",
+        "body": ["decvalue(${1})${0}"],
+        "description": ""
+    },
+    "function decvalue_o": {
+        "prefix": "decvalue_o",
+        "body": ["decvalue_o(${1})${0}"],
+        "description": ""
+    },
+    "function decvalue_unichar": {
+        "prefix": "decvalue_unichar",
+        "body": ["decvalue_unichar(${1})${0}"],
+        "description": ""
+    },
+    "function disconnect": {
+        "prefix": "disconnect",
+        "body": ["disconnect(${1})${0}"],
+        "description": ""
+    },
+    "function done": {
+        "prefix": "done",
+        "body": ["done(${1})${0}"],
+        "description": ""
+    },
+    "function encvalue": {
+        "prefix": "encvalue",
+        "body": ["encvalue(${1})${0}"],
+        "description": ""
+    },
+    "function encvalue_o": {
+        "prefix": "encvalue_o",
+        "body": ["encvalue_o(${1})${0}"],
+        "description": ""
+    },
+    "function encvalue_unichar": {
+        "prefix": "encvalue_unichar",
+        "body": ["encvalue_unichar(${1})${0}"],
+        "description": ""
+    },
+    "function enum2int": {
+        "prefix": ["enum2int", "2int"],
+        "body": ["enum2int(${1})${0}"],
+        "description": ""
+    },
+    "function exception": {
+        "prefix": "exception",
+        "body": ["exception(${1})${0}"],
+        "description": ""
+    },
+    "function execute": {
+        "prefix": "execute",
+        "body": ["execute(${1})${0}"],
+        "description": ""
+    },
+    "float2int": {
+        "prefix": ["float2int", "2int"],
+        "body": ["float2int(${1:invalue})${0}"],
+        "description": [
+            "float2int(in float invalue) return integer",
+            "* an error would occur if invalue is infinity, -infinity, or not_a_number\n\n"
+        ]
+    },
+    "function getcall": {
+        "prefix": "getcall",
+        "body": ["getcall(${1})${0}"],
+        "description": ""
+    },
+    "function getreply": {
+        "prefix": "getreply",
+        "body": ["getreply(${1})${0}"],
+        "description": ""
+    },
+    "function get_stringencoding": {
+        "prefix": "get_stringencoding",
+        "body": ["get_stringencoding(${1})${0}"],
+        "description": ""
+    },
+    "function halt": {
+        "prefix": "halt",
+        "body": ["halt(${1})${0}"],
+        "description": ""
+    },
+    "function hex2bit": {
+        "prefix": ["hex2bit", "2bit"],
+        "body": ["hex2bit(${1:invalue})${0}"],
+        "description": [
+            "hex2bit(in hexstring invalue) return bitstring\n\n"
+        ]
+    },
+    "hex2int": {
+        "prefix": ["hex2int", "2int"],
+        "body": ["hex2int(${1:invalue})${0}"],
+        "description": [
+            "hex2int(in hexstring invalue) return integer\n\n"
+        ]
+    },
+    "hex2oct": {
+        "prefix": ["hex2oct", "2oct"],
+        "body": ["hex2oct(${1:invalue})${0}"],
+        "description": [
+            "hex2oct(in hexstring invalue) return octetstring\n\n"
+        ]
+    },
+    "hex2str": {
+        "prefix": ["hex2str", "2str"],
+        "body": ["hex2str(${1:invalue})${0}"],
+        "description": [
+            "hex2str(in hexstring invalue) return charstring\n\n"
+        ]
+    },
+    "function hostid": {
+        "prefix": "hostid",
+        "body": ["hostid(${1})${0}"],
+        "description": ""
+    },
+    "int2bit": {
+        "prefix": ["int2bit", "2bit"],
+        "body": ["int2bit(${1:invalue}, ${2:length})${0}"],
+        "description": [
+            "int2bit(in integer invalue, in integer length) return bitstring",
+            "* where invalue range should be greater than 0",
+            "* an error would occur if return value has more bits than the specified length\n\n"
+        ]
+    },
+    "int2char": {
+        "prefix": ["int2char", "2char"],
+        "body": ["int2char(${1:invalue})${0}"],
+        "description": [
+            "int2char(in integer invalue) return charstring",
+            "* where invalue range is 0-127\n\n"
+        ]
+    },
+    "int2enum": {
+        "prefix": ["int2enum", "2enum"],
+        "body": ["int2enum(${1:inpar}, ${2:outpar})${0}"],
+        "description": [
+            "int2enum(in integer inpar, out EnumType outpar)\n\n"
+        ]
+    },
+    "int2float": {
+        "prefix": ["int2float", "2float"],
+        "body": ["int2float(${1:invalue})${0}"],
+        "description": [
+            "int2float(in integer invalue) return float\n\n"
+        ]
+    },
+    "int2hex": {
+        "prefix": ["int2hex", "2hex"],
+        "body": ["int2hex(${1:invalue}, ${2:length)${0}"],
+        "description": [
+            "int2hex(in integer invalue, in integer length) return hexstring",
+            "* where invalue range should be greater than 0",
+            "* an error would occur if return value has more bits than the specified length\n\n"
+        ]
+    },
+    "int2oct": {
+        "prefix": ["int2oct", "2oct"],
+        "body": ["int2oct(${1:invalue}, ${2:length)${0}"],
+        "description": [
+            "int2oct(in integer invalue, in integer length) return octetstring",
+            "* where invalue range should be greater than 0",
+            "* an error would occur if return value has more bits than the specified length\n\n"
+        ]
+    },
+    "int2str": {
+        "prefix": ["int2str", "2str"],
+        "body": ["int2str(${1:invalue})${0}"],
+        "description": [
+            "int2str(in integer invalue) return charstring\n\n"
+        ]
+    },
+    "int2unichar": {
+        "prefix": ["int2unichar", "2unichar"],
+        "body": ["int2unichar(${1:invalue})${0}"],
+        "description": [
+            "int2unichar(in integer invalue) return universal charstring",
+            "* where invalue range is 0-2147483647\n\n"
+        ]
+    },
+    "function isbound": {
+        "prefix": "isbound",
+        "body": ["isbound(${1})${0}"],
+        "description": ""
+    },
+    "function ischosen": {
+        "prefix": "ischosen",
+        "body": ["ischosen(${1})${0}"],
+        "description": ""
+    },
+    "function ispresent": {
+        "prefix": "ispresent",
+        "body": ["ispresent(${1})${0}"],
+        "description": ""
+    },
+    "function istemplatekind": {
+        "prefix": "istemplatekind",
+        "body": ["istemplatekind(${1})${0}"],
+        "description": ""
+    },
+    "function isvalue": {
+        "prefix": "isvalue",
+        "body": ["isvalue(${1})${0}"],
+        "description": ""
+    },
+    "function kill": {
+        "prefix": "kill",
+        "body": ["kill(${1})${0}"],
+        "description": ""
+    },
+    "function killed": {
+        "prefix": "killed",
+        "body": ["killed(${1})${0}"],
+        "description": ""
+    },
+    "function length": {
+        "prefix": "length",
+        "body": ["length(${1})${0}"],
+        "description": ""
+    },
+    "function lengthof": {
+        "prefix": "lengthof",
+        "body": ["lengthof(${1})${0}"],
+        "description": ""
+    },
+    "function log": {
+        "prefix": "log",
+        "body": ["log(${1})${0}"],
+        "description": ""
+    },
+    "function map": {
+        "prefix": "map",
+        "body": ["map(${1})${0}"],
+        "description": ""
+    },
+    "function match": {
+        "prefix": "match",
+        "body": ["match(${1})${0}"],
+        "description": ""
+    },
+    "oct2bit": {
+        "prefix": ["oct2bit", "2bit"],
+        "body": ["oct2bit(${1:invalue})${0}"],
+        "description": [
+            "oct2bit(in octetstring invalue) return bitstring\n\n"
+        ]
+    },
+    "oct2char": {
+        "prefix": ["oct2char", "2char"],
+        "body": ["oct2char(${1:invalue})${0}"],
+        "description": [
+            "oct2char(in octetstring invalue) return charstring\n\n"
+        ]
+    },
+    "oct2hex": {
+        "prefix": ["oct2hex", "2hex"],
+        "body": ["oct2hex(${1:invalue})${0}"],
+        "description": [
+            "oct2hex(in octetstring invalue) return hexstring\n\n"
+        ]
+    },
+    "oct2int": {
+        "prefix": ["oct2int", "2int"],
+        "body": ["oct2int(${1:invalue})${0}"],
+        "description": [
+            "oct2int(in octetstring invalue) return integer\n\n"
+        ]
+    },
+    "oct2str": {
+        "prefix": ["oct2str", "2str"],
+        "body": ["oct2str(${1:invalue})${0}"],
+        "description": [
+            "oct2str(in octetstring invalue) return charstring\n\n"
+        ]
+    },
+    "oct2unichar": {
+        "prefix": ["oct2unichar", "2unichar"],
+        "body": ["oct2unichar(${1:invalue}, ${2:encoding})${0}\n\n"],
+        "description": [
+            "oct2unichar(in octetstring invalue, in charstring encoding := \"UTF-8\") return universal charstring\n\n"
+        ]
+    },
+    "function param": {
+        "prefix": "param",
+        "body": ["param(${1})${0}"],
+        "description": ""
+    },
+    "function pattern": {
+        "prefix": "pattern",
+        "body": ["pattern(${1})${0}"],
+        "description": ""
+    },
+    "function permutation": {
+        "prefix": "permutation",
+        "body": ["permutation(${1})${0}"],
+        "description": ""
+    },
+    "function raise": {
+        "prefix": "raise",
+        "body": ["raise(${1})${0}"],
+        "description": ""
+    },
+    "function read": {
+        "prefix": "read",
+        "body": ["read(${1})${0}"],
+        "description": ""
+    },
+    "function receive": {
+        "prefix": "receive",
+        "body": ["receive(${1})${0}"],
+        "description": ""
+    },
+    "function regexp": {
+        "prefix": "regexp",
+        "body": ["regexp(${1})${0}"],
+        "description": ""
+    },
+    "function remove_bom": {
+        "prefix": "remove_bom",
+        "body": ["remove_bom(${1})${0}"],
+        "description": ""
+    },
+    "function replace": {
+        "prefix": "replace",
+        "body": ["replace(${1})${0}"],
+        "description": ""
+    },
+    "function reply": {
+        "prefix": "reply",
+        "body": ["reply(${1})${0}"],
+        "description": ""
+    },
+    "function rnd": {
+        "prefix": "rnd",
+        "body": ["rnd(${1})${0}"],
+        "description": ""
+    },
+    "function running": {
+        "prefix": "running",
+        "body": ["running(${1})${0}"],
+        "description": ""
+    },
+    "function send": {
+        "prefix": "send",
+        "body": ["send(${1})${0}"],
+        "description": ""
+    },
+    "function setencode": {
+        "prefix": "setencode",
+        "body": ["setencode(${1})${0}"],
+        "description": ""
+    },
+    "function setverdict": {
+        "prefix": "setverdict",
+        "body": ["setverdict(${1})${0}"],
+        "description": ""
+    },
+    "function sizeof": {
+        "prefix": "sizeof",
+        "body": ["sizeof(${1})${0}"],
+        "description": ""
+    },
+    "function start": {
+        "prefix": "start",
+        "body": ["start(${1})${0}"],
+        "description": ""
+    },
+    "function stop": {
+        "prefix": "stop",
+        "body": ["stop(${1})${0}"],
+        "description": ""
+    },
+    "str2float": {
+        "prefix": ["str2float", "2float"],
+        "body": ["str2float(${1:invalue})${0}"],
+        "description": [
+            "str2float(in charstring invalue) return float",
+            "* leading zeros are allowed",
+            "* leading \"+\" sign before positive values is allowed",
+            "* -0.0 is allowed"
+        ]
+    },
+    "function str2hex": {
+        "prefix": ["str2hex", "2hex"],
+        "body": ["str2hex(${1})${0}"],
+        "description": ""
+    },
+    "str2int": {
+        "prefix": ["str2int", "2int"],
+        "body": ["str2int(${1:invalue})${0}"],
+        "description": [
+            "str2int(in charstring invalue) return integer",
+            "* an error would occur if invalue contains characters other than numbers 0-9",
+            "* an error would occur if the character \"-\" is at another position other than the leftmost one\n\n"
+        ]
+    },
+    "function str2oct": {
+        "prefix": ["str2oct", "2oct"],
+        "body": ["str2oct(${1})${0}"],
+        "description": ""
+    },
+    "function subset": {
+        "prefix": "subset",
+        "body": ["subset(${1})${0}"],
+        "description": ""
+    },
+    "function substr": {
+        "prefix": "substr",
+        "body": ["substr(${1})${0}"],
+        "description": ""
+    },
+    "function superset": {
+        "prefix": "superset",
+        "body": ["superset(${1})${0}"],
+        "description": ""
+    },
+    "function template": {
+        "prefix": "template",
+        "body": ["template(${1})${0}"],
+        "description": ""
+    },
+    "function testcasename": {
+        "prefix": "testcasename",
+        "body": ["testcasename(${1})${0}"],
+        "description": ""
+    },
+    "function timeout": {
+        "prefix": "timeout",
+        "body": ["timeout(${1})${0}"],
+        "description": ""
+    },
+    "function trigger": {
+        "prefix": "trigger",
+        "body": ["trigger(${1})${0}"],
+        "description": ""
+    },
+    "function unichar2int": {
+        "prefix": ["unichar2int", "2int"],
+        "body": ["unichar2int(${1:invalue})${0}"],
+        "description": [
+            "unichar2int(in universal charstring invalue) return integer",
+            "* an error would occur if length of invalue != 1\n\n"
+        ]
+    },
+    "function unichar2oct": {
+        "prefix": ["unichar2oct", "2oct"],
+        "body": ["unichar2oct(${1})${0}"],
+        "description": ""
+    },
+    "function union": {
+        "prefix": "union",
+        "body": ["union(${1})${0}"],
+        "description": ""
+    },
+    "function valueof": {
+        "prefix": "valueof",
+        "body": ["valueof(${1})${0}"],
+        "description": ""
+    },
+    "modifier_abstract": {
+        "prefix": "@abstract",
+        "body": ["@abstract ${0}"],
+        "description": ""
+    },
+    "modifier_control": {
+        "prefix": "@control",
+        "body": ["@control ${0}"],
+        "description": ""
+    },
+    "modifier_decoded": {
+        "prefix": "@decoded",
+        "body": ["@decoded ${0}"],
+        "description": ""
+    },
+    "modifier_default": {
+        "prefix": "@default",
+        "body": ["@default ${0}"],
+        "description": ""
+    },
+    "modifier_deterministic": {
+        "prefix": "@deterministic",
+        "body": ["@deterministic ${0}"],
+        "description": ""
+    },
+    "modifier_dynamic": {
+        "prefix": "@dynamic",
+        "body": ["@dynamic ${0}"],
+        "description": ""
+    },
+    "modifier_final": {
+        "prefix": "@final",
+        "body": ["@final ${0}"],
+        "description": ""
+    },
+    "modifier_fuzzy": {
+        "prefix": "@fuzzy",
+        "body": ["@fuzzy ${0}"],
+        "description": ""
+    },
+    "modifier_index": {
+        "prefix": "@index",
+        "body": ["@index ${0}"],
+        "description": ""
+    },
+    "modifier_lazy": {
+        "prefix": "@lazy",
+        "body": ["@lazy ${0}"],
+        "description": ""
+    },
+    "modifier_local": {
+        "prefix": "@local",
+        "body": ["@local ${0}"],
+        "description": ""
+    },
+    "modifier_match": {
+        "prefix": "@match",
+        "body": ["@match ${0}"],
+        "description": ""
+    },
+    "modifier_mutation": {
+        "prefix": "@mutation",
+        "body": ["@mutation ${0}"],
+        "description": ""
+    },
+    "modifier_mutation_o": {
+        "prefix": "@mutation_o",
+        "body": ["@mutation_o ${0}"],
+        "description": ""
+    },
+    "modifier_mutation_unichar": {
+        "prefix": "@mutation_unichar",
+        "body": ["@mutation_unichar ${0}"],
+        "description": ""
+    },
+    "modifier_nocase": {
+        "prefix": "@nocase",
+        "body": ["@nocase ${0}"],
+        "description": ""
+    },
+    "boolean_false": {
+        "prefix": "false",
+        "body": ["false${0}"],
+        "description": ""
+    },
+    "boolean_true": {
+        "prefix": "true",
+        "body": ["true${0}"],
+        "description": ""
+    },
+    "verdict_pass": {
+        "prefix": "pass",
+        "body": ["pass${0}"],
+        "description": ""
+    },
+    "verdict_fail": {
+        "prefix": "fail",
+        "body": ["fail${0}"],
+        "description": ""
+    },
+    "verdict_error": {
+        "prefix": "error",
+        "body": ["error${0}"],
+        "description": ""
+    },
+    "verdict_inconc": {
+        "prefix": "inconc",
+        "body": ["inconc${0}"],
+        "description": ""
+    },
+    "verdict_none": {
+        "prefix": "none",
+        "body": ["none${0}"],
+        "description": ""
+    },
+    "special_number_infinity": {
+        "prefix": "infinity",
+        "body": ["infinity${0}"],
+        "description": ""
+    },
+    "special_number_not_a_number": {
+        "prefix": "not_a_number",
+        "body": ["not_a_number${0}"],
+        "description": ""
+    },
+    "operator_and": {
+        "prefix": "and",
+        "body": ["and ${0}"],
+        "description": ""
+    },
+    "operator_and4b": {
+        "prefix": ["and4b", "4b"],
+        "body": ["and4b ${0}"],
+        "description": ""
+    },
+    "operator_match": {
+        "prefix": "match",
+        "body": ["match ${0}"],
+        "description": ""
+    },
+    "operator_mod": {
+        "prefix": "mod",
+        "body": ["mod ${0}"],
+        "description": ""
+    },
+    "operator_not": {
+        "prefix": "not",
+        "body": ["not ${0}"],
+        "description": ""
+    },
+    "operator_not4b": {
+        "prefix": ["not4b", "4b"],
+        "body": ["not4b ${0}"],
+        "description": ""
+    },
+    "operator_or": {
+        "prefix": "or",
+        "body": ["or ${0}"],
+        "description": ""
+    },
+    "operator_or4b": {
+        "prefix": ["or4b", "4b"],
+        "body": ["or4b ${0}"],
+        "description": ""
+    },
+    "operator_rem": {
+        "prefix": "rem",
+        "body": ["rem ${0}"],
+        "description": ""
+    },
+    "operator_xor": {
+        "prefix": "xor",
+        "body": ["xor ${0}"],
+        "description": ""
+    },
+    "operator_xor4b": {
+        "prefix": ["xor4b", "4b"],
+        "body": ["xor4b ${0}"],
+        "description": ""
+    }
+}
