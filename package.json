@@ -1,129 +1,140 @@
 {
-    "name": "ttcn3",
-    "description": "Rich TTCN-3 langauge support for Visual Sutdio Code",
-    "publisher": "Nokia",
-    "preview": true,
-    "version": "0.0.1",
-    "license": "BSD-3-Clause",
-    "engines": {
-        "vscode": "^1.41.0"
+	"name": "ttcn3",
+	"displayName": "TTCN-3",
+	"description": "Rich TTCN-3 language support for Visual Sutdio Code",
+	"publisher": "Nokia",
+	"preview": true,
+	"version": "0.0.2",
+	"license": "BSD-3-Clause",
+	"engines": {
+		"vscode": "^1.41.0"
+	},
+	"categories": [
+		"Programming Languages",
+		"Snippets"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nokia/vscode-ttcn3"
+	},
+    "icon": "images/ttcn3-logo.png",
+    "galleryBanner": {
+        "color": "#883399",
+        "theme": "light"
     },
-    "categories": [
-        "Programming Languages",
-        "Snippets"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/nokia/vscode-ttcn3"
-    },
-    "keywords": [
-        "ttcn-3",
-        "ttcn3",
-        "ttcn",
-        "k3",
-        "ntt"
-    ],
-    "activationEvents": [
-        "workspaceContains:**/*.ttcn*",
-        "workspaceContains:**/package.yml",
-        "onLanguage:ttcn3"
-    ],
-    "main": "./out/extension.js",
-    "contributes": {
-        "languages": [
-            {
-                "id": "ttcn3",
-                "aliases": [
-                    "TTCN-3",
-                    "ttcn3"
-                ],
-                "extensions": [
-                    ".ttcn3",
-                    ".ttcn",
-                    ".ttcnpp"
-                ],
-                "configuration": "./language-configuration.json"
-            }
-        ],
-        "grammars": [
-            {
-                "language": "ttcn3",
-                "scopeName": "source.ttcn",
-                "path": "./syntaxes/ttcn.tmLanguage.json"
-            }
-        ],
-        "snippets": [
-            {
-                "language": "ttcn3",
-                "path": "./snippets/ttcn.tmSnippet.json"
-            }
-        ],
-        "configuration": {
-            "type": "object",
-            "title": "TTCN-3 configuration",
-            "properties": {
-                "ttcn3.port": {
-                    "type": "number",
-                    "default": 7000,
-                    "scope": "window",
-                    "description": "The WebSocket port to stream LSP log data into."
-                },
-                "ttcn3.trace.server": {
-                    "scope": "window",
-                    "type": "object",
-                    "description": "Traces the communication between VS Code and the language server.",
-                    "properties": {
-                        "verbosity": {
-                            "type": "string",
-                            "description": "Controls the verbosity of the trace.",
-                            "enum": [
-                                "off",
-                                "message",
-                                "verbose"
-                            ],
-                            "default": "off"
-                        },
-                        "format": {
-                            "type": "string",
-                            "description": "Controls the output format of the trace.",
-                            "enum": [
-                                "text",
-                                "json"
-                            ],
-                            "default": "text"
-                        }
-                    }
-                }
-            }
-        },
-        "commands": [
-            {
-                "command": "ttcn3.startStreaming",
-                "title": "Start Stream Logs into ttcn3.port"
-            }
-        ]
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile",
-        "test": "node ./out/test/runTest.js"
-    },
-    "dependencies": {
-        "vscode-languageclient": "^5.1.0-next.9",
-        "ws": "^6.0.0"
-    },
-    "devDependencies": {
-        "@types/glob": "^7.1.1",
-        "@types/mocha": "^5.2.7",
-        "@types/node": "^12.11.7",
-        "@types/vscode": "^1.41.0",
-        "@types/ws": "^6.0.0",
-        "glob": "^7.1.5",
-        "mocha": "^6.2.2",
-        "typescript": "^3.6.4",
-        "tslint": "^5.20.0",
-        "vscode-test": "^1.2.2"
-    }
+	"keywords": [
+		"ttcn-3",
+		"ttcn3",
+		"ttcn",
+		"k3",
+		"ntt"
+	],
+	"activationEvents": [
+		"workspaceContains:**/*.ttcn*",
+		"workspaceContains:**/package.yml",
+		"onLanguage:ttcn3"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "ttcn3",
+				"aliases": [
+					"TTCN-3",
+					"ttcn3"
+				],
+				"extensions": [
+					".ttcn3",
+					".ttcn",
+					".ttcnpp"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "ttcn3",
+				"scopeName": "source.ttcn",
+				"path": "./syntaxes/ttcn.tmLanguage.json"
+			}
+		],
+		"snippets": [
+			{
+				"language": "ttcn3",
+				"path": "./snippets/ttcn.tmSnippet.json"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "TTCN-3 configuration",
+			"properties": {
+				"ttcn3.port": {
+					"type": "number",
+					"default": 7000,
+					"scope": "window",
+					"description": "The WebSocket port to stream LSP log data into."
+				},
+				"ttcn3.trace.server": {
+					"scope": "window",
+					"type": "object",
+					"description": "Traces the communication between VS Code and the language server.",
+					"properties": {
+						"verbosity": {
+							"type": "string",
+							"description": "Controls the verbosity of the trace.",
+							"enum": [
+								"off",
+								"message",
+								"verbose"
+							],
+							"default": "off"
+						},
+						"format": {
+							"type": "string",
+							"description": "Controls the output format of the trace.",
+							"enum": [
+								"text",
+								"json"
+							],
+							"default": "text"
+						}
+					}
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "ttcn3.startStreaming",
+				"title": "Start Stream Logs into ttcn3.port"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile",
+		"test": "node ./out/test/runTest.js"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^5.1.0-next.9",
+		"ws": "^6.0.0"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.41.0",
+		"@types/ws": "^6.0.0",
+		"glob": "^7.1.5",
+		"mocha": "^6.2.2",
+		"typescript": "^3.6.4",
+		"tslint": "^5.20.0",
+		"vscode-test": "^1.2.2"
+	},
+	"__metadata": {
+		"id": "bbe93f03-4234-401c-9ee1-e8d5e7c15af5",
+		"publisherDisplayName": "Nokia",
+		"publisherId": "e78726d8-c401-4e08-9f95-def564f872d8"
+	}
 }
