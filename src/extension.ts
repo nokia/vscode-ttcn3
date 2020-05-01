@@ -8,7 +8,7 @@ let client: LanguageClient;
 
 export function activate(context: ExtensionContext) {
 
-  if (workspace.getConfiguration('ttcn3').get('useLanguageServer')) {
+  if (!workspace.getConfiguration('ttcn3').get('useLanguageServer')) {
      return
   }
 
