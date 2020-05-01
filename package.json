@@ -4,7 +4,7 @@
 	"description": "Rich TTCN-3 language support for Visual Sutdio Code",
 	"publisher": "Nokia",
 	"preview": true,
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"license": "BSD-3-Clause",
 	"engines": {
 		"vscode": "^1.41.0"
@@ -17,11 +17,11 @@
 		"type": "git",
 		"url": "https://github.com/nokia/vscode-ttcn3"
 	},
-    "icon": "images/ttcn3-logo.png",
-    "galleryBanner": {
-        "color": "#883399",
-        "theme": "light"
-    },
+	"icon": "images/ttcn3-logo.png",
+	"galleryBanner": {
+		"color": "#883399",
+		"theme": "light"
+	},
 	"keywords": [
 		"ttcn-3",
 		"ttcn3",
@@ -68,6 +68,11 @@
 			"type": "object",
 			"title": "TTCN-3 configuration",
 			"properties": {
+				"ttcn3.useLanguageServer": {
+					"type": "boolean",
+					"default": false,
+					"description": "Experimental: Use TTCN-3 language server from Nokia for Definition"
+				},
 				"ttcn3.port": {
 					"type": "number",
 					"default": 7000,
