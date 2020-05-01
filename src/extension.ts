@@ -7,7 +7,12 @@ import * as WebSocket from 'ws';
 let client: LanguageClient;
 
 export function activate(context: ExtensionContext) {
-  console.log('Activating extension language-ttcn3');
+
+  if (workspace.getConfiguration('ttcn3').get('useLanguageServer')) {
+     return
+  }
+
+  console.log('Activating language server for ttcn3');
 
   let serverOptions: ServerOptions = {
     run: {command: 'k3', args: ['langserver']},
