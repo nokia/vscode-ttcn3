@@ -24,3 +24,5 @@ reload the extension.
 
 We are pushing hard to get to you as many features as soon as possible, but
 there's still much to do in every corner. Help is very much appreciated. 
+
+Kindly, have a look at our [contribution guide](CONTRIBUTING.md).
