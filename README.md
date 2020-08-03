@@ -26,3 +26,8 @@ We are pushing hard to get to you as many features as soon as possible, but
 there's still much to do in every corner. Help is very much appreciated. 
 
 Kindly, have a look at our [contribution guide](CONTRIBUTING.md).
+
+
+## License
+
+This project is licensed under the BSD-3-Clause license - see the [LICENSE](https://github.com/nokia/vscode-ttcn3/blob/master/LICENSE).
