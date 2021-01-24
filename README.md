@@ -12,12 +12,31 @@ and adds further smartness. Current features:
 
 ## Language Server
 
-TTCN-3 support is powered by the [NTT/K3 Language Server](http://github.com/nokia/ntt).
-It's still very much in beta and therefore disabled by default. If you want to
-try it out, install `k3` tool somewhere, so this extension can find it.
+Most features of this extensions are provided by the [ntt language
+server](http://nokia.github.io/ntt/editors). It's still in beta and
+therefore disabled by default.
 
-Set `ttcn3.useLanguageServer` to `true` to enable the use of language server and
-reload the extension.
+If you like to use features like go to defintion, enable ntt by opening [vscode
+settings](https://code.visualstudio.com/docs/getstarted/settings) and set
+`ttcn3.useLanguageServer` to `true`.
+
+
+**Opening Folders**
+
+This is very important. Go to defintion works only for known TTCN-3 modules.
+Therefore you should always open whole folders (`Open > Folder`) and not just
+single files (`Open > File`). ntt automatically recognizes all TTCN-3 from that
+folder than.
+
+When you open multiple folders, the first one is considered the test suite root
+folder and should contain a [test suite manifest
+file](https://nokia.github.io/ntt/getting-started#the-test-suite-manifest).  
+
+If you do not open the right folders, very little will work. This is the most
+common issue of ntt language server that we see.
+
+Unfortunately there isn't much you can do. We are aware of this situation and
+plan to improve it as soon as we can.
 
 
 ## Contribution
