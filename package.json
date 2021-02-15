@@ -109,8 +109,9 @@
 		},
 		"commands": [
 			{
-				"command": "ttcn3.startStreaming",
-				"title": "Start Stream Logs into ttcn3.port"
+				"command": "ttcn3.languageServer.restart",
+				"title": "Restart the Language Server",
+				"category": "TTCN-3"
 			}
 		]
 	},
