@@ -4,7 +4,7 @@
 	"description": "Rich TTCN-3 language support for Visual Sutdio Code",
 	"publisher": "Nokia",
 	"preview": true,
-	"version": "0.0.5",
+	"version": "0.1.0",
 	"license": "BSD-3-Clause",
 	"engines": {
 		"vscode": "^1.41.0"
@@ -109,8 +109,9 @@
 		},
 		"commands": [
 			{
-				"command": "ttcn3.startStreaming",
-				"title": "Start Stream Logs into ttcn3.port"
+				"command": "ttcn3.languageServer.restart",
+				"title": "Restart the Language Server",
+				"category": "TTCN-3"
 			}
 		]
 	},
@@ -122,19 +123,28 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"dependencies": {
-		"vscode-languageclient": "^5.1.0-next.9",
-		"ws": "^6.0.0"
+		"decompress": "^4.2.1",
+		"request": "^2.88.2",
+		"request-progress": "^3.0.0",
+		"request-promise-native": "^1.0.8",
+		"semver": "^7.3.2",
+		"vscode-languageclient": "^6.1.3"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
-		"@types/mocha": "^5.2.7",
+		"@types/mocha": "^7.0.2",
 		"@types/node": "^12.11.7",
+		"@types/request-promise-native": "^1.0.17",
+		"@types/semver": "^7.2.0",
 		"@types/vscode": "^1.41.0",
 		"@types/ws": "^6.0.0",
+		"@types/decompress": "^4.2.1",
 		"glob": "^7.1.5",
 		"mocha": "^6.2.2",
-		"typescript": "^3.6.4",
+		"ts-loader": "^7.0.5",
 		"tslint": "^5.20.0",
+		"typescript": "^3.9.3",
+		"vsce": "^1.75.0",
 		"vscode-test": "^1.2.2"
 	},
 	"__metadata": {
