@@ -1,3 +1,5 @@
+import * as child_process from "child_process";
+
 export function isOSWindows(): boolean {
     return process.platform === "win32";
 }
@@ -16,7 +18,7 @@ export function correctBinname(binname: string): string {
 
 export function exec(cmd: string): Promise<{ stdout: string, stderr: string }> {
 	return new Promise((resolve, reject) => {
-		cp.exec(cmd, (err, stdout, stderr) => {
+		child_process.exec(cmd, (err:any, stdout:any, stderr:any) => {
 			if (err) {
 				return reject(err);
 			}

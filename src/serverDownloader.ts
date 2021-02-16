@@ -44,7 +44,7 @@ export class ServerDownloader {
 
 		status.update(`Unpacking ${this.displayName} ${version}...`);
 		await decompress(downloadDest, this.installDir, {
-			    filter: (file:any) => path.basename(file.path) == 'ntt'});
+			    filter: (file:any) => path.basename(file.path) == correctBinname("ntt")});
 		await fs.promises.unlink(downloadDest);
 
 		status.update(`Initializing ${this.displayName}...`);
