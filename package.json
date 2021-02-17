@@ -112,6 +112,11 @@
 				"command": "ttcn3.languageServer.restart",
 				"title": "Restart the Language Server",
 				"category": "TTCN-3"
+			},
+			{
+				"command": "ttcn3.languageServer.status",
+				"title": "Show language server status",
+				"category": "TTCN-3"
 			}
 		]
 	},
