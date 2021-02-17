@@ -2,8 +2,8 @@ import fs = require('fs');
 import path = require('path');
 import * as child_process from "child_process";
 import * as vscode from 'vscode';
-import { commands, ExtensionContext, OutputChannel} from 'vscode';
-import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient';
+import { commands, ExtensionContext } from 'vscode';
+import { LanguageClient, LanguageClientOptions, ServerOptions , ExecuteCommandParams, ExecuteCommandRequest } from 'vscode-languageclient';
 import { LOG } from './util/logger';
 import { ServerDownloader } from './serverDownloader';
 import { Status, StatusBarEntry } from './util/status';
@@ -92,6 +92,11 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 		outputChannel.appendLine("");
 
 		context.subscriptions.push(client.start());
+	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.status", async () => {
+		const params: ExecuteCommandParams = { command: "ntt.status", arguments: []};
+		await client.sendRequest(ExecuteCommandRequest.type, params);
 	}));
 }
 
