@@ -60,7 +60,7 @@ export class ServerDownloader {
 		var installedVersion = "0.0.0";
 		try {
 			const cmd = path.join(this.installDir, correctBinname("ntt"))
-			var { stdout } = await exec(cmd);
+			var { stdout } = await exec(cmd + " version");
 			let sv = semver.coerce(stdout);
 			if (sv) {
 				installedVersion = sv.version
