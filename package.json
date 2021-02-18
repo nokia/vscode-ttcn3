@@ -4,7 +4,7 @@
 	"description": "Rich TTCN-3 language support for Visual Sutdio Code",
 	"publisher": "Nokia",
 	"preview": true,
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"license": "BSD-3-Clause",
 	"engines": {
 		"vscode": "^1.41.0"
