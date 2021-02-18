@@ -2,7 +2,7 @@ import fs = require('fs');
 import path = require('path');
 import * as child_process from "child_process";
 import * as vscode from 'vscode';
-import { commands, ExtensionContext } from 'vscode';
+import { ExtensionContext, OutputChannel } from 'vscode';
 import { LanguageClient, LanguageClientOptions, ServerOptions , ExecuteCommandParams, ExecuteCommandRequest } from 'vscode-languageclient';
 import { LOG } from './util/logger';
 import { ServerDownloader } from './serverDownloader';
@@ -10,14 +10,18 @@ import { Status, StatusBarEntry } from './util/status';
 import { isOSUnixoid, correctBinname } from './util/osUtils';
 
 let client: LanguageClient;
+let outputChannel: OutputChannel
 
 export function activate(context: ExtensionContext) {
+
+	outputChannel = vscode.window.createOutputChannel("TTCN-3");
+	context.subscriptions.push(outputChannel);
 
 	const conf = vscode.workspace.getConfiguration('ttcn3');
 
 	// Our work is done, if the user does not want to run a language server.
 	if (!conf.get('useLanguageServer')) {
-		LOG.info('Language server is disabled. If you like to use features like go to definition, enable the language server by opening vscode settings and set ttcn3.useLanguageServer to true. For more information about the TTCN-3 language server, have a look at https://nokia.github.io/ntt/editors/');
+		outputChannel.appendLine('Language server is disabled. If you like to use features like go to definition, enable the language server by opening vscode settings and set ttcn3.useLanguageServer to true. For more information about the TTCN-3 language server, have a look at https://nokia.github.io/ntt/editors/');
 		return;
 	}
 
@@ -37,14 +41,11 @@ async function withSpinningStatus(context: vscode.ExtensionContext, action: (sta
 
 export async function activateLanguageServer(context: vscode.ExtensionContext, status: Status, conf: vscode.WorkspaceConfiguration) {
 
-	const outputChannel = vscode.window.createOutputChannel("TTCN-3");
-	context.subscriptions.push(outputChannel);
-
-	LOG.info('Activating language server for TTCN-3...');
-	status.update('Activating language server for TTCN-3...');
+	outputChannel.appendLine('Activating TTCN-3 Language Server...');
+	status.update('Activating Activating TTCN-3 Language Server...');
 
 	const installDir = path.join(context.extensionPath, "servers");
-	const nttDownloader = new ServerDownloader("TTCN-3 Language Server", "ntt", assetName(), installDir);
+	const nttDownloader = new ServerDownloader("TTCN-3 Language Server", "ntt", assetName(), installDir, outputChannel);
 
 	try {
 		await nttDownloader.downloadServerIfNeeded(status);
@@ -59,12 +60,6 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	}
 
 	const ntt = await findNttExecutable(installDir);
-	if (ntt == null) {
-		vscode.window.showErrorMessage("Couldn't locate ntt in $PATH");
-		return;
-	}
-
-	status.update(`Initializing TTCN-3 Language Server...`);
 
 	let serverOptions: ServerOptions = {
 		run:   { command: ntt, args: ['langserver'] },
@@ -77,11 +72,13 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	};
 
 	// Create the language client and start the client.
+	status.update(`Initializing TTCN-3 Language Server...`);
 	client = new LanguageClient( 'ttcn3', 'TTCN-3 Language Server', serverOptions, clientOptions);
 	try {
 		context.subscriptions.push(client.start());
 	} catch (e) {
-		vscode.window.showInformationMessage('Could ot start the TTCN-3 language server:', e);
+		vscode.window.showInformationMessage('Could ot start the TTCN-3 Language Server:', e);
+		return
 	}
 
 	context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.restart", async () => {
@@ -111,7 +108,7 @@ async function findNttExecutable(installDir: string): Promise<string> {
 
 	// Then search PATH parts
 	if (process.env['PATH']) {
-		LOG.info("Looking for ntt in PATH");
+		outputChannel.appendLine("Looking for ntt in PATH");
 
 		let pathparts = process.env['PATH'].split(path.delimiter);
 		for (let i = 0; i < pathparts.length; i++) {
@@ -122,7 +119,7 @@ async function findNttExecutable(installDir: string): Promise<string> {
 		}
 	}
 
-	LOG.info("Could not find ntt, will try using binary name directly");
+	outputChannel.appendLine("Could not find ntt, will try using binary name directly");
 	return ntt;
 }
 

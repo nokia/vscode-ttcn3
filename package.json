@@ -110,7 +110,7 @@
 		"commands": [
 			{
 				"command": "ttcn3.languageServer.restart",
-				"title": "Restart the Language Server",
+				"title": "Restart language server",
 				"category": "TTCN-3"
 			},
 			{

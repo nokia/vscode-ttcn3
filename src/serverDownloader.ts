@@ -16,12 +16,14 @@ export class ServerDownloader {
 	private githubProjectName: string;
 	private assetName: string;
 	private installDir: string;
+	outputChannel: vscode.OutputChannel
 
-	constructor(displayName: string, githubProjectName: string, assetName: string, installDir: string) {
+	constructor(displayName: string, githubProjectName: string, assetName: string, installDir: string, outputChannel: vscode.OutputChannel) {
 		this.displayName = displayName;
 		this.githubProjectName = githubProjectName;
 		this.installDir = installDir;
 		this.assetName = assetName;
+		this.outputChannel = outputChannel;
 	}
 
 	private async latestReleaseInfo(): Promise<GitHubReleasesAPIResponse> {
@@ -38,6 +40,7 @@ export class ServerDownloader {
 
 		const downloadDest = path.join(this.installDir, `download-${this.assetName}`);
 		status.update(`Downloading ${this.displayName} ${version}...`);
+		this.outputChannel.append(`Downloading ${this.displayName} ${version}...`);
 		await download(downloadUrl, downloadDest, percent => {
 			status.update(`Downloading ${this.displayName} ${version} :: ${(percent * 100).toFixed(2)} %`);
 		});
@@ -47,6 +50,7 @@ export class ServerDownloader {
 			    filter: (file:any) => path.basename(file.path) == correctBinname("ntt")});
 		await fs.promises.unlink(downloadDest);
 
+		this.outputChannel.appendLine(`done`)
 		status.update(`Initializing ${this.displayName}...`);
 	}
 
@@ -63,9 +67,8 @@ export class ServerDownloader {
 			}
 		} catch (err) {}
 
-
-		LOG.info(`Querying GitHub API for new ${this.displayName} version...`);
-
+		this.outputChannel.appendLine(`Installed ${this.displayName} version: ${installedVersion}`)
+		this.outputChannel.append(`Checking GitHub for the latest release...`)
 		let releaseInfo: GitHubReleasesAPIResponse;
 
 		try {
@@ -87,7 +90,11 @@ export class ServerDownloader {
 		var latestVersion = "0.0.0";
 		if (sv) {
 			latestVersion = sv.version
+			this.outputChannel.appendLine(`found version ${latestVersion}`)
+		} else {
+			this.outputChannel.appendLine(`not available`)
 		}
+
 		if (semver.gt(latestVersion, installedVersion)) {
 
 			const selected = await vscode.window.showInformationMessage(`A new language server release is available: ${latestVersion}. Install now?`, 'Install', 'Cancel');
