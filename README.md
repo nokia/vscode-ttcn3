@@ -16,27 +16,47 @@ Most features of this extensions are provided by the [ntt language
 server](http://nokia.github.io/ntt/editors). It's still in beta and
 therefore disabled by default.
 
-If you like to use features like go to defintion, enable ntt by opening [vscode
+If you like to use features like go to definition, enable ntt by opening [vscode
 settings](https://code.visualstudio.com/docs/getstarted/settings) and set
 `ttcn3.useLanguageServer` to `true`.
 
 
-**Opening Folders**
+### Troubleshooting: Go to Definition does not work
 
-This is very important. Go to defintion works only for known TTCN-3 modules.
-Therefore you should always open whole folders (`Open > Folder`) and not just
-single files (`Open > File`). ntt automatically recognizes all TTCN-3 from that
-folder than.
 
-When you open multiple folders, the first one is considered the test suite root
-folder and should contain a [test suite manifest
-file](https://nokia.github.io/ntt/getting-started#the-test-suite-manifest).  
+**Unknown Module Locations**
+
+Go to Definition works only for known TTCN-3 modules. Yet, there is no standard
+way of telling the language server where to look for TTCN-3 modules.  
+
+You should always open whole folders (`Open > Folder`) and not just
+single files (`Open > File`). The language server automatically recognizes all
+TTCN-3 from that opened folder.  
+If your TTCN-3 test suite is organized across multiple folders, a [test suite manifest
+file](https://nokia.github.io/ntt/getting-started#the-test-suite-manifest)
+should be in the test suite's root folder.  
+When you open multiple folders (workspace), the first folder is considered the
+test suite root folder.
+
+The command "TTCN-3: Show language server status" shows a list of all known
+TTCN-3 modules and will help to verify that all relevant modules are known by
+the language server
 
 If you do not open the right folders, very little will work. This is the most
-common issue of ntt language server that we see.
+common issue that we see. If you have suggestions on how to improve this, we'd
+love to hear from you.
 
-Unfortunately there isn't much you can do. We are aware of this situation and
-plan to improve it as soon as we can.
+
+**Work in Progress**
+
+The language server is still work in progress. Not all TTCN-3 semantic is
+implemented already, therefore some TTCN-3 structure might not work as
+expected:
+
+* _Component Variables_
+* _Signatures_
+* _Dot Expressions_ (such as `foo.bar`)
+* _Ambiguous Module Definitions_ (only the first hit is returned)
 
 
 ## Contribution
