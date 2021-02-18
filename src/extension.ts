@@ -22,7 +22,16 @@ export function activate(context: ExtensionContext) {
 	// Our work is done, if the user does not want to run a language server.
 	if (!conf.get('useLanguageServer')) {
 		outputChannel.appendLine('Language server is disabled. If you like to use features like go to definition, enable the language server by opening vscode settings and set ttcn3.useLanguageServer to true. For more information about the TTCN-3 language server, have a look at https://nokia.github.io/ntt/editors/');
-		return;
+
+		context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.restart", async () => {
+			outputChannel.appendLine("Restart command is not available, please enable TTCN-3 Language Server in vscode settings.");
+		}));
+
+		context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.status", async () => {
+			outputChannel.appendLine("Status command is not available, please enable TTCN-3 Language Server in vscode settings.");
+		}));
+
+		return
 	}
 
 	const initTasks: Promise<void>[] = [];
@@ -77,7 +86,7 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	try {
 		context.subscriptions.push(client.start());
 	} catch (e) {
-		vscode.window.showInformationMessage('Could ot start the TTCN-3 Language Server:', e);
+		vscode.window.showInformationMessage('Could not start the TTCN-3 Language Server:', e);
 		return
 	}
 
