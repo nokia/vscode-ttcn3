@@ -119,18 +119,21 @@ async function findNttExecutable(installDir: string): Promise<string> {
 
 	// Then search PATH parts
 	if (process.env['PATH']) {
-		outputChannel.appendLine("Looking for ntt in PATH");
+		outputChannel.append("Looking for ntt in PATH...");
 
 		let pathparts = process.env['PATH'].split(path.delimiter);
 		for (let i = 0; i < pathparts.length; i++) {
 			let binpath = path.join(pathparts[i], ntt);
 			if (fs.existsSync(binpath)) {
+				outputChannel.appendLine(binpath);
 				return binpath;
 			}
 		}
+		outputChannel.appendLine("");
 	}
 
-	outputChannel.appendLine("Could not find ntt, will try using binary name directly");
+	let p = process.env['PATH']
+	outputChannel.appendLine(`Could not find ntt in ${p}, will try using binary name directly`);
 	return ntt;
 }
 
