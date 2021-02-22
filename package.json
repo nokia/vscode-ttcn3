@@ -65,46 +65,38 @@
 			}
 		],
 		"configuration": {
-			"type": "object",
-			"title": "TTCN-3 configuration",
+			"title": "TTCN-3",
 			"properties": {
-				"ttcn3.useLanguageServer": {
+				"ttcn3.server.enabled": {
+					"title": "TTCN3: Enable TTCN-3 language server (experimental)",
 					"type": "boolean",
 					"default": false,
-					"description": "Experimental: Use TTCN-3 language server from Nokia for Definition"
+					"description": "Enable TTCN-3 language server for advanced features, like go to defintion, ..."
 				},
-				"ttcn3.port": {
-					"type": "number",
-					"default": 7000,
-					"scope": "window",
-					"description": "The WebSocket port to stream LSP log data into."
+				"ttcn3.server.update": {
+					"title": "TTCN-3: Update TTCN-3 language server automatically",
+					"type": "boolean",
+					"default": true,
+					"description": "Install and update TTCN-3 language server automatically"
+				},
+				"ttcn3.useLanguageServer": {
+					"title": "TTCN3: Enable TTCN-3 language server (experimental)",
+					"type": "boolean",
+					"default": false,
+					"description": "experimental: use TTCN-3 language server from Nokia for definition",
+					"deprecationMessage": "Deprecated: Please use ttcn3.server.enable instead."
 				},
 				"ttcn3.trace.server": {
 					"scope": "window",
-					"type": "object",
-					"description": "Traces the communication between VS Code and the language server.",
-					"properties": {
-						"verbosity": {
-							"type": "string",
-							"description": "Controls the verbosity of the trace.",
-							"enum": [
-								"off",
-								"message",
-								"verbose"
-							],
-							"default": "off"
-						},
-						"format": {
-							"type": "string",
-							"description": "Controls the output format of the trace.",
-							"enum": [
-								"text",
-								"json"
-							],
-							"default": "text"
-						}
+					"type": "string",
+					"description": "TTCN-3: Controls the verbosity of the trace between VS Code and the language server.",
+					"enum": [
+						"off",
+						"message",
+						"verbose"
+					],
+					"default": "off"
 					}
-				}
 			}
 		},
 		"commands": [
