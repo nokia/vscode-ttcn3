@@ -20,7 +20,7 @@ export function activate(context: ExtensionContext) {
 	const conf = vscode.workspace.getConfiguration('ttcn3');
 
 	// Our work is done, if the user does not want to run a language server.
-	if (!conf.get('useLanguageServer')) {
+	if (!conf.get('useLanguageServer') && !conf.get('server.enabled')) {
 		outputChannel.appendLine('Language server is disabled. If you like to use features like go to definition, enable the language server by opening vscode settings and set ttcn3.useLanguageServer to true. For more information about the TTCN-3 language server, have a look at https://nokia.github.io/ntt/editors/');
 
 		context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.restart", async () => {
@@ -56,16 +56,18 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	const installDir = path.join(context.extensionPath, "servers");
 	const nttDownloader = new ServerDownloader("TTCN-3 Language Server", "ntt", assetName(), installDir, outputChannel);
 
-	try {
-		await nttDownloader.downloadServerIfNeeded(status);
-		// Ensure that start script can be executed
-		if (isOSUnixoid()) {
-			child_process.exec(`chmod +x ${installDir}/ntt`);
+	if (conf.get('server.update')) {
+		try {
+			await nttDownloader.downloadServerIfNeeded(status);
+			// Ensure that start script can be executed
+			if (isOSUnixoid()) {
+				child_process.exec(`chmod +x ${installDir}/ntt`);
+			}
+		} catch (error) {
+			console.error(error);
+			vscode.window.showWarningMessage(`Could not update/download TTCN-3 Language Server: ${error}`);
+			return;
 		}
-	} catch (error) {
-		console.error(error);
-		vscode.window.showWarningMessage(`Could not update/download TTCN-3 Language Server: ${error}`);
-		return;
 	}
 
 	const ntt = await findNttExecutable(installDir);
@@ -117,18 +119,21 @@ async function findNttExecutable(installDir: string): Promise<string> {
 
 	// Then search PATH parts
 	if (process.env['PATH']) {
-		outputChannel.appendLine("Looking for ntt in PATH");
+		outputChannel.append("Looking for ntt in PATH...");
 
 		let pathparts = process.env['PATH'].split(path.delimiter);
 		for (let i = 0; i < pathparts.length; i++) {
 			let binpath = path.join(pathparts[i], ntt);
 			if (fs.existsSync(binpath)) {
+				outputChannel.appendLine(binpath);
 				return binpath;
 			}
 		}
+		outputChannel.appendLine("");
 	}
 
-	outputChannel.appendLine("Could not find ntt, will try using binary name directly");
+	let p = process.env['PATH']
+	outputChannel.appendLine(`Could not find ntt in ${p}, will try using binary name directly`);
 	return ntt;
 }
 
