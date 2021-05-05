@@ -106,6 +106,11 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 		const params: ExecuteCommandParams = { command: "ntt.status", arguments: []};
 		await client.sendRequest(ExecuteCommandRequest.type, params);
 	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand("ntt.test", async (args) => {
+		const params: ExecuteCommandParams = { command: "ntt.test", arguments: [args]};
+		await client.sendRequest(ExecuteCommandRequest.type, params);
+	}));
 }
 
 async function findNttExecutable(installDir: string): Promise<string> {
