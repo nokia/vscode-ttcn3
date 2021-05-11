@@ -17,11 +17,10 @@
 		"type": "git",
 		"url": "https://github.com/nokia/vscode-ttcn3"
 	},
-	"icon": "images/ttcn3-logo.png",
-	"galleryBanner": {
-		"color": "#883399",
-		"theme": "light"
+	"bugs": {
+		"url": "https://github.com/nokia/vscode-ttcn3/issues"
 	},
+	"icon": "images/ttcn3-logo.png",
 	"keywords": [
 		"ttcn-3",
 		"ttcn3",

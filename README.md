@@ -1,44 +1,54 @@
+[![](https://vsmarketplacebadge.apphb.com/version-short/nokia.ttcn3.svg)](https://marketplace.visualstudio.com/items?itemName=nokia.ttcn3)
+[![](https://vsmarketplacebadge.apphb.com/downloads-short/nokia.ttcn3.svg)](https://marketplace.visualstudio.com/items?itemName=nokia.ttcn3)
+[![](https://vsmarketplacebadge.apphb.com/rating-star/nokia.ttcn3.svg)](https://marketplace.visualstudio.com/items?itemName=nokia.ttcn3)
+[![](https://aka.ms/vsls-badge)](https://aka.ms/vsls-gitlens)
+
+
 # TTCN-3 for Visual Studio Code
 
-Adds language support for TTCN-3 to Visual Studio Code. This extension is a fork
-of [Emmanuel Alap's TTCN-3 Language Extension](https://github.com/ealap/vscode-language-ttcn)
-and adds further smartness. Current features:
+<img width="40%" align="right" src="images/highlight.png"/>
+
+#### [Repository](https://github.com/nokia/vscode-ttcn3)&nbsp;&nbsp;|&nbsp;&nbsp;[Issues](https://github.com/nokia/vscode-ttcn3/issues)&nbsp;&nbsp;|&nbsp;&nbsp;[Documentation](https://nokia.github.io/ntt/editors/#visual-studio-code)
+
+Adds language support for [TTCN-3](https://nokia.github.io/ntt/#whats-ttcn-3)
+to Visual Studio Code. Available features:
 
 * Syntax Highlighting.
-* [Code Snippets](https://github.com/nokia/vscode-ttcn3/blob/master/snippets/ttcn.tmSnippet.json) for quick coding.
-* Jump to Definition (when TTCN-3 Language Server is enabled).
+* Code Snippets for quick coding.
+* Jump to Definition for quick navigation.
+* Code completion for a growing number of module defintions.
+* Find references
+* CodeLens for running tests from inside your IDE (experimental).
 * And more features to come...
 
 
-## Language Server
+If you find this extension useful, please [write a review](https://marketplace.visualstudio.com/items?itemName=nokia.ttcn3#review-details 'Write a review')
+and [star it on GitHub](https://github.com/nokia/vscode-ttcn3 'Star it on GitHub').
 
-Most features of this extensions are provided by the [ntt language
-server](http://nokia.github.io/ntt/editors). It's still in beta and
-therefore disabled by default.
-
-If you like to use features like go to definition, enable ntt by opening [vscode
-settings](https://code.visualstudio.com/docs/getstarted/settings) and set
-`ttcn3.useLanguageServer` to `true`.
+<br clear="right"/>
 
 
-### Troubleshooting: Go to Definition does not work
+## IntelliSense
 
+IntelliSense is still experimental. Enable the TTCN-3 language server
+to use them:
+
+
+<img width="40%" src="images/vscode-ttcn3-settings.png"/>
+
+
+### Troubleshooting
 
 **Unknown Module Locations**
 
-Go to Definition works only for known TTCN-3 modules. Yet, there is no standard
+IntelliSense works only for known TTCN-3 modules. Yet, there is no standard
 way of telling the language server where to look for TTCN-3 modules.  
 
 You should always open whole folders (`Open > Folder`) and not just
 single files (`Open > File`). The language server automatically recognizes all
 TTCN-3 from that opened folder.  
-If your TTCN-3 test suite is organized across multiple folders, a [test suite manifest
-file](https://nokia.github.io/ntt/getting-started#the-test-suite-manifest)
-should be in the test suite's root folder.  
-When you open multiple folders (workspace), the first folder is considered the
-test suite root folder.
 
-The command "TTCN-3: Show language server status" shows a list of all known
+The command _"TTCN-3: Show language server status"_ shows a list of all known
 TTCN-3 modules and will help to verify that all relevant modules are known by
 the language server
 
