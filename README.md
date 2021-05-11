@@ -34,7 +34,7 @@ IntelliSense is still experimental. Enable the TTCN-3 language server
 to use them:
 
 
-<img width="40%" src="images/vscode-ttcn3-settings.png"/>
+<img src="images/vscode-ttcn3-settings.png"/>
 
 
 ### Troubleshooting
