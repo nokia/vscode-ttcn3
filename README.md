@@ -37,7 +37,7 @@ to use them:
 <img src="images/vscode-ttcn3-settings.png"/>
 
 
-### Troubleshooting
+## Troubleshooting
 
 **Unknown Module Locations**
 
