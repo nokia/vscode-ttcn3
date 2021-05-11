@@ -30,8 +30,8 @@ and [star it on GitHub](https://github.com/nokia/vscode-ttcn3 'Star it on GitHub
 
 ## IntelliSense
 
-IntelliSense is still experimental. Enable the TTCN-3 language server
-to use them:
+IntelliSense is powered by the [ntt language server](https://nokia.github.io/ntt) and is still experimental.
+Enable the TTCN-3 language server to use IntelliSense features. ntt updates and installs automatically.
 
 
 <img src="images/vscode-ttcn3-settings.png"/>
