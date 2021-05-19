@@ -53,8 +53,9 @@ TTCN-3 modules and will help to verify that all relevant modules are known by
 the language server
 
 If you do not open the right folders, very little will work. This is the most
-common issue that we see. If you have suggestions on how to improve this, we'd
-love to hear from you.
+common issue that we see. You can improve this situation by creating a manifest
+file as described in the [documentation](https://nokia.github.io/ntt). If you
+have suggestions on how to improve this further, we'd love to hear from you.
 
 
 **Work in Progress**
