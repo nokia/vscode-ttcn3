@@ -4,7 +4,7 @@
 	"description": "Rich TTCN-3 language support for Visual Sutdio Code",
 	"publisher": "Nokia",
 	"preview": true,
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"license": "BSD-3-Clause",
 	"engines": {
 		"vscode": "^1.41.0"
@@ -83,6 +83,15 @@
 					"type": "boolean",
 					"default": false,
 					"description": "Enable CodeLens for running tests from inside your editor."
+				},
+				"ttcn3.server.toolsPath": {
+					"title": "TTCN-3: Search path for additional TTCN-3 tools",
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [],
+					"description": "list of directory paths"
 				},
 				"ttcn3.useLanguageServer": {
 					"title": "TTCN3: Enable TTCN-3 language server (experimental)",
