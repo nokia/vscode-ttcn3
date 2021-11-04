@@ -80,12 +80,14 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	} else {
 		separator = ':';
 	}
-	let pathList: string[] = conf.get('server.toolsPath')!;
-	toolsPath = pathList.join(separator);
-	if (toolsPath.length > 0) {
-		toolsPath = toolsPath + separator + process.env['PATH']!;
-	} else {
-		toolsPath = process.env['PATH']!;
+	let pathList: string[]|undefined = conf.get('server.toolsPath');
+	if (pathList) {
+		toolsPath = pathList.join(separator);
+		if (toolsPath.length > 0) {
+			toolsPath = toolsPath + separator + process.env['PATH']!;
+		} else {
+			toolsPath = process.env['PATH']!;
+		}
 	}
 	outputChannel.appendLine('toolsPath: ' + toolsPath);
 	let serverOptions: ServerOptions = {
