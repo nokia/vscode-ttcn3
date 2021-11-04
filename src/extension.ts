@@ -12,7 +12,6 @@ import { isString } from 'util';
 
 let client: LanguageClient;
 let outputChannel: OutputChannel;
-//let testExecOutChannel: OutputChannel;
 
 export function activate(context: ExtensionContext) {
 
