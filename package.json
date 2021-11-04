@@ -91,7 +91,7 @@
 						"type": "string"
 					},
 					"default": [],
-					"description": "list of directory paths"
+					"description": "Search paths for additional TTCN-3 tools, such as k3 runtime"
 				},
 				"ttcn3.useLanguageServer": {
 					"title": "TTCN3: Enable TTCN-3 language server (experimental)",
