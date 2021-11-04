@@ -3,18 +3,20 @@ import path = require('path');
 import * as child_process from "child_process";
 import * as vscode from 'vscode';
 import { ExtensionContext, OutputChannel } from 'vscode';
-import { LanguageClient, LanguageClientOptions, ServerOptions , ExecuteCommandParams, ExecuteCommandRequest } from 'vscode-languageclient';
+import { LanguageClient, LanguageClientOptions, ServerOptions, ExecuteCommandParams, ExecuteCommandRequest } from 'vscode-languageclient';
 import { LOG } from './util/logger';
 import { ServerDownloader } from './serverDownloader';
 import { Status, StatusBarEntry } from './util/status';
 import { isOSUnixoid, correctBinname } from './util/osUtils';
+import { isString } from 'util';
 
 let client: LanguageClient;
-let outputChannel: OutputChannel
+let outputChannel: OutputChannel;
 
 export function activate(context: ExtensionContext) {
 
 	outputChannel = vscode.window.createOutputChannel("TTCN-3");
+	//testExecOutChannel = vscode.window.createOutputChannel("TTCN-3-Test");
 	context.subscriptions.push(outputChannel);
 
 	const conf = vscode.workspace.getConfiguration('ttcn3');
@@ -31,7 +33,7 @@ export function activate(context: ExtensionContext) {
 			outputChannel.appendLine("Status command is not available, please enable TTCN-3 Language Server in vscode settings.");
 		}));
 
-		return
+		return;
 	}
 
 	const initTasks: Promise<void>[] = [];
@@ -71,10 +73,24 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	}
 
 	const ntt = await findNttExecutable(installDir);
-
+	let toolsPath: string = "";
+	let separator: string;
+	if (getOs() === 'windows') {
+		separator = ';';
+	} else {
+		separator = ':';
+	}
+	let pathList: string[] = conf.get('server.toolsPath')!;
+	toolsPath = pathList.join(separator);
+	if (toolsPath.length > 0) {
+		toolsPath = toolsPath + separator + process.env['PATH']!;
+	} else {
+		toolsPath = process.env['PATH']!;
+	}
+	outputChannel.appendLine('toolsPath: ' + toolsPath);
 	let serverOptions: ServerOptions = {
-		run:   { command: ntt, args: ['langserver'] },
-		debug: { command: ntt, args: ['langserver'] }
+		run: { command: ntt, args: ['langserver'], options: { env: { 'PATH': toolsPath } } },
+		debug: { command: ntt, args: ['langserver'], options: { env: { 'PATH': toolsPath } } }
 	};
 
 	let clientOptions: LanguageClientOptions = {
@@ -84,31 +100,31 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 
 	// Create the language client and start the client.
 	status.update(`Initializing TTCN-3 Language Server...`);
-	client = new LanguageClient( 'ttcn3', 'TTCN-3 Language Server', serverOptions, clientOptions);
+	client = new LanguageClient('ttcn3', 'TTCN-3 Language Server', serverOptions, clientOptions);
 	try {
 		context.subscriptions.push(client.start());
 	} catch (e) {
 		vscode.window.showInformationMessage('Could not start the TTCN-3 Language Server:', e);
-		return
+		return;
 	}
 
 	context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.restart", async () => {
 		await client.stop();
 
 		outputChannel.appendLine("");
-		outputChannel.appendLine(" === Language Server Restart ===")
+		outputChannel.appendLine(" === Language Server Restart ===");
 		outputChannel.appendLine("");
 
 		context.subscriptions.push(client.start());
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.status", async () => {
-		const params: ExecuteCommandParams = { command: "ntt.status", arguments: []};
+		const params: ExecuteCommandParams = { command: "ntt.status", arguments: [] };
 		await client.sendRequest(ExecuteCommandRequest.type, params);
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("ntt.test", async (args) => {
-		const params: ExecuteCommandParams = { command: "ntt.test", arguments: [args]};
+		const params: ExecuteCommandParams = { command: "ntt.test", arguments: [args] };
 		await client.sendRequest(ExecuteCommandRequest.type, params);
 	}));
 }
@@ -137,7 +153,7 @@ async function findNttExecutable(installDir: string): Promise<string> {
 		outputChannel.appendLine("");
 	}
 
-	let p = process.env['PATH']
+	let p = process.env['PATH'];
 	outputChannel.appendLine(`Could not find ntt in ${p}, will try using binary name directly`);
 	return ntt;
 }
