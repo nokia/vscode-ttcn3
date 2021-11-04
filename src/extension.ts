@@ -18,7 +18,6 @@ export function activate(context: ExtensionContext) {
 	outputChannel = vscode.window.createOutputChannel("TTCN-3");
 	//testExecOutChannel = vscode.window.createOutputChannel("TTCN-3-Test");
 	context.subscriptions.push(outputChannel);
-	//context.subscriptions.push(testExecOutChannel);
 
 	const conf = vscode.workspace.getConfiguration('ttcn3');
 
