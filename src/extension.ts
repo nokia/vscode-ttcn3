@@ -80,7 +80,7 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	} else {
 		separator = ':';
 	}
-	let pathList: string[]|undefined = conf.get('server.toolsPath');
+	let pathList: string[] | undefined = conf.get('server.toolsPath');
 	if (pathList) {
 		toolsPath = pathList.join(separator);
 		if (toolsPath.length > 0) {
@@ -91,9 +91,15 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	}
 	outputChannel.appendLine('toolsPath: ' + toolsPath);
 	let serverOptions: ServerOptions = {
-		run: { command: ntt, args: ['langserver'], options: { env: { 'PATH': toolsPath } } },
-		debug: { command: ntt, args: ['langserver'], options: { env: { 'PATH': toolsPath } } }
+		run: { command: ntt, args: ['langserver'], options: { env: process.env } },
+		debug: { command: ntt, args: ['langserver'], options: { env: process.env } }
 	};
+	if (serverOptions.debug.options) {
+		serverOptions.debug.options.env['PATH'] = toolsPath;
+	}
+	if (serverOptions.run.options) {
+		serverOptions.run.options.env['PATH'] = toolsPath;
+	}
 
 	let clientOptions: LanguageClientOptions = {
 		documentSelector: ['ttcn3'],
