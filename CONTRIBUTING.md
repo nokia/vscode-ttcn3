@@ -42,6 +42,35 @@ request being accepted:
 * Write [good commit messages](https://chris.beams.io/posts/git-commit/).
 
 
+## Troubleshoot
+
+### Cannot install vsce globally (permission denied)
+
+This [fedora page](https://developer.fedoraproject.org/tech/languages/nodejs/nodejs.html) suggest
+creating a directory for global installations inside your home directory:
+
+	mkdir ~/.npm-global
+
+Set the new directory path for npm:
+
+	npm config set prefix '~/.npm-global'
+
+Open/create the `~/.profile` file and add the following line:
+
+	export PATH=~/.npm-global/bin:$PATH
+
+Update your system variables with this command:
+
+	source ~/.profile
+
+Install vsce:
+
+	npm install -g vsce
+
+
+
+
+
 ## Issue and Pull Request Labels
 
 Labels help us track and manage issues and pull requests.
