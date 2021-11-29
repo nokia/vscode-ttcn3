@@ -4,7 +4,7 @@
 	"description": "Rich TTCN-3 language support for Visual Studio Code",
 	"publisher": "Nokia",
 	"preview": true,
-	"version": "0.4.1",
+	"version": "0.4.2",
 	"license": "BSD-3-Clause",
 	"engines": {
 		"vscode": "^1.41.0"
@@ -135,6 +135,7 @@
 	},
 	"dependencies": {
 		"decompress": "^4.2.1",
+		"help": "^3.0.2",
 		"request": "^2.88.2",
 		"request-progress": "^3.0.0",
 		"request-promise-native": "^1.0.8",
@@ -153,9 +154,9 @@
 		"glob": "^7.1.7",
 		"mocha": "^6.2.3",
 		"ts-loader": "^7.0.5",
-		"tslint": "^5.20.0",
+		"tslint": "^5.20.1",
 		"typescript": "^3.9.3",
-		"vsce": "^1.88.0",
+		"vsce": "^1.103.1",
 		"vscode-test": "^1.5.2"
 	},
 	"__metadata": {
