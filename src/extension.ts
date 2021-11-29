@@ -81,7 +81,17 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 		separator = ':';
 	}
 	let pathList: string[] | undefined = conf.get('server.toolsPath');
+	var libraryList: string[] = new Array();
+	let libraryPath: string = "";
 	if (pathList) {
+		if (getOs() != 'windows') {
+			pathList.forEach(element => {
+				libraryList.push(element + '/../lib64');
+				libraryList.push(element + '/../lib');
+			});
+			libraryPath = libraryList.join(separator);
+			libraryPath = libraryPath + separator + process.env['LD_LIBRARY_PATH']!;
+		}
 		toolsPath = pathList.join(separator);
 		if (toolsPath.length > 0) {
 			toolsPath = toolsPath + separator + process.env['PATH']!;
@@ -96,9 +106,15 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	};
 	if (serverOptions.debug.options) {
 		serverOptions.debug.options.env['PATH'] = toolsPath;
+		if (libraryPath.length > 0) {
+			serverOptions.debug.options.env['LD_LIBRARY_PATH'] = libraryPath;
+		}
 	}
 	if (serverOptions.run.options) {
 		serverOptions.run.options.env['PATH'] = toolsPath;
+		if (libraryPath.length > 0) {
+			serverOptions.run.options.env['LD_LIBRARY_PATH'] = libraryPath;
+		}
 	}
 
 	let clientOptions: LanguageClientOptions = {
