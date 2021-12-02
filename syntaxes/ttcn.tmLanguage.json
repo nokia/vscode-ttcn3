@@ -48,6 +48,11 @@
         "keywords": {
             "patterns": [
                 {
+                    "comment": "predefined types",
+                    "name": "support.type.ttcn",
+                    "match": "(?x) \\b(address|anytype|bitstring|boolean|charstring|default|float|hexstring|integer|octetstring|universal charstring|verdicttype)\\b"
+                },
+                {
                     "comment": "structural keywords",
                     "name": "support.function.module.ttcn",
                     "match": "(?x) \\b(type|module|var|timer|signature|template|function|altstep|testcase)\\b"
@@ -64,19 +69,19 @@
                 },
                 {
                     "name": "keyword.other.ttcn",
-                    "match": "(?x) \\b(address|alt|any|anytype|apply|assert|at)\\b"
+                    "match": "(?x) \\b(alt|any|apply|assert|at)\\b"
                 },
                 {
                     "name": "keyword.other.ttcn",
-                    "match": "(?x) \\b(bitstring|boolean|break)\\b"
+                    "match": "(?x) \\b(break)\\b"
                 },
                 {
                     "name": "keyword.other.ttcn",
-                    "match": "(?x) \\b(char|charstring|class|component|configuration|conjunct|cont|continue|control)\\b"
+                    "match": "(?x) \\b(char|class|component|configuration|conjunct|cont|continue|control)\\b"
                 },
                 {
                     "name": "keyword.other.ttcn",
-                    "match": "(?x) \\b(deactivate|decmatch|default|delta|disjunct|display|duration)\\b"
+                    "match": "(?x) \\b(deactivate|decmatch|delta|disjunct|display|duration)\\b"
                 },
                 {
                     "name": "keyword.other.ttcn",
@@ -84,7 +89,7 @@
                 },
                 {
                     "name": "keyword.other.ttcn",
-                    "match": "(?x) \\b(finally|finished|float|friend|from)\\b"
+                    "match": "(?x) \\b(finally|finished|friend|from)\\b"
                 },
                 {
                     "name": "keyword.other.ttcn",
@@ -92,11 +97,11 @@
                 },
                 {
                     "name": "keyword.other.ttcn",
-                    "match": "(?x) \\b(hexstring|history)\\b"
+                    "match": "(?x) \\b(history)\\b"
                 },
                 {
                     "name": "keyword.other.ttcn",
-                    "match": "(?x) \\b(ifpresent|implies|import|in|inout|integer|interleave|inv)\\b"
+                    "match": "(?x) \\b(ifpresent|implies|import|in|inout|interleave|inv)\\b"
                 },
                 {
                     "name": "keyword.other.ttcn",
@@ -112,7 +117,7 @@
                 },
                 {
                     "name": "keyword.other.ttcn",
-                    "match": "(?x) \\b(object|octetstring|of|omit|on|onentry|onexit|optional|out|override)\\b"
+                    "match": "(?x) \\b(object|of|omit|on|onentry|onexit|optional|out|override)\\b"
                 },
                 {
                     "name": "keyword.other.ttcn",
@@ -132,11 +137,11 @@
                 },
                 {
                     "name": "keyword.other.ttcn",
-                    "match": "(?x) \\b(universal|unmap|until)\\b"
+                    "match": "(?x) \\b(unmap|until)\\b"
                 },
                 {
                     "name": "keyword.other.ttcn",
-                    "match": "(?x) \\b(value|values|variant|verdicttype)\\b"
+                    "match": "(?x) \\b(value|values|variant)\\b"
                 },
                 {
                     "name": "keyword.other.ttcn",
