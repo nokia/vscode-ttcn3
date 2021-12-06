@@ -48,9 +48,7 @@
         "keywords": {
             "patterns": [
                 {
-                    "comment": "predefined types",
-                    "name": "support.type.ttcn",
-                    "match": "(?x) \\b(address|anytype|bitstring|boolean|charstring|default|float|hexstring|integer|octetstring|universal charstring|verdicttype)\\b"
+                    "include": "#predefined_types"
                 },
                 {
                     "comment": "structural keywords",
@@ -232,7 +230,7 @@
                 },
                 {
                     "name": "entity.name.method.ttcn",
-                    "match": "(?x) \\b(template|testcasename|timeout|trigger)\\b"
+                    "match": "(?x) \\b(testcasename|timeout|trigger)\\b"
                 },
                 {
                     "name": "entity.name.method.ttcn",
@@ -251,9 +249,36 @@
         "identifiers": {
             "patterns": [
                 {
-                    "comment": "type identifier",
-                    "name": "keyword.other.type.ttcn",
-                    "match": "(?<=^const|^template|^timer|^type|^var)\\s+((?!@)[[:alpha:]][[:word:]]*)\\s*(?=[[:space:]\\[\\:\\;])"
+                    "comment": "type identifier for value decls with modifier",
+                    "match": "(?<=(^|\\b)(template|var)(\\s+@[[:alpha:]]+){1,2})\\s+([[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
+                    "captures": {
+                        "4": {
+                            "patterns": [
+                                {
+                                    "include": "#predefinde_types"
+                                },
+                                {
+                                    "include": "#type_identifier"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "comment": "type identifier for value decls",
+                    "match": "(?<=(^|\\b)(const|template|timer|type|var))\\s+([[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
+                    "captures": {
+                        "3": {
+                            "patterns": [
+                                {
+                                    "include": "#predefinde_types"
+                                },
+                                {
+                                    "include": "#type_identifier"
+                                }
+                            ]
+                        }
+                    }
                 },
                 {
                     "comment": "function/testcase/altstep identifier",
@@ -346,6 +371,15 @@
                     "match": "(?<=^|[[:space:]\\{\\(\\[\\.])([[:alpha:]][[:word:]]*)\\s*(?=[\\(])(?!\\s*\\S+\\s*\\.\\.)"
                 }
             ]
+        },
+        "type_identifier": {
+            "match": "([[:alpha:]][[:word:]]*)",
+            "name": "entity.name.function.module.ttcn"
+        },
+        "predefinde_types": {
+            "comment": "predefined types",
+            "name": "support.type.ttcn",
+            "match": "(address|anytype|bitstring|boolean|charstring|default|float|hexstring|integer|octetstring|universal charstring|verdicttype)"
         },
         "numbers": {
             "patterns": [
