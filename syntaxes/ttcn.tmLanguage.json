@@ -144,9 +144,6 @@
                 {
                     "name": "keyword.other.ttcn",
                     "match": "(?x) \\b(wait|with)\\b"
-                },
-                {
-                    "include": "#user-keyword"
                 }
             ]
         },
@@ -249,10 +246,47 @@
         "identifiers": {
             "patterns": [
                 {
-                    "comment": "type identifier for value decls with modifier",
-                    "match": "(?<=(^|\\b)(template|var)(\\s+@[[:alpha:]]+){1,2})\\s+([[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
+                    "comment": "type identifier for (restricted)(var)template def w/ modifier",
+                    "match": "(?<=(^|\\b)template\\s*)(\\(\\s*([[:alpha:]]+)\\s*\\))*(\\s+(@[[:alpha:]]+)){0,2}\\s+(universal charstring|[[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
                     "captures": {
-                        "4": {
+                        "3": {
+                            "patterns": [
+                                {
+                                    "include": "#template_restriction"
+                                }
+                            ]
+                        },
+                        "5": {
+                            "patterns": [
+                                {
+                                    "include": "#modifier"
+                                }
+                            ]
+                        },
+                        "6": {
+                            "patterns": [
+                                {
+                                    "include": "#predefinde_types"
+                                },
+                                {
+                                    "include": "#type_identifier"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "comment": "type identifier for var decl w/ modifier",
+                    "match": "(?<=(^|\\b)var\\b)(?! template\\b)(\\(\\s*([[:alpha:]]+)\\s*\\))*(\\s+@[[:alpha:]]+){0,2}\\s+(universal charstring|[[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
+                    "captures": {
+                        "3": {
+                            "patterns": [
+                                {
+                                    "include": "#template_restriction"
+                                }
+                            ]
+                        },
+                        "5": {
                             "patterns": [
                                 {
                                     "include": "#predefinde_types"
@@ -266,7 +300,7 @@
                 },
                 {
                     "comment": "type identifier for value decls",
-                    "match": "(?<=(^|\\b)(const|template|timer|type|var))\\s+([[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
+                    "match": "(?<=(^|\\b)(const|timer|type))\\s+([[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
                     "captures": {
                         "3": {
                             "patterns": [
@@ -301,11 +335,6 @@
                         }
                     },
                     "match": "(?<=^module)\\s+([[:alpha:]][[:word:]]*)\\s*,\\s*([[:alpha:]][[:word:]]*)(?=[[:space:]\\{\\;])"
-                },
-                {
-                    "comment": "type identifier",
-                    "name": "keyword.other.type.ttcn",
-                    "match": "(?<=[[:^word:]]const|[[:^word:]]template|[[:^word:]]timer|[[:^word:]]type|[[:^word:]]var)\\s+((?!@)[[:alpha:]][[:word:]]*)\\s*(?=[[:space:]\\[\\:\\;])"
                 },
                 {
                     "comment": "function/testcase/altstep identifier",
@@ -380,6 +409,14 @@
             "comment": "predefined types",
             "name": "support.type.ttcn",
             "match": "(address|anytype|bitstring|boolean|charstring|default|float|hexstring|integer|octetstring|universal charstring|verdicttype)"
+        },
+        "template_restriction": {
+            "name": "keyword.other.ttcn",
+            "match": "(value|omit|present)"
+        },
+        "modifier": {
+            "name": "support.constant.modifier.ttcn",
+            "match": "@(abstract|control|decoded|default|deterministic|dynamic|final|fuzzy|index|lazy|local|match|mutation|mutation_o|mutation_unichar|nocase)\\b"
         },
         "numbers": {
             "patterns": [
