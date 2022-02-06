@@ -37,31 +37,10 @@ Enable the TTCN-3 language server to use IntelliSense features. ntt updates and 
 <img src="images/vscode-ttcn3-settings.png"/>
 
 
-## Troubleshooting
-
-**Unknown Module Locations**
-
-IntelliSense works only for known TTCN-3 modules. Yet, there is no standard
-way of telling the language server where to look for TTCN-3 modules.  
-
-You should always open whole folders (`Open > Folder`) and not just
-single files (`Open > File`). The language server automatically recognizes all
-TTCN-3 from that opened folder.  
-
-The command _"TTCN-3: Show language server status"_ shows a list of all known
-TTCN-3 modules and will help to verify that all relevant modules are known by
-the language server
-
-If you do not open the right folders, very little will work. This is the most
-common issue that we see. You can improve this situation by creating a manifest
-file as described in the [documentation](https://nokia.github.io/ntt). If you
-have suggestions on how to improve this further, we'd love to hear from you.
-
-
-**Work in Progress**
+## Work in Progress
 
 The language server is still work in progress. Not all TTCN-3 semantic is
-implemented already, therefore some TTCN-3 structure might not work as
+implemented already, therefore some TTCN-3 structure mights not work as
 expected:
 
 * _Component Variables_

@@ -33,6 +33,9 @@ export function activate(context: ExtensionContext) {
 			outputChannel.appendLine("Status command is not available, please enable TTCN-3 Language Server in vscode settings.");
 		}));
 
+		context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.debug.toggle", async () => {
+			outputChannel.appendLine("Toggle debug command is not available, please enable TTCN-3 Language Server in vscode settings.");
+		}));
 		return;
 	}
 
@@ -144,6 +147,11 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 
 	context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.status", async () => {
 		const params: ExecuteCommandParams = { command: "ntt.status", arguments: [] };
+		await client.sendRequest(ExecuteCommandRequest.type, params);
+	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.debug.toggle", async () => {
+		const params: ExecuteCommandParams = { command: "ntt.debug.toggle", arguments: [] };
 		await client.sendRequest(ExecuteCommandRequest.type, params);
 	}));
 

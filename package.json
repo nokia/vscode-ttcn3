@@ -4,7 +4,7 @@
 	"description": "Rich TTCN-3 language support for Visual Studio Code",
 	"publisher": "Nokia",
 	"preview": true,
-	"version": "0.4.3",
+	"version": "0.5.0",
 	"license": "BSD-3-Clause",
 	"engines": {
 		"vscode": "^1.41.0"
@@ -122,6 +122,11 @@
 			{
 				"command": "ttcn3.languageServer.status",
 				"title": "Show language server status",
+				"category": "TTCN-3"
+			},
+			{
+				"command": "ttcn3.languageServer.debug.toggle",
+				"title": "Toggle language server debug mode",
 				"category": "TTCN-3"
 			}
 		]
