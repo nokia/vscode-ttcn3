@@ -128,7 +128,13 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	try {
 		context.subscriptions.push(client.start());
 	} catch (e) {
-		vscode.window.showInformationMessage('Could not start the TTCN-3 Language Server:', e);
+		if (e instanceof Error) {
+			vscode.window.showInformationMessage('Could not start the TTCN-3 Language Server:', e.message);
+		} else if (typeof e === 'string') {
+			vscode.window.showInformationMessage('Could not start the TTCN-3 Language Server:', e);
+		} else {
+			vscode.window.showInformationMessage('Could not start the TTCN-3 Language Server: unknown error');
+		}
 		return;
 	}
 
