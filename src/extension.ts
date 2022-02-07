@@ -3,7 +3,7 @@ import path = require('path');
 import * as child_process from "child_process";
 import * as vscode from 'vscode';
 import { ExtensionContext, OutputChannel } from 'vscode';
-import { LanguageClient, LanguageClientOptions, ServerOptions, ExecuteCommandParams, ExecuteCommandRequest } from 'vscode-languageclient';
+import { LanguageClient, LanguageClientOptions, ServerOptions, ExecuteCommandParams, ExecuteCommandRequest } from 'vscode-languageclient/node';
 import { LOG } from './util/logger';
 import { ServerDownloader } from './serverDownloader';
 import { Status, StatusBarEntry } from './util/status';
