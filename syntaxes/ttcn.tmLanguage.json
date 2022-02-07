@@ -247,7 +247,7 @@
             "patterns": [
                 {
                     "comment": "type identifier for (restricted)(var)template def w/ modifier",
-                    "match": "(?<=(^|\\b)template\\s*)(\\(\\s*([[:alpha:]]+)\\s*\\))*(\\s+(@[[:alpha:]]+)){0,2}\\s+(universal charstring|[[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
+                    "match": "(?<=(^|\\b)template\\s*)(\\(\\s*([[:alpha:]]+)\\s*\\))*(:\\s+@[[:alpha:]]+){0,2}\\s+(universal charstring|[[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
                     "captures": {
                         "3": {
                             "patterns": [
@@ -259,14 +259,7 @@
                         "5": {
                             "patterns": [
                                 {
-                                    "include": "#modifier"
-                                }
-                            ]
-                        },
-                        "6": {
-                            "patterns": [
-                                {
-                                    "include": "#predefinde_types"
+                                    "include": "#predefined_types"
                                 },
                                 {
                                     "include": "#type_identifier"
@@ -277,19 +270,12 @@
                 },
                 {
                     "comment": "type identifier for var decl w/ modifier",
-                    "match": "(?<=(^|\\b)var\\b)(?! template\\b)(\\(\\s*([[:alpha:]]+)\\s*\\))*(\\s+@[[:alpha:]]+){0,2}\\s+(universal charstring|[[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
+                    "match": "(?<=(^|\\b)var\\b)(?! template\\b)(:\\s+@[[:alpha:]]+){0,2}\\s+(universal charstring|[[:alpha:]][[:word:]]*)\\s*(?=[\\s\\[\\:\\;])",
                     "captures": {
                         "3": {
                             "patterns": [
                                 {
-                                    "include": "#template_restriction"
-                                }
-                            ]
-                        },
-                        "5": {
-                            "patterns": [
-                                {
-                                    "include": "#predefinde_types"
+                                    "include": "#predefined_types"
                                 },
                                 {
                                     "include": "#type_identifier"
@@ -305,7 +291,7 @@
                         "3": {
                             "patterns": [
                                 {
-                                    "include": "#predefinde_types"
+                                    "include": "#predefined_types"
                                 },
                                 {
                                     "include": "#type_identifier"
@@ -405,10 +391,10 @@
             "match": "([[:alpha:]][[:word:]]*)",
             "name": "entity.name.function.module.ttcn"
         },
-        "predefinde_types": {
+        "predefined_types": {
             "comment": "predefined types",
             "name": "support.type.ttcn",
-            "match": "(address|anytype|bitstring|boolean|charstring|default|float|hexstring|integer|octetstring|universal charstring|verdicttype)"
+            "match": "(?x) \\b(address|anytype|bitstring|boolean|charstring|default|float|hexstring|integer|octetstring|universal charstring|verdicttype)\\b"
         },
         "template_restriction": {
             "name": "keyword.other.ttcn",
@@ -416,7 +402,7 @@
         },
         "modifier": {
             "name": "support.constant.modifier.ttcn",
-            "match": "@(abstract|control|decoded|default|deterministic|dynamic|final|fuzzy|index|lazy|local|match|mutation|mutation_o|mutation_unichar|nocase)\\b"
+            "match": "(?x) @(abstract|control|decoded|default|deterministic|dynamic|final|fuzzy|index|lazy|local|match|mutation|mutation_o|mutation_unichar|nocase)\\b"
         },
         "numbers": {
             "patterns": [
