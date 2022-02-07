@@ -144,7 +144,7 @@
 		"request-progress": "^3.0.0",
 		"request-promise-native": "^1.0.8",
 		"semver": "^7.3.5",
-		"vscode-languageclient": "^6.1.3"
+		"vscode-languageclient": "^7.0.0"
 	},
 	"devDependencies": {
 		"@types/decompress": "^4.2.1",
