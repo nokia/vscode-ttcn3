@@ -1,0 +1,73 @@
+name: TTCN-3
+scopeName: source.ttcn3
+fileTypes: [ ttcn3, ttcn, ttcnpp ]
+
+patterns:
+  - include: "#keywords"
+  - include: "#strings"
+  - include: "#literals"
+  - include: "#comments"
+
+repository:
+  keywords:
+    patterns:
+    - name: keyword.ttcn3
+      match: \b(?:address|all|altstep|alt|any|case|catch|class|component|configuration|connect|const|control|create|display|do|else|encode|enumerated|exception|except|execute|extends|extension|external|finally|for|friend|from|function|goto|group|if|import|inout|interleave|in|label|language|length|map|message|modifies|modulepar|module|mtc|noblock|null|of|omit|on|optional|out|override|param|port|present|private|procedure|public|realtime|record|return|runs|select|self|set|signature|stream|system|template|testcase|this|timer|to|type|union|unmap|value|variant|var|while|with)\b
+
+    - name: keyword.operator.other.ttcn3
+      match: (?:->| =>|::|:=|\?|!|\.\.\.|\.\.)
+
+    - name: keyword.operator.string.ttcn3
+      match: (?:<<|>>|<@|@>|&)
+
+    - name: keyword.operator.arithmetic.ttcn3
+      match: (?:\+|-|\*|/|\bmod\b|\brem\b)
+
+    - name: keyword.operator.relation.ttcn3
+      match: (?:>|<|>=|<=|==|!=)
+
+    - name: keyword.operator.boolean.ttcn3
+      match: \b(?:and|and4b|not|not4b|or|or4b|xor|xor4b)\b
+
+    - name: support.type.ttcn3
+      match: \b(?:integer|boolean|float|charstring|universalcharstring|verdicttype|bitstring|hexstring|octettstring)\b
+
+    - name: support.function.ttcn3
+      match: \b(?:any2unistr|bit2hex|bit2int|bit2oct|bit2str|char2int|char2oct|decvalue|decvalue_o|decvalue_unichar|encvalue|encvalue_o|encvalue_unichar|enum2int|float2int|get_stringencoding|hex2bit|hex2int|hex2oct|hex2str|hostid|int2bit|int2char|int2enum|int2float|int2hex|int2oct|int2str|int2unichar|isbound|ischosen|ispresent|istemplatekind|isvalue|lengthof|match|may|oct2bit|oct2char|oct2hex|oct2int|oct2str|oct2unichar|regexp|remove_bom|replace|rnd|setverdict|shall|sizeof|str2float|str2hex|str2int|str2oct|substr|testcasename|unichar2int|unichar2oct)\b
+
+
+  literals:
+    patterns:
+    - name: constant.numeric.digits.ttcn3
+      match: (-?)\b([0-9]+)\b
+    - name: constant.numeric.bitstring.ttcn3
+      match: "'[[:xdigit:]*?\\\\[:space:]]*'[hHoObB]"
+    - name: constant.numeric.exponent.ttcn3
+      match: \b(-?)([0-9]+E(-?)[0-9]+)\b
+    - name: constant.numeric.nan.ttcn3
+      match: (?!\-)\b(not_a_number)\b
+    - name: constant.numeric.infinity.ttcn3
+      match: (-?)\b(infinity)\b
+    - name: constant.numeric.boolean.ttcn3
+      match: \b(?:true|false)\b
+    - name: constant.numeric.verdict.ttcn3
+      match: \b(?:pass|fail|inconc|none|error)\b
+
+  strings:
+    name: string.quoted.double.ttcn3
+    begin: '"'
+    end: '"'
+    patterns:
+    - name: constant.character.escape.double-quote.ttcn3
+      match: '""'
+    - name: string.regexp.ttcn3
+      match: \\[\\"bdnrstw]
+    applyEndPatternLast: 1
+
+  comments:
+    patterns:
+    - name: comment.block.documentation.ttcn3
+      match: //.*
+    - name: comment.line.double-dash.ttcn3
+      begin: /\*
+      end: \*/

@@ -4,7 +4,7 @@
 	"description": "Rich TTCN-3 language support for Visual Studio Code",
 	"publisher": "Nokia",
 	"preview": true,
-	"version": "0.8.0",
+	"version": "0.9.0",
 	"license": "BSD-3-Clause",
 	"engines": {
 		"vscode": "^1.67.0"
@@ -60,8 +60,8 @@
 		"grammars": [
 			{
 				"language": "ttcn3",
-				"scopeName": "source.ttcn",
-				"path": "./syntaxes/ttcn.tmLanguage.json"
+				"scopeName": "source.ttcn3",
+				"path": "./syntaxes/ttcn3.tmLanguage.json"
 			},
 			{
 				"language": "ttcn3-out",
@@ -144,7 +144,7 @@
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
+		"vscode:prepublish": "npx js-yaml syntaxes/ttcn3.tmLanguage.yaml > syntaxes/ttcn3.tmLanguage.json && npm run compile",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile",
@@ -168,6 +168,7 @@
 		"@types/vscode": "^1.67.0",
 		"@types/ws": "^6.0.0",
 		"glob": "^7.1.7",
+		"js-yaml": "^4.1.0",
 		"mocha": "^6.2.3",
 		"ts-loader": "^7.0.5",
 		"tslint": "^5.20.1",
