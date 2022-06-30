@@ -1,0 +1,68 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "ttcn3-out",
+    "patterns": [
+        {
+            "include": "#expressions"
+        }
+    ],
+    "repository": {
+        "expressions": {
+            "patterns": [
+                {
+                    "include": "#keywords"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "comment": "structural keywords",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "(?x) \\b(Scanning|Activating|manifest|Summary)\\b"
+                },
+                {
+                    "comment": "RUN-line",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "^^=== RUN \\S+.+$$"
+                },
+                {
+                    "comment": "pass-line",
+                    "name": "entity.name.function.module.ttcn-out",
+                    "match": "^^--- pass .+$$"
+                },
+                {
+                    "comment": "fail-line",
+                    "name": "invalid.illegal.numstring.ttcn-out",
+                    "match": "^^--- fail .+$$"
+                },
+                {
+                    "comment": "error-line",
+                    "name": "invalid.illegal.numstring.ttcn-out",
+                    "match": "^^--- error .+$$"
+                },
+                {
+                    "comment": "none-line",
+                    "name": "comment.block.documentation.ttcn-out",
+                    "match": "^^--- none .+$$"
+                },
+                {
+                    "comment": "inconc-line",
+                    "name": "comment.block.documentation.ttcn-out",
+                    "match": "^^--- inconc .+$$"
+                },
+                {
+                    "comment": "separator-line",
+                    "name": "comment.block.documentation.ttcn-out",
+                    "match": "^^=+([^=])*=+$$"
+                },
+                {
+                    "comment": "action-line",
+                    "name": "string.quoted.double.ttcn-out",
+                    "match": "^^(Running|Compiling) test.+$$"
+                }
+            ]
+        }
+    },
+    "scopeName": "source.ttcn-out"
+}
