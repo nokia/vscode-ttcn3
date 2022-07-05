@@ -41,6 +41,15 @@ request being accepted:
   separate pull requests.
 * Write [good commit messages](https://chris.beams.io/posts/git-commit/).
 
+## Release the extension
+
+1. When releasing the extension, don't forget to create a git tag with the version
+number and update this version number in the file `package.json`.
+2. Run `vsce package` to create a vsix file.
+3. Log into the [marketplace](https://marketplace.visualstudio.com/)
+4. Click on "Publish extensions"
+5. Click on "..." behing the extension name and choose "Update"
+
 
 ## Troubleshoot
 
