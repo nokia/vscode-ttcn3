@@ -3,18 +3,38 @@
     "name": "ttcn3-out",
     "patterns": [
         {
-            "include": "#expressions"
+            "include": "#important_lines"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#strings"
         }
     ],
     "repository": {
-        "expressions": {
+        "keywords": {
             "patterns": [
                 {
-                    "include": "#keywords"
+                    "comment": "structural keywords",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "(?x) \\b(Scanning|Summary|Adding)\\b "
                 }
             ]
         },
-        "keywords": {
+        "strings": {
+            "name": "string.quoted.double.ttcn-out",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.double-quote.ttcn-out",
+                    "match": "\"\""
+                }
+            ],
+            "applyEndPatternLast": 1
+        },
+        "important_lines": {
             "patterns": [
                 {
                     "comment": "startup notification",
@@ -27,6 +47,11 @@
                     "match": "^^Installed TTCN-3 Language Server version:"
                 },
                 {
+                    "comment": "Downloading LS version",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "^^Downloading TTCN-3 Language Server "
+                },
+                {
                     "comment": "upstream LS version",
                     "name": "support.function.module.ttcn-out",
                     "match": "^^Checking GitHub for the latest release..."
@@ -35,11 +60,6 @@
                     "comment": "manifest detection",
                     "name": "support.function.module.ttcn-out",
                     "match": "^^project: using manifest"
-                },
-                {
-                    "comment": "structural keywords",
-                    "name": "support.function.module.ttcn-out",
-                    "match": "(?x) \\b(Scanning|Summary)\\b"
                 },
                 {
                     "comment": "RUN-line",
