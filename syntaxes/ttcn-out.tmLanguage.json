@@ -1,0 +1,143 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "ttcn3-out",
+    "patterns": [
+        {
+            "include": "#important_lines"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#strings"
+        }
+    ],
+    "repository": {
+        "keywords": {
+            "patterns": [
+                {
+                    "comment": "structural keywords",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "(?x) \\b(Scanning|Summary|Adding)\\b "
+                }
+            ]
+        },
+        "strings": {
+            "name": "string.quoted.double.ttcn-out",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.double-quote.ttcn-out",
+                    "match": "\"\""
+                }
+            ],
+            "applyEndPatternLast": 1
+        },
+        "important_lines": {
+            "patterns": [
+                {
+                    "comment": "startup notification",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "^^Activating TTCN-3 Language Server..."
+                },
+                {
+                    "comment": "installed LS version",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "^^Installed TTCN-3 Language Server version:"
+                },
+                {
+                    "comment": "Downloading LS version",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "^^Downloading TTCN-3 Language Server "
+                },
+                {
+                    "comment": "upstream LS version",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "^^Checking GitHub for the latest release..."
+                },
+                {
+                    "comment": "manifest detection",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "^^project: using manifest"
+                },
+                {
+                    "comment": "RUN-line",
+                    "name": "support.function.module.ttcn-out",
+                    "match": "^^=== RUN \\S+.+$$"
+                },
+                {
+                    "comment": "pass-line",
+                    "name": "entity.name.function.module.ttcn-out",
+                    "match": "^^--- pass .+$$"
+                },
+                {
+                    "comment": "fail-line",
+                    "name": "invalid.illegal.numstring.ttcn-out",
+                    "match": "^^--- fail .+$$"
+                },
+                {
+                    "comment": "error-line",
+                    "name": "invalid.illegal.numstring.ttcn-out",
+                    "match": "^^--- error .+$$"
+                },
+                {
+                    "comment": "none-line",
+                    "name": "comment.block.documentation.ttcn-out",
+                    "match": "^^--- none .+$$"
+                },
+                {
+                    "comment": "inconc-line",
+                    "name": "comment.block.documentation.ttcn-out",
+                    "match": "^^--- inconc .+$$"
+                },
+                {
+                    "comment": "separator-line",
+                    "name": "comment.block.documentation.ttcn-out",
+                    "match": "^^=+([^=])*=+$$"
+                },
+                {
+                    "comment": "action-line",
+                    "name": "string.quoted.double.ttcn-out",
+                    "match": "^^(Running|Compiling) test.+$$"
+                },
+                {
+                    "comment": "Final Result: PASSED",
+                    "name": "entity.name.function.module.ttcn-out",
+                    "match": "PASSED$$"
+                },
+                {
+                    "comment": "Final Result: FAILED",
+                    "name": "invalid.illegal.numstring.ttcn-out",
+                    "match": "FAILED$$"
+                },
+                {
+                    "comment": "Final Result: UNSTABLE",
+                    "name": "variable.parameter.assignment.ttcn-out",
+                    "match": "UNSTABLE$$"
+                },
+                {
+                    "comment": "Final Result: NOEXEC",
+                    "name": "keyword.other.ttcn-out",
+                    "match": "NOEXEC$$"
+                },
+                {
+                    "comment": "compiler warning",
+                    "name": "variable.parameter.assignment.ttcn-out",
+                    "match": " warning: #W.+$$"
+                },
+                {
+                    "comment": "compiler error",
+                    "name": "invalid.illegal.numstring.ttcn-out",
+                    "match": " error: #E.+$$"
+                },
+                {
+                    "comment": "carrots",
+                    "name": "invalid.illegal.numstring.ttcn-out",
+                    "match": "\\^~+$$"
+                }
+            ]
+        }
+    },
+    "scopeName": "source.ttcn-out"
+}

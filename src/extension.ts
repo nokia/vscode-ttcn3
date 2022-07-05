@@ -8,14 +8,13 @@ import { LOG } from './util/logger';
 import { ServerDownloader } from './serverDownloader';
 import { Status, StatusBarEntry } from './util/status';
 import { isOSUnixoid, correctBinname } from './util/osUtils';
-import { isString } from 'util';
 
 let client: LanguageClient;
 let outputChannel: OutputChannel;
 
 export function activate(context: ExtensionContext) {
 
-	outputChannel = vscode.window.createOutputChannel("TTCN-3");
+	outputChannel = vscode.window.createOutputChannel("TTCN-3", "ttcn3-out");
 	//testExecOutChannel = vscode.window.createOutputChannel("TTCN-3-Test");
 	context.subscriptions.push(outputChannel);
 
