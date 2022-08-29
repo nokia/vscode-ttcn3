@@ -30,10 +30,10 @@ repository:
       match: \b(?:and|and4b|not|not4b|or|or4b|xor|xor4b)\b
 
     - name: storage.modifier.ttcn3
-      match: \@(?:[A-Za-z0-9_]+)\b
+      match: \@[A-Za-z0-9_]+\b
 
     - name: storage.variable.ttcn3
-      match: \%(?:[A-Za-z0-9_]+)\b
+      match: \%[A-Za-z0-9_]+\b
 
     - name: support.type.ttcn3
       match: \b(?:integer|boolean|float|charstring|universalcharstring|verdicttype|bitstring|hexstring|octetstring|char|any|anytype|universal)\b
@@ -76,10 +76,21 @@ repository:
       match: \\[\\"bdnrstw]
     applyEndPatternLast: 1
 
+  tags:
+    patterns:
+    - match: \@[A-Za-z0-9_-]+
+      name: keyword.other.documentation.ttcn3
+
   comments:
     patterns:
-    - name: comment.line.double-dash.ttcn3
-      match: //.*
-    - name: comment.block.documentation.ttcn3
-      begin: /\*
-      end: \*/
+      - name: comment.line.double-dash.ttcn3
+        begin: //
+        end: \n
+        patterns:
+          - include: "#tags"
+      - name: comment.block.ttcn3
+        begin: /\*
+        end: \*/
+        patterns:
+          - include: "#tags"
+
