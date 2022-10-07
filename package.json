@@ -156,7 +156,7 @@
 		"request-progress": "^3.0.0",
 		"request-promise-native": "^1.0.8",
 		"semver": "^7.3.5",
-		"vscode-languageclient": "^7.0.0"
+		"vscode-languageclient": "^8.0.2"
 	},
 	"devDependencies": {
 		"@types/decompress": "^4.2.1",
@@ -172,7 +172,7 @@
 		"mocha": "^6.2.3",
 		"ts-loader": "^7.0.5",
 		"tslint": "^5.20.1",
-		"typescript": "^3.9.3",
+		"typescript": "^4.8.3",
 		"vsce": "^2.9.2",
 		"vscode-test": "^1.5.2"
 	},
