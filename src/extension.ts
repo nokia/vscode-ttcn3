@@ -52,6 +52,17 @@ async function withSpinningStatus(context: vscode.ExtensionContext, action: (sta
 	status.dispose();
 }
 
+function getTtcn3Config(uri?: vscode.Uri|null): vscode.WorkspaceConfiguration {
+	if (!uri) {
+		if (vscode.window.activeTextEditor) {
+			uri = vscode.window.activeTextEditor.document.uri;
+		} else {
+			uri = null;
+		}
+	}
+	return vscode.workspace.getConfiguration('ttcn3', uri);
+}
+
 export async function activateLanguageServer(context: vscode.ExtensionContext, status: Status, conf: vscode.WorkspaceConfiguration) {
 
 	outputChannel.appendLine('Activating TTCN-3 Language Server...');
@@ -128,7 +139,7 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	status.update(`Initializing TTCN-3 Language Server...`);
 	client = new LanguageClient('ttcn3', 'TTCN-3 Language Server', serverOptions, clientOptions);
 	try {
-		context.subscriptions.push(client.start());
+		await client.start();
 	} catch (e) {
 		if (e instanceof Error) {
 			vscode.window.showInformationMessage('Could not start the TTCN-3 Language Server:', e.message);
@@ -147,7 +158,7 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 		outputChannel.appendLine(" === Language Server Restart ===");
 		outputChannel.appendLine("");
 
-		context.subscriptions.push(client.start());
+		await client.start();
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.status", async () => {
@@ -164,7 +175,16 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 		const params: ExecuteCommandParams = { command: "ntt.test", arguments: [args] };
 		await client.sendRequest(ExecuteCommandRequest.type, params);
 	}));
-}
+	context.subscriptions.push(
+		vscode.workspace.onDidChangeConfiguration((e: vscode.ConfigurationChangeEvent) => {
+			if (!e.affectsConfiguration('ttcn3')) {
+				return;
+			}
+			const updatedTtcn3Config = getTtcn3Config();
+
+	client.sendNotification("workspace/didChangeConfiguration");
+	}));
+		}
 
 async function findNttExecutable(installDir: string): Promise<string> {
 	let ntt = correctBinname("ntt");
