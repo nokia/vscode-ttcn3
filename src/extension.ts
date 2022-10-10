@@ -3,7 +3,7 @@ import path = require('path');
 import * as child_process from "child_process";
 import * as vscode from 'vscode';
 import { ExtensionContext, OutputChannel } from 'vscode';
-import { LanguageClient, LanguageClientOptions, ServerOptions, ExecuteCommandParams, ExecuteCommandRequest } from 'vscode-languageclient/node';
+import { LanguageClient, LanguageClientOptions, ServerOptions, ExecuteCommandParams, ExecuteCommandRequest, DidChangeConfigurationParams, DidChangeConfigurationNotification } from 'vscode-languageclient/node';
 import { LOG } from './util/logger';
 import { ServerDownloader } from './serverDownloader';
 import { Status, StatusBarEntry } from './util/status';
@@ -52,7 +52,7 @@ async function withSpinningStatus(context: vscode.ExtensionContext, action: (sta
 	status.dispose();
 }
 
-function getTtcn3Config(uri?: vscode.Uri|null): vscode.WorkspaceConfiguration {
+function getTtcn3Config(uri?: vscode.Uri | null): vscode.WorkspaceConfiguration {
 	if (!uri) {
 		if (vscode.window.activeTextEditor) {
 			uri = vscode.window.activeTextEditor.document.uri;
@@ -181,10 +181,10 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 				return;
 			}
 			const updatedTtcn3Config = getTtcn3Config();
-
-	client.sendNotification("workspace/didChangeConfiguration");
-	}));
-		}
+			const params: DidChangeConfigurationParams = { settings: undefined };
+			client.sendNotification(DidChangeConfigurationNotification.type, params);
+		}));
+}
 
 async function findNttExecutable(installDir: string): Promise<string> {
 	let ntt = correctBinname("ntt");
