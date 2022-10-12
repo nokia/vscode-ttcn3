@@ -79,7 +79,7 @@
 			"title": "TTCN-3",
 			"properties": {
 				"ttcn3.server.enabled": {
-					"title": "TTCN3: Enable TTCN-3 language server (experimental)",
+					"title": "TTCN-3: Enable TTCN-3 language server (experimental)",
 					"type": "boolean",
 					"default": false,
 					"description": "Enable TTCN-3 language server for advanced features, like go to defintion, ..."
@@ -91,7 +91,7 @@
 					"description": "Install and update TTCN-3 language server automatically"
 				},
 				"ttcn3.server.codelens": {
-					"title": "TTCN-3: Enable TTCN-3 lanugage server CodeLens (experimental)",
+					"title": "TTCN-3: Enable TTCN-3 language server CodeLens (experimental)",
 					"type": "boolean",
 					"default": false,
 					"description": "Enable CodeLens for running tests from inside your editor."
@@ -106,7 +106,7 @@
 					"description": "Search paths for additional TTCN-3 tools, such as k3 runtime"
 				},
 				"ttcn3.useLanguageServer": {
-					"title": "TTCN3: Enable TTCN-3 language server (experimental)",
+					"title": "TTCN-3: Enable TTCN-3 language server (experimental)",
 					"type": "boolean",
 					"default": false,
 					"description": "experimental: use TTCN-3 language server from Nokia for definition",
