@@ -96,6 +96,12 @@
 					"default": false,
 					"description": "Enable CodeLens for running tests from inside your editor."
 				},
+				"ttcn3.server.useOwnFormatter": {
+					"title": "TTCN-3: activate ntt formatter (experimental)",
+					"type": "boolean",
+					"default": false,
+					"description": "If activated, works together with editor setting 'Format on save'"
+				},
 				"ttcn3.server.toolsPath": {
 					"title": "TTCN-3: Search path for additional TTCN-3 tools",
 					"type": "array",
