@@ -96,7 +96,7 @@
 					"default": false,
 					"description": "Enable CodeLens for running tests from inside your editor."
 				},
-				"ttcn3.server.useOwnFormatter": {
+				"ttcn3.format.enabled": {
 					"title": "TTCN-3: Enable TTCN-3 source code formatting (experimental)",
 					"type": "boolean",
 					"default": false,
