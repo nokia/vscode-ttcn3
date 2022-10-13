@@ -100,7 +100,7 @@
 					"title": "TTCN-3: Enable TTCN-3 source code formatting (experimental)",
 					"type": "boolean",
 					"default": false,
-					"description": "If activated, works together with editor setting 'Format on save'"
+					"markdownDescription": "Format the file according to the TTCN-3 standard style. Make sure that `#editor.insertSpaces#` and `#editor.tabSize#` is fitting your needs."
 				},
 				"ttcn3.server.toolsPath": {
 					"title": "TTCN-3: Search path for additional TTCN-3 tools",
@@ -147,7 +147,12 @@
 				"title": "Toggle language server debug mode",
 				"category": "TTCN-3"
 			}
-		]
+		],
+		"configurationDefaults": {
+			"[ttcn3]": {
+				"editor.formatOnSave": true
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npx js-yaml syntaxes/ttcn3.tmLanguage.yaml > syntaxes/ttcn3.tmLanguage.json && npm run compile",
