@@ -52,17 +52,6 @@ async function withSpinningStatus(context: vscode.ExtensionContext, action: (sta
 	status.dispose();
 }
 
-function getTtcn3Config(uri?: vscode.Uri | null): vscode.WorkspaceConfiguration {
-	if (!uri) {
-		if (vscode.window.activeTextEditor) {
-			uri = vscode.window.activeTextEditor.document.uri;
-		} else {
-			uri = null;
-		}
-	}
-	return vscode.workspace.getConfiguration('ttcn3', uri);
-}
-
 export async function activateLanguageServer(context: vscode.ExtensionContext, status: Status, conf: vscode.WorkspaceConfiguration) {
 
 	outputChannel.appendLine('Activating TTCN-3 Language Server...');
@@ -177,10 +166,11 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	}));
 	context.subscriptions.push(
 		vscode.workspace.onDidChangeConfiguration((e: vscode.ConfigurationChangeEvent) => {
+			// react on any configuration change.
+			// Let the server decide what is usefull
 			if (!e.affectsConfiguration('ttcn3')) {
 				return;
 			}
-			const updatedTtcn3Config = getTtcn3Config();
 			const params: DidChangeConfigurationParams = { settings: undefined };
 			client.sendNotification(DidChangeConfigurationNotification.type, params);
 		}));
