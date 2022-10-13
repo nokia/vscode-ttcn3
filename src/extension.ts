@@ -168,9 +168,6 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 		vscode.workspace.onDidChangeConfiguration((e: vscode.ConfigurationChangeEvent) => {
 			// react on any configuration change.
 			// Let the server decide what is usefull
-			if (!e.affectsConfiguration('ttcn3')) {
-				return;
-			}
 			const params: DidChangeConfigurationParams = { settings: undefined };
 			client.sendNotification(DidChangeConfigurationNotification.type, params);
 		}));
