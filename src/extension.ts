@@ -3,7 +3,7 @@ import path = require('path');
 import * as child_process from "child_process";
 import * as vscode from 'vscode';
 import { ExtensionContext, OutputChannel } from 'vscode';
-import { LanguageClient, LanguageClientOptions, ServerOptions, ExecuteCommandParams, ExecuteCommandRequest } from 'vscode-languageclient/node';
+import { LanguageClient, LanguageClientOptions, ServerOptions, ExecuteCommandParams, ExecuteCommandRequest, DidChangeConfigurationParams, DidChangeConfigurationNotification } from 'vscode-languageclient/node';
 import { LOG } from './util/logger';
 import { ServerDownloader } from './serverDownloader';
 import { Status, StatusBarEntry } from './util/status';
@@ -128,7 +128,7 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 	status.update(`Initializing TTCN-3 Language Server...`);
 	client = new LanguageClient('ttcn3', 'TTCN-3 Language Server', serverOptions, clientOptions);
 	try {
-		context.subscriptions.push(client.start());
+		await client.start();
 	} catch (e) {
 		if (e instanceof Error) {
 			vscode.window.showInformationMessage('Could not start the TTCN-3 Language Server:', e.message);
@@ -147,7 +147,7 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 		outputChannel.appendLine(" === Language Server Restart ===");
 		outputChannel.appendLine("");
 
-		context.subscriptions.push(client.start());
+		await client.start();
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("ttcn3.languageServer.status", async () => {
@@ -164,6 +164,13 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 		const params: ExecuteCommandParams = { command: "ntt.test", arguments: [args] };
 		await client.sendRequest(ExecuteCommandRequest.type, params);
 	}));
+	context.subscriptions.push(
+		vscode.workspace.onDidChangeConfiguration((e: vscode.ConfigurationChangeEvent) => {
+			// react on any configuration change.
+			// Let the server decide what is usefull
+			const params: DidChangeConfigurationParams = { settings: undefined };
+			client.sendNotification(DidChangeConfigurationNotification.type, params);
+		}));
 }
 
 async function findNttExecutable(installDir: string): Promise<string> {
