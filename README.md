@@ -19,6 +19,8 @@ to Visual Studio Code. Available features:
 * Code completion for a growing number of module defintions.
 * Find references
 * CodeLens for running tests from inside your IDE (experimental).
+* Semantic highlighting (experimental).
+* Automatic formatting (experimental).
 * And more features to come...
 
 
@@ -30,7 +32,7 @@ and [star it on GitHub](https://github.com/nokia/vscode-ttcn3 'Star it on GitHub
 
 ## IntelliSense
 
-IntelliSense is powered by the [ntt language server](https://nokia.github.io/ntt) and is still experimental.
+IntelliSense is powered by the [ntt language server](https://nokia.github.io/ntt).
 Enable the TTCN-3 language server to use IntelliSense features. ntt updates and installs automatically.
 
 
@@ -39,22 +41,14 @@ Enable the TTCN-3 language server to use IntelliSense features. ntt updates and 
 
 ## Work in Progress
 
-The language server is still work in progress. Not all TTCN-3 semantic is
-implemented already, therefore some TTCN-3 structure mights not work as
-expected:
+This extension and the language server is still work in progress. Not all
+TTCN-3 semantics are implemented already. If something is not working, please
+leave a message so we can fix it timely.
 
-* _Component Variables_
-* _Signatures_
-* _Dot Expressions_ (such as `foo.bar`)
-* _Ambiguous Module Definitions_ (only the first hit is returned)
+Any kind of contribution is very much appreciated.
 
-
-## Contribution
-
-We are pushing hard to get to you as many features as soon as possible, but
-there's still much to do in every corner. Help is very much appreciated. 
-
-Kindly, have a look at our [contribution guide](CONTRIBUTING.md).
+Kindly, have a look at our contribution guides for [this extension](CONTRIBUTING.md)
+and the [language server](https://github.com/nokia/ntt/blob/master/CONTRIBUTING.md).
 
 
 ## License
