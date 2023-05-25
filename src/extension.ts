@@ -70,7 +70,6 @@ export async function activateLanguageServer(context: vscode.ExtensionContext, s
 		} catch (error) {
 			console.error(error);
 			vscode.window.showWarningMessage(`Could not update/download TTCN-3 Language Server: ${error}`);
-			return;
 		}
 	}
 
