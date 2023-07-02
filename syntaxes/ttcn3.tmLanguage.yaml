@@ -3,83 +3,349 @@ scopeName: source.ttcn3
 fileTypes: [ ttcn3, ttcn, ttcnpp ]
 
 patterns:
+  - include: "#declarations"
+  - include: "#types"
   - include: "#comments"
+  - include: "#preprocessor"
   - include: "#keywords"
   - include: "#strings"
   - include: "#literals"
 
 repository:
+  declarations:
+    patterns:
+      - name: keyword.declaration.$1.ttcn3
+        match: |-
+          (?x)
+          \b( altstep
+            | configuration
+            | const
+            | control
+            | function
+            | modulepar
+            | signature
+            | template
+            | testcase
+            | timer
+            | type
+            | var
+          )\b
+  types:
+    patterns:
+      - name: storage.type.class.ttcn3 keyword.declaration.class.ttcn3
+        match: '\b(component|class)\b'
+
+      - name: storage.type.enum.ttcn3 keyword.declaration.enum.ttcn3
+        match: '\benumerated\b'
+
+      - name: storage.type.struct.ttcn3 keyword.declaration.struct.ttcn3
+        match: '\b(port|record\s+of|record|set\s+of|set|map)\b'
+
+      - name: storage.type.ttcn3 keyword.declaration.type.ttcn3
+        match: '\b(message|procedure|timer|signature)\b'
+
+      - name: storage.type.union.ttcn3 keyword.declaration.union.ttcn3
+        match: '\bunion\b'
+
   keywords:
     patterns:
-    - name: keyword.ttcn3
-      match: \b(?:address|all|altstep|alt|case|catch|class|component|configuration|connect|const|control|create|display|do|else|encode|enumerated|exception|except|execute|extends|extension|external|finally|for|friend|from|function|goto|group|if|import|inout|interleave|in|label|language|length|map|message|modifies|modulepar|module|mtc|noblock|null|of|omit|on|optional|out|override|param|port|present|private|procedure|public|realtime|record|return|runs|select|self|set|signature|stream|system|template|testcase|this|timer|to|type|union|unmap|value|variant|var|while|with)\b
+      - name: punctuation.vararg-ellipses
+        match: (?<!\.)\.\.\.(?!\.)
 
-    - name: keyword.operator.other.ttcn3
-      match: (?:->| =>|::|:=|\?|!|\.\.\.|\.\.)
+      - name: punctuation.range
+        match: (?<!\.)\.\.(?!\.)
 
-    - name: keyword.operator.string.ttcn3
-      match: (?:<<|>>|<@|@>|&)
+      - name: keyword.operator.arrow.ttcn3
+        match: (->| =>)
 
-    - name: keyword.operator.arithmetic.ttcn3
-      match: (?:\+|-|\*|/|\bmod\b|\brem\b)
+      - name: keyword.operator.other.ttcn3
+        match: (::|\?|!)
 
-    - name: keyword.operator.relation.ttcn3
-      match: (?:>|<|>=|<=|==|!=)
+      - name: punctuation.ttcn3
+        match: (\(|\)|\[|\]|{|}|:)
 
-    - name: keyword.operator.boolean.ttcn3
-      match: \b(?:and|and4b|not|not4b|or|or4b|xor|xor4b)\b
+      - name: punctuation.separator.comma.ttcn4
+        match: ","
 
-    - name: storage.modifier.ttcn3
-      match: \@[A-Za-z0-9_]+\b
+      - name: punctuation.terminator.statement.ttcn3
+        match: ";"
 
-    - name: storage.variable.ttcn3
-      match: \%[A-Za-z0-9_]+\b
+      - name: punctuation.accessor.cs
+        match: "\\."
 
-    - name: support.type.ttcn3
-      match: \b(?:integer|boolean|float|charstring|universalcharstring|verdicttype|bitstring|hexstring|octetstring|char|any|anytype|universal)\b
+      - name: keyword.operator.bitwise.shift.ttcn3
+        match: (?:<<|>>|<@|@>|&)
 
-    - name: support.function.ttcn3
-      match: \b(?:any2unistr|bit2hex|bit2int|bit2oct|bit2str|char2int|char2oct|decvalue|decvalue_o|decvalue_unichar|encvalue|encvalue_o|encvalue_unichar|enum2int|float2int|get_stringencoding|hex2bit|hex2int|hex2oct|hex2str|hostid|int2bit|int2char|int2enum|int2float|int2hex|int2oct|int2str|int2unichar|isbound|ischosen|ispresent|istemplatekind|isvalue|lengthof|log|match|may|oct2bit|oct2char|oct2hex|oct2int|oct2str|oct2unichar|regexp|remove_bom|replace|rnd|setverdict|shall|sizeof|str2float|str2hex|str2int|str2oct|substr|testcasename|unichar2int|unichar2oct)\b
+      - name: keyword.operator.arithmetic.ttcn3
+        match: (?:\+|-|\*|/|\bmod\b|\brem\b)
 
-    - name: support.function.ttcn3
-      match: \b(?:permutation|superset|subset|complement)\b
+      - name: keyword.operator.increment
+        match: \+\+
 
-    - name: support.function.ttcn3
-      match: \b(?:action|activate|alive|call|check|clear|continue|nowait|getverdict|getcall|getreply|octetstring|halt|ifpresent|deactivate|decmatch|default|disconnect|done|kill|killed|mixed|pattern|raise|read|receive|recursive|repeat|reply|running|send|sender|setencode|start|stop|timeout|trigger|valueof)\b
+      - name: keyword.operator.decrement
+        match: --
 
+      - name: keyword.operator.assignment
+        match: =
+
+      - name: keyword.operator.relational.ttcn3
+        match: (?:>|<|>=|<=)
+
+      - name: keyword.operator.comparison.ttcn3
+        match: \b(==|!=)\b
+
+      - name: keyword.operator.logical.ttcn3
+        match: \b(?:and|or|not|xor)\b
+
+      - name: keyword.operator.bitwise.ttcn3
+        match: \b(?:and4b|or4b|not4b|xor4b)\b
+
+      - name: keyword.operator.concatenation.ttcn3
+        match: \&
+
+      - comment: Modifiers
+        name: storage.modifier.$1.ttcn3
+        match: \@([A-Za-z0-9_]+)\b
+
+      - comment: Titan variables
+        name: variable.language.$1.ttcn3
+        match: \%([A-Za-z0-9_]+)\b
+
+      - name: keyword.control.loop.$1.ttcn3
+        match: \b(for|while|do)\b
+
+      - name: keyword.control.flow.$1.ttcn3
+        match: \b(goto|label|break|continue|repeat|return|stop|throw|catch)\b
+
+      - name: keyword.control.conditional.$1.ttcn3
+        match: \b(if|else|select|case)\b
+
+      - name: keyword.control.$1.ttcn3
+        match: \b(alt|interleave)\b
+
+      - name: entity.other.attribute-name.ttcn3
+        match: '\b(display|encode|extension|override|variant|with)\b'
+
+      - match: '\b(friend|private|public)\b'
+        name: constant.language.access-type.ttcn3
+
+      - comment: Built-in types
+        name: support.type.ttcn3
+        match: |-
+          (?x)
+          \b( address
+          | anytype
+          | any
+          | bitstring
+          | boolean
+          | charstring
+          | char
+          | float
+          | hexstring
+          | integer
+          | octetstring
+          | universal charstring
+          | universal
+          | verdicttype
+          )\b
+
+      - name: support.function.ttcn3
+        match: \b( any2unistr
+          | bit2hex
+          | bit2int
+          | bit2oct
+          | bit2str
+          | char2int
+          | char2oct
+          | decvalue
+          | decvalue_o
+          | decvalue_unichar
+          | encvalue
+          | encvalue_o
+          | encvalue_unichar
+          | enum2int
+          | float2int
+          | get_stringencoding
+          | hex2bit
+          | hex2int
+          | hex2oct
+          | hex2str
+          | hostid
+          | int2bit
+          | int2char
+          | int2enum
+          | int2float
+          | int2hex
+          | int2oct
+          | int2str
+          | int2unichar
+          | isbound
+          | ischosen
+          | ispresent
+          | istemplatekind
+          | isvalue
+          | length
+          | lengthof
+          | log
+          | match
+          | may
+          | oct2bit
+          | oct2char
+          | oct2hex
+          | oct2int
+          | oct2str
+          | oct2unichar
+          | regexp
+          | remove_bom
+          | replace
+          | rnd
+          | setverdict
+          | shall
+          | sizeof
+          | str2float
+          | str2hex
+          | str2int
+          | str2oct
+          | substr
+          | testcasename
+          | unichar2int
+          | unichar2oct
+          )\b
+
+      - name: support.function.ttcn3
+        match: \b( complement
+          | pattern
+          | permutation
+          | subset
+          | superset
+          )\b
+
+      - name: support.function.ttcn3
+        match: \b( action
+          | activate
+          | alive
+          | call
+          | check
+          | clear
+          | deactivate
+          | decmatch
+          | default
+          | disconnect
+          | done
+          | getcall
+          | getreply
+          | getverdict
+          | halt
+          | ifpresent
+          | kill
+          | killed
+          | mixed
+          | nowait
+          | octetstring
+          | raise
+          | read
+          | receive
+          | recursive
+          | reply
+          | running
+          | send
+          | sender
+          | setencode
+          | start
+          | timeout
+          | trigger
+          | valueof
+          )\b
+
+      - name: keyword.ttcn3
+        match: |-
+          (?x)
+          \b ( address
+          | all
+          | connect
+          | create
+          | except
+          | exception
+          | execute
+          | extends
+          | external
+          | finally
+          | from
+          | group
+          | import
+          | in
+          | inout
+          | language
+          | map
+          | modifies
+          | module
+          | noblock
+          | of
+          | on
+          | optional
+          | out
+          | param
+          | present
+          | realtime
+          | runs
+          | stream
+          | to
+          | trait
+          | unmap
+          | value
+          )\b
 
   literals:
     patterns:
-    - name: constant.numeric.digits.ttcn3
-      match: (-?)\b([0-9]+)\b
-    - name: constant.numeric.bitstring.ttcn3
-      match: "'[[:xdigit:]*?\\\\[:space:]]*'[hHoObB]"
-    - name: constant.numeric.exponent.ttcn3
-      match: \b(-?)([0-9]+E(-?)[0-9]+)\b
-    - name: constant.numeric.nan.ttcn3
-      match: (?!\-)\b(not_a_number)\b
-    - name: constant.numeric.infinity.ttcn3
-      match: (-?)\b(infinity)\b
-    - name: constant.numeric.boolean.ttcn3
-      match: \b(?:true|false)\b
-    - name: constant.numeric.verdict.ttcn3
-      match: \b(?:pass|fail|inconc|none|error)\b
+      - name: constant.numeric.digits.ttcn3
+        match: (-?)\b([0-9]+)\b
 
+      - name: constant.numeric.bitstring.ttcn3
+        match: "'[[:xdigit:]*?\\\\[:space:]]*'[hHoObB]"
+
+      - name: constant.numeric.exponent.ttcn3
+        match: \b(-?)([0-9]+E(-?)[0-9]+)\b
+
+      - name: constant.numeric.nan.ttcn3
+        match: (?!\-)\bnot_a_number\b
+
+      - name: constant.numeric.infinity.ttcn3
+        match: (-?)\binfinity\b
+
+      - name: constant.language.$1.ttcn3
+        match: \b(null|omit)\b
+
+      - name: constant.language.boolean.$1.ttcn3
+        match: '\b(true|false)\b'
+
+      - name: constant.numeric.verdict.$1.ttcn3
+        match: \b(pass|none|inconc|fail|error)\b
+
+      - name: constant.language.$1.ttcn3
+        match: \b__([A-Za-z0-9]+)__\b
+
+      - name: variable.language.$1.ttcn3
+        match: \b(mtc|self|system|this)\b
   strings:
     name: string.quoted.double.ttcn3
     begin: '"'
     end: '"'
     patterns:
-    - name: constant.character.escape.double-quote.ttcn3
-      match: '""'
-    - name: string.regexp.ttcn3
-      match: \\[\\"bdnrstw]
-    applyEndPatternLast: 1
+      - name: constant.character.escape.double-quote.ttcn3
+        match: '""'
 
-  tags:
+      - name: string.regexp.ttcn3
+        match: \\[\\"bdnrstw]
+        applyEndPatternLast: 1
+
+  preprocessor:
+    name: meta.preprocessor.ttcn3
+    match: '^\s*#.*$'
+
+  documentation-tags:
     patterns:
-    - match: \@[A-Za-z0-9_-]+
-      name: keyword.other.documentation.ttcn3
+      - match: (?<![A-Za-z0-9])\@([A-Za-z0-9_-]+):?
+        name: keyword.other.documentation.$1.ttcn3
 
   comments:
     patterns:
@@ -87,10 +353,11 @@ repository:
         begin: //
         end: \n
         patterns:
-          - include: "#tags"
+          - include: "#documentation-tags"
+
       - name: comment.block.ttcn3
         begin: /\*
         end: \*/
         patterns:
-          - include: "#tags"
+          - include: "#documentation-tags"
 
