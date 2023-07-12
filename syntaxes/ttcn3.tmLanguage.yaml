@@ -3,6 +3,7 @@ scopeName: source.ttcn3
 fileTypes: [ ttcn3, ttcn, ttcnpp ]
 
 patterns:
+  - include: "#expressions"
   - include: "#declarations"
   - include: "#types"
   - include: "#comments"
@@ -12,8 +13,46 @@ patterns:
   - include: "#literals"
 
 repository:
+  expressions:
+    patterns:
+      - name: variable.parameter.assignment.ttcn
+        match: (?!\.)([[:alpha:]][[:word:]]*)\s*(?=(\:\=))
+
+      - name: variable.parameter.assignment.index.ttcn
+        match: (?!\.)([[:alpha:]][[:word:]]*)\s*(?=(\[[\S]*\]\s*(:\=)))
+
+      - name: constant.numeric.method.index.ttcn
+        match: (?<=[\[])\s*([[:alpha:]][[:word:]\-\+[:space:]]*)\s*(?=[\]])
+
+      - name: keyword.other.class.index.dot.ttcn
+        match: (?<=[\{\(\[\][:space:]\;]|^)([[:alpha:]][[:word:]]*)(?=\[\S+\][\.])
+
+      - name: entity.name.function.module.ttcn
+        match: (?<=[\{\(\[\][:space:]\,\;]|^)(?!infinity|not_a_number)([[:alpha:]][[:word:]]*)(?=[\.])
+
+      - name: entity.name.method.dot.ttcn
+        match: (?<=[\.])(?!infinity|not_a_number)([[:alpha:]][[:word:]]*)\s*(?=[\(])
+
+      - name: keyword.other.method.dot.ttcn
+        match: (?<=[\.])(?!infinity|not_a_number)([[:alpha:]][[:word:]]*)\s*(?=[\s])
+
+      - name: entity.name.method.round.ttcn
+        match: (?<=^|[[:space:]\{\(\[\.])([[:alpha:]][[:word:]]*)\s*(?=[\(])(?!\s*\S+\s*\.\.)
+
   declarations:
     patterns:
+      - name: entity.name.function.module.ttcn
+        match: (?<=[[:^word:]]from|[[:^word:]]module)\s+([[:alpha:]][[:word:]]*)(?=[[:space:]\{\}\;])
+
+      - name: keyword.other.type.ttcn
+        match: (?<=[[:^word:]]const|[[:^word:]]template|[[:^word:]]timer|[[:^word:]]type|[[:^word:]]var)\s+((?!@)[[:alpha:]][[:word:]]*)\s*(?=[[:space:]\[\:\;])
+
+      - name: entity.name.method.function.ttcn
+        match: (?<=[[:^word:]]function|[[:^word:]]testcase|[[:^word:]]altstep|[[:^word]]configuration)\s+((?!interleave)[[:alpha:]][[:word:]]*)(?=[[:space:]\(\)\{\}\<\>\;])
+
+      - name: entity.name.method.modified.ttcn
+        match: (?<=@deterministic|@control)\s+([[:alpha:]][[:word:]]*)(?=[[:space:]\(\)\{\}\<\>\;])
+
       - name: keyword.declaration.$1.ttcn3
         match: |-
           (?x)
@@ -30,8 +69,12 @@ repository:
             | type
             | var
           )\b
+
   types:
     patterns:
+      - name: keyword.other.type.ttcn
+        match: (?<=^const|^template|^timer|^type|^var)\s+((?!@)[[:alpha:]][[:word:]]*)\s*(?=[[:space:]\[\:\;])
+
       - name: storage.type.class.ttcn3 keyword.declaration.class.ttcn3
         match: '\b(component|class)\b'
 
