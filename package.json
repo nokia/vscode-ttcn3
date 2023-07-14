@@ -96,12 +96,6 @@
 					"default": false,
 					"description": "Enable CodeLens for running tests from inside your editor."
 				},
-				"ttcn3.format.enabled": {
-					"title": "TTCN-3: Enable TTCN-3 source code formatting (experimental)",
-					"type": "boolean",
-					"default": false,
-					"markdownDescription": "Format the file according to the TTCN-3 standard style. Make sure that `#editor.insertSpaces#` and `#editor.tabSize#` is fitting your needs."
-				},
 				"ttcn3.server.toolsPath": {
 					"title": "TTCN-3: Search path for additional TTCN-3 tools",
 					"type": "array",
@@ -167,7 +161,7 @@
 		"request-progress": "^3.0.0",
 		"request-promise-native": "^1.0.8",
 		"semver": "^7.3.5",
-		"vscode-languageclient": "^8.0.2"
+		"vscode-languageclient": "^8.1.0"
 	},
 	"devDependencies": {
 		"@types/decompress": "^4.2.1",
