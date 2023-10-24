@@ -47,7 +47,8 @@ export class ServerDownloader {
 
 		status.update(`Unpacking ${this.displayName} ${version}...`);
 		await decompress(downloadDest, this.installDir, {
-			    filter: (file:any) => path.basename(file.path) == correctBinname("ntt")});
+			filter: (file: any) => path.basename(file.path) == correctBinname("ntt")
+		});
 		await fs.promises.unlink(downloadDest);
 
 		this.outputChannel.appendLine(`done`)
@@ -65,7 +66,7 @@ export class ServerDownloader {
 			if (sv) {
 				installedVersion = sv.version
 			}
-		} catch (err) {}
+		} catch (err) { }
 
 		this.outputChannel.appendLine(`Installed ${this.displayName} version: ${installedVersion}`)
 		this.outputChannel.append(`Checking GitHub for the latest release...`)
@@ -96,9 +97,12 @@ export class ServerDownloader {
 		}
 
 		if (semver.gt(latestVersion, installedVersion)) {
-
-			const selected = await vscode.window.showInformationMessage(`A new language server release is available: ${latestVersion}. Install now?`, 'Install', 'Cancel');
-			if (selected === 'Cancel') {
+			const cancelButton: vscode.MessageItem = { title: 'Cancel', isCloseAffordance: true }
+			const installButton: vscode.MessageItem = { title: 'Install', isCloseAffordance: false }
+			const selected = await vscode.window.showInformationMessage(`vscode-ttcn3: A new ttcn-3 language server release is available: ${latestVersion}. Install now?`,
+				{ modal: true, detail: `The language Server enhances the ttcn-3 experience with\ncode navigation, coloring, code completion and more.\nCancel leaves you with the already installed version of the language server: ${installedVersion}` },
+				installButton, cancelButton);
+			if (selected === cancelButton) {
 				return;
 			}
 			const serverAsset = releaseInfo.assets.find(asset => asset.name === this.assetName);
