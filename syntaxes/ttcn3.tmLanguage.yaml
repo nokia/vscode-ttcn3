@@ -1,6 +1,7 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json
 name: TTCN-3
 scopeName: source.ttcn3
-fileTypes: [ ttcn3, ttcn, ttcnpp ]
+fileTypes: [ttcn3, ttcn, ttcnpp]
 
 patterns:
   - include: "#expressions"
@@ -403,4 +404,3 @@ repository:
         end: \*/
         patterns:
           - include: "#documentation-tags"
-
