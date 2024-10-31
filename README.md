@@ -1,6 +1,3 @@
-[![](https://vsmarketplacebadge.apphb.com/version-short/nokia.ttcn3.svg)](https://marketplace.visualstudio.com/items?itemName=nokia.ttcn3)
-[![](https://vsmarketplacebadge.apphb.com/downloads-short/nokia.ttcn3.svg)](https://marketplace.visualstudio.com/items?itemName=nokia.ttcn3)
-[![](https://vsmarketplacebadge.apphb.com/rating-star/nokia.ttcn3.svg)](https://marketplace.visualstudio.com/items?itemName=nokia.ttcn3)
 [![](https://aka.ms/vsls-badge)](https://aka.ms/vsls-gitlens)
 
 
