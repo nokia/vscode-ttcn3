@@ -151,9 +151,7 @@
 	"scripts": {
 		"vscode:prepublish": "npx js-yaml syntaxes/ttcn3.tmLanguage.yaml > syntaxes/ttcn3.tmLanguage.json && npm run compile",
 		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile",
-		"test": "node ./out/test/runTest.js"
+		"watch": "tsc -watch -p ./"
 	},
 	"dependencies": {
 		"axios": "^1.7.7",
@@ -163,16 +161,12 @@
 	},
 	"devDependencies": {
 		"@types/decompress": "^4.2.1",
-		"@types/mocha": "^7.0.2",
 		"@types/node": "^22.7.9",
 		"@types/semver": "^7.3.5",
 		"@types/vscode": "^1.67.0",
 		"@types/ws": "^6.0.0",
-		"@vscode/test-electron": "^2.4.1",
 		"@vscode/vsce": "^3.2.1",
-		"glob": "^9.0.0",
 		"js-yaml": "^4.1.0",
-		"ts-loader": "^9.4.2",
 		"typescript": "^4.8.3"
 	},
 	"__metadata": {
