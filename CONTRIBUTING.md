@@ -21,13 +21,22 @@ If you believe you have found an issue, please use the GitHub issue tracker
 to report the Problem. If you're not sure if it's a bug or not, start by asking
 on the mailing list [ntt@groups.io](mailto:ntt@groups.io).
 
+## Building the extension
+
+Install dependencies:
+
+    npm install
+
+Create package:
+
+    vsce package
 
 ## Pull Requests
 
 0. [Fork][fork] and clone the repository
 0. Create a new branch: `git checkout -b my-branch-name`
-0. Make your change and remember to add tests
-0. Build the project locally and run local tests
+0. Make your change and remember to add tests (if possible)
+0. Build the project locally and run local tests (if there are any)
 0. Push to your fork and [submit a pull request][pr]
 0. Pat your self on the back and wait for your pull request to be reviewed and merged.
 
@@ -49,34 +58,6 @@ number and update this version number in the file `package.json`.
 3. Log into the [marketplace](https://marketplace.visualstudio.com/)
 4. Click on "Publish extensions"
 5. Click on "..." behing the extension name and choose "Update"
-
-
-## Troubleshoot
-
-### Cannot install vsce globally (permission denied)
-
-This [fedora page](https://developer.fedoraproject.org/tech/languages/nodejs/nodejs.html) suggest
-creating a directory for global installations inside your home directory:
-
-	mkdir ~/.npm-global
-
-Set the new directory path for npm:
-
-	npm config set prefix '~/.npm-global'
-
-Open/create the `~/.profile` file and add the following line:
-
-	export PATH=~/.npm-global/bin:$PATH
-
-Update your system variables with this command:
-
-	source ~/.profile
-
-Install vsce:
-
-	npm install -g vsce
-
-
 
 
 
