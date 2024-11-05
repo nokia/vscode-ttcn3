@@ -27,7 +27,7 @@ export class ServerDownloader {
 	}
 
 	private async latestReleaseInfo(): Promise<GitHubReleasesAPIResponse> {
-		const response = await axios.get(`https://api.github.com/repos/nokia/${this.githubProjectName}/releases/latest`, {
+		const response = await axios.get(`https://ttcn3.dev/api/v1/ntt/releases/latest`, {
 			headers: { "User-Agent": "vscode-ttcn3-ide" }
 		})
 		const data = await response.data;
