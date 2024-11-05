@@ -156,30 +156,27 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"dependencies": {
+		"axios": "^1.7.7",
 		"decompress": "^4.2.1",
-		"request": "^2.88.2",
-		"request-progress": "^3.0.0",
-		"request-promise-native": "^1.0.8",
-		"semver": "^7.5.2",
+		"semver": "^7.6.3",
 		"vscode-languageclient": "^8.1.0"
 	},
 	"devDependencies": {
 		"@types/decompress": "^4.2.1",
-		"@types/glob": "^7.1.3",
+		"@types/glob": "^8.1.0",
 		"@types/mocha": "^7.0.2",
-		"@types/node": "^12.20.12",
-		"@types/request-promise-native": "^1.0.17",
+		"@types/node": "^22.7.9",
 		"@types/semver": "^7.3.5",
 		"@types/vscode": "^1.67.0",
 		"@types/ws": "^6.0.0",
-		"glob": "^7.1.7",
+		"@vscode/test-electron": "^2.4.1",
+		"@vscode/vsce": "^3.2.1",
+		"glob": "^9.0.0",
 		"js-yaml": "^4.1.0",
 		"mocha": "^10.1.0",
 		"ts-loader": "^9.4.2",
 		"tslint": "^5.20.1",
-		"typescript": "^4.8.3",
-		"vsce": "^2.9.2",
-		"vscode-test": "^1.5.2"
+		"typescript": "^4.8.3"
 	},
 	"__metadata": {
 		"id": "bbe93f03-4234-401c-9ee1-e8d5e7c15af5",

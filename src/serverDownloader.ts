@@ -1,9 +1,9 @@
-import * as decompress from 'decompress';
 import * as vscode from 'vscode';
 import * as path from "path";
 import * as semver from "semver";
-import * as requestPromise from "request-promise-native";
+import axios from 'axios'
 import * as fs from "fs";
+import decompress from 'decompress';
 import { fsExists } from "./util/fsUtils";
 import { exec, correctBinname } from './util/osUtils';
 import { GitHubReleasesAPIResponse } from "./githubApi";
@@ -27,10 +27,11 @@ export class ServerDownloader {
 	}
 
 	private async latestReleaseInfo(): Promise<GitHubReleasesAPIResponse> {
-		const rawJson = await requestPromise.get(`https://api.github.com/repos/nokia/${this.githubProjectName}/releases/latest`, {
+		const response = await axios.get(`https://api.github.com/repos/nokia/${this.githubProjectName}/releases/latest`, {
 			headers: { "User-Agent": "vscode-ttcn3-ide" }
-		});
-		return JSON.parse(rawJson) as GitHubReleasesAPIResponse;
+		})
+		const data = await response.data;
+		return data as GitHubReleasesAPIResponse;
 	}
 
 	private async downloadServer(downloadUrl: string, version: string, status: Status): Promise<void> {
