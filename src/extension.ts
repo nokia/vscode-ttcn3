@@ -20,6 +20,13 @@ export function activate(context: ExtensionContext) {
 
 	const conf = vscode.workspace.getConfiguration('ttcn3');
 
+	vscode.languages.registerDocumentFormattingEditProvider('ttcn3', {
+		provideDocumentFormattingEdits(document: vscode.TextDocument) {
+			child_process.exec(`ntt format --in-place "${document.uri.fsPath}`);
+			return [];
+		}
+	});
+
 	// Our work is done, if the user does not want to run a language server.
 	if (!conf.get('useLanguageServer') && !conf.get('server.enabled')) {
 		outputChannel.appendLine('Language server is disabled. If you like to use features like go to definition, enable the language server by opening vscode settings and set ttcn3.useLanguageServer to true. For more information about the TTCN-3 language server, have a look at https://nokia.github.io/ntt/editors/');
