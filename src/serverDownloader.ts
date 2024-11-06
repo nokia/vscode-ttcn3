@@ -1,15 +1,37 @@
 import * as vscode from 'vscode';
 import * as path from "path";
 import * as semver from "semver";
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 import * as fs from "fs";
 import decompress from 'decompress';
 import { fsExists } from "./util/fsUtils";
 import { exec, correctBinname } from './util/osUtils';
 import { GitHubReleasesAPIResponse } from "./githubApi";
 import { LOG } from "./util/logger";
-import { download } from "./util/downloadUtils";
 import { Status } from "./util/status";
+import { ProxyAgent } from 'proxy-agent';
+
+function fetch<T = any, R = AxiosResponse<T>, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<R> {
+	// Axios has an issue with HTTPS requests over HTTP proxies. A custom
+	// agent circumvents this issue.
+	const agent = new ProxyAgent()
+	if (!config) {
+		config = {}
+	}
+	config.httpAgent = agent;
+	config.httpsAgent = agent;
+	config.proxy = false;
+
+	// Some common headers
+	if (!config.headers) {
+		config.headers = {}
+	}
+	config.headers["User-Agent"] = "vscode-ttcn3-ide";
+	config.headers["Cache-Control"] = "no-cache";
+	config.headers["Pragma"] = "no-cache";
+	return axios.get(url, config);
+}
+
 
 export class ServerDownloader {
 	private displayName: string;
@@ -27,9 +49,10 @@ export class ServerDownloader {
 	}
 
 	private async latestReleaseInfo(): Promise<GitHubReleasesAPIResponse> {
-		const response = await axios.get(`https://ttcn3.dev/api/v1/ntt/releases/latest`, {
-			headers: { "User-Agent": "vscode-ttcn3-ide" }
-		})
+		const response = await fetch(`https://ttcn3.dev/api/v1/ntt/releases/latest`);
+		if (!response.headers['content-type']?.includes('application/json')) {
+			throw new Error(`Unexpected content type: ${response.headers['content-type']}`);
+		}
 		const data = await response.data;
 		return data as GitHubReleasesAPIResponse;
 	}
@@ -42,8 +65,20 @@ export class ServerDownloader {
 		const downloadDest = path.join(this.installDir, `download-${this.assetName}`);
 		status.update(`Downloading ${this.displayName} ${version}...`);
 		this.outputChannel.append(`Downloading ${this.displayName} ${version}...`);
-		await download(downloadUrl, downloadDest, percent => {
-			status.update(`Downloading ${this.displayName} ${version} :: ${(percent * 100).toFixed(2)} %`);
+
+		const response = await fetch(downloadUrl, {
+			responseType: 'stream',
+			onDownloadProgress: (progressEvent: any) => {
+				const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+				status.update(`Downloading ${this.displayName} ${version} :: ${percent.toFixed(2)} %`);
+			}
+		});
+
+	        const writer = fs.createWriteStream(downloadDest);
+		response.data.pipe(writer);
+		await new Promise((resolve, reject) => {
+				writer.on('finish', resolve);
+				writer.on('error', reject);
 		});
 
 		status.update(`Unpacking ${this.displayName} ${version}...`);
@@ -70,13 +105,13 @@ export class ServerDownloader {
 		} catch (err) { }
 
 		this.outputChannel.appendLine(`Installed ${this.displayName} version: ${installedVersion}`)
-		this.outputChannel.append(`Checking GitHub for the latest release...`)
+		this.outputChannel.append(`Checking ttcn3.dev for the latest release...`)
 		let releaseInfo: GitHubReleasesAPIResponse;
 
 		try {
 			releaseInfo = await this.latestReleaseInfo();
 		} catch (error) {
-			const message = `Could not fetch from GitHub releases API: ${error}.`;
+			const message = `Unable to fetch latest release: ${error}.`;
 			if (installedVersion == "0.0.0") {
 				// No server is installed yet, so throw
 				throw new Error(message);
