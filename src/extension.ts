@@ -1,13 +1,13 @@
-import fs = require('fs');
-import path = require('path');
 import * as child_process from "child_process";
 import * as vscode from 'vscode';
 import { ExtensionContext, OutputChannel } from 'vscode';
 import { LanguageClient, LanguageClientOptions, ServerOptions, ExecuteCommandParams, ExecuteCommandRequest, DidChangeConfigurationParams, DidChangeConfigurationNotification } from 'vscode-languageclient/node';
-import { LOG } from './util/logger';
-import { ServerDownloader } from './serverDownloader';
-import { Status, StatusBarEntry } from './util/status';
-import { isOSUnixoid, correctBinname } from './util/osUtils';
+import * as path from "path";
+import * as semver from "semver";
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
+import * as fs from "fs";
+import decompress from 'decompress';
+import { ProxyAgent } from 'proxy-agent';
 
 let client: LanguageClient;
 let outputChannel: OutputChannel;
@@ -236,4 +236,326 @@ export function deactivate(): Thenable<void> | undefined {
 		return undefined;
 	}
 	return client.stop();
+}
+
+function fetch<T = any, R = AxiosResponse<T>, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<R> {
+	// Axios has an issue with HTTPS requests over HTTP proxies. A custom
+	// agent circumvents this issue.
+	const agent = new ProxyAgent()
+	if (!config) {
+		config = {}
+	}
+	config.httpAgent = agent;
+	config.httpsAgent = agent;
+	config.proxy = false;
+
+	// Some common headers
+	if (!config.headers) {
+		config.headers = {}
+	}
+	config.headers["User-Agent"] = "vscode-ttcn3-ide";
+	config.headers["Cache-Control"] = "no-cache";
+	config.headers["Pragma"] = "no-cache";
+	return axios.get(url, config);
+}
+
+
+export class ServerDownloader {
+	private displayName: string;
+	private githubProjectName: string;
+	private assetName: string;
+	private installDir: string;
+	outputChannel: vscode.OutputChannel
+
+	constructor(displayName: string, githubProjectName: string, assetName: string, installDir: string, outputChannel: vscode.OutputChannel) {
+		this.displayName = displayName;
+		this.githubProjectName = githubProjectName;
+		this.installDir = installDir;
+		this.assetName = assetName;
+		this.outputChannel = outputChannel;
+	}
+
+	private async latestReleaseInfo(): Promise<GitHubReleasesAPIResponse> {
+		const response = await fetch(`https://ttcn3.dev/api/v1/ntt/releases/latest`);
+		if (!response.headers['content-type']?.includes('application/json')) {
+			throw new Error(`Unexpected content type: ${response.headers['content-type']}`);
+		}
+		const data = await response.data;
+		return data as GitHubReleasesAPIResponse;
+	}
+
+	private async downloadServer(downloadUrl: string, version: string, status: Status): Promise<void> {
+		if (!(await fsExists(this.installDir))) {
+			await fs.promises.mkdir(this.installDir, { recursive: true });
+		}
+
+		const downloadDest = path.join(this.installDir, `download-${this.assetName}`);
+		status.update(`Downloading ${this.displayName} ${version}...`);
+		this.outputChannel.append(`Downloading ${this.displayName} ${version}...`);
+
+		const response = await fetch(downloadUrl, {
+			responseType: 'stream',
+			onDownloadProgress: (progressEvent: any) => {
+				const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+				status.update(`Downloading ${this.displayName} ${version} :: ${percent.toFixed(2)} %`);
+			}
+		});
+
+	        const writer = fs.createWriteStream(downloadDest);
+		response.data.pipe(writer);
+		await new Promise((resolve, reject) => {
+				writer.on('finish', resolve);
+				writer.on('error', reject);
+		});
+
+		status.update(`Unpacking ${this.displayName} ${version}...`);
+		await decompress(downloadDest, this.installDir, {
+			filter: (file: any) => path.basename(file.path) == correctBinname("ntt")
+		});
+		await fs.promises.unlink(downloadDest);
+
+		this.outputChannel.appendLine(`done`)
+		status.update(`Initializing ${this.displayName}...`);
+	}
+
+
+	async downloadServerIfNeeded(status: Status): Promise<void> {
+
+		var installedVersion = "0.0.0";
+		try {
+			const cmd = path.join(this.installDir, correctBinname("ntt"))
+			var { stdout } = await exec(cmd + " version");
+			let sv = semver.coerce(stdout);
+			if (sv) {
+				installedVersion = sv.version
+			}
+		} catch (err) { }
+
+		this.outputChannel.appendLine(`Installed ${this.displayName} version: ${installedVersion}`)
+		this.outputChannel.append(`Checking ttcn3.dev for the latest release...`)
+		let releaseInfo: GitHubReleasesAPIResponse;
+
+		try {
+			releaseInfo = await this.latestReleaseInfo();
+		} catch (error) {
+			const message = `Unable to fetch latest release: ${error}.`;
+			if (installedVersion == "0.0.0") {
+				// No server is installed yet, so throw
+				throw new Error(message);
+			} else {
+				// Do not throw since user might just be offline
+				// and a version of the server is already installed
+				LOG.warn(message);
+				return;
+			}
+		}
+
+		let sv = semver.coerce(releaseInfo.tag_name);
+		var latestVersion = "0.0.0";
+		if (sv) {
+			latestVersion = sv.version
+			this.outputChannel.appendLine(`found version ${latestVersion}`)
+		} else {
+			this.outputChannel.appendLine(`not available`)
+		}
+
+		if (semver.gt(latestVersion, installedVersion)) {
+			const cancelButton: vscode.MessageItem = { title: 'Cancel', isCloseAffordance: true }
+			const installButton: vscode.MessageItem = { title: 'Install', isCloseAffordance: false }
+			const selected = await vscode.window.showInformationMessage(`vscode-ttcn3: A new ttcn-3 language server release is available: ${latestVersion}. Install now?`,
+				{ modal: true, detail: `The language Server enhances the ttcn-3 experience with\ncode navigation, coloring, code completion and more.\nCancel leaves you with the already installed version of the language server: ${installedVersion}` },
+				installButton, cancelButton);
+			if (selected === cancelButton) {
+				return;
+			}
+			const serverAsset = releaseInfo.assets.find(asset => asset.name === this.assetName);
+			if (serverAsset) {
+				const downloadUrl = serverAsset.browser_download_url;
+				await this.downloadServer(downloadUrl, latestVersion, status);
+			} else {
+				throw new Error(`Latest GitHub release for ${this.githubProjectName} does not contain the asset '${this.assetName}'!`);
+			}
+		}
+	}
+}
+
+export interface GitHubReleasesAPIResponse {
+    url: string;
+    assets_url: string;
+    upload_url: string;
+    html_url: string;
+    id: number;
+    node_id: string;
+    tag_name: string;
+    target_commitish: string;
+    name: string;
+    draft: boolean;
+    author: GitHubReleasesAPIAuthor;
+    prerelease: boolean;
+    created_at: string;
+    published_at: string;
+    assets: GitHubReleasesAPIAsset[];
+    tarball_url: string;
+    zipball_url: string;
+    body: any | null;
+}
+
+export interface GitHubReleasesAPIAuthor {
+    login: string;
+    id: number;
+    node_id: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+}
+
+export interface GitHubReleasesAPIAsset {
+    url: string;
+    id: number;
+    node_id: string;
+    name: string;
+    label: string;
+    uploader: GitHubReleasesAPIAuthor;
+    content_type: string;
+    state: string;
+    size: number;
+    download_count: number;
+    created_at: string;
+    updated_at: string;
+    browser_download_url: string;
+}
+
+export async function fsExists(path: fs.PathLike): Promise<boolean> {
+    try {
+        await fs.promises.access(path);
+        return true;
+    } catch {
+        return false;
+    }
+}
+export enum LogLevel {
+    NONE = 100,
+    ERROR = 2,
+    WARN = 1,
+    INFO = 0,
+    DEBUG = -1,
+    TRACE = -2,
+    DEEP_TRACE = -3
+}
+
+export class Logger {
+    level: LogLevel;
+
+    public constructor(level: LogLevel) {
+        this.level = level;
+    }
+
+    private format(msg: String, placeholders: any[]): string {
+        let result = "";
+        let i = 0;
+        let placeholderIndex = 0;
+        while (i < msg.length) {
+            let c = msg.charAt(i);
+            let next = msg.charAt(i + 1);
+            if (c === '{' && next === '}') {
+                result += placeholders[placeholderIndex];
+                placeholderIndex++;
+                i += 2;
+            } else {
+                result += c;
+                i++;
+            }
+        }
+        return result;
+    }
+
+    private log(prefix: String, level: LogLevel, msg: String, placeholders: any[]): void {
+        if (level >= this.level) {
+            console.log(prefix + this.format(msg, placeholders));
+        }
+    }
+
+    public error(msg: String, ...placeholders: any[]): void { this.log("Extension: [ERROR]  ", LogLevel.ERROR, msg, placeholders); }
+
+    public warn(msg: String, ...placeholders: any[]): void { this.log("Extension: [WARN]   ", LogLevel.WARN, msg, placeholders); }
+
+    public info(msg: String, ...placeholders: any[]): void { this.log("Extension: [INFO]   ", LogLevel.INFO, msg, placeholders); }
+
+    public debug(msg: String, ...placeholders: any[]): void { this.log("Extension: [DEBUG]  ", LogLevel.DEBUG, msg, placeholders); }
+
+    public trace(msg: String, ...placeholders: any[]): void { this.log("Extension: [TRACE]  ", LogLevel.TRACE, msg, placeholders); }
+
+    public deepTrace(msg: String, ...placeholders: any[]): void { this.log("Extension: [D_TRACE]", LogLevel.DEEP_TRACE, msg, placeholders); }
+}
+
+export const LOG = new Logger(LogLevel.INFO);
+
+export function isOSWindows(): boolean {
+    return process.platform === "win32";
+}
+
+export function isOSUnixoid(): boolean {
+    let platform = process.platform;
+    return platform === "linux"
+        || platform === "darwin"
+        || platform === "freebsd"
+        || platform === "openbsd";
+}
+
+export function correctBinname(binname: string): string {
+    return binname + ((process.platform === 'win32') ? '.exe' : '');
+}
+
+export function exec(cmd: string): Promise<{ stdout: string, stderr: string }> {
+	return new Promise((resolve, reject) => {
+		child_process.exec(cmd, (err:any, stdout:any, stderr:any) => {
+			if (err) {
+				return reject(err);
+			}
+			return resolve({ stdout, stderr });
+		});
+	});
+}
+
+
+export interface Status {
+    /** Updates the message. */
+    update(msg: string): void;
+}
+
+/**
+ * Encapsulates a status bar item.
+ */
+export class StatusBarEntry implements Status {
+    private barItem: vscode.StatusBarItem;
+    private prefix?: string;
+
+    constructor(context: vscode.ExtensionContext, prefix?: string) {
+        this.prefix = prefix;
+        this.barItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+        context.subscriptions.push(this.barItem);
+    }
+
+    show(): void {
+        this.barItem.show();
+    }
+
+    update(msg: string): void {
+        this.barItem.text = `${this.prefix} ${msg}`;
+    }
+
+    dispose(): void {
+        this.barItem.dispose();
+    }
 }
