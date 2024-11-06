@@ -38,6 +38,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+      - run: mkdir -p "$PWD/servers"; GOBIN="$PWD/servers" go install github.com/nokia/ntt@latest
       - uses: actions/setup-node@v4
         with:
           node-version: latest
