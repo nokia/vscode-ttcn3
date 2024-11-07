@@ -42,7 +42,7 @@ jobs:
         with:
           go-version: stable
       - shell: bash
-        run: mkdir -p "$PWD/servers"; GOBIN="$PWD/servers" go install github.com/nokia/ntt@maint/0.18
+        run: mkdir -p "$PWD/servers"; GOBIN="$PWD/servers" go install github.com/nokia/ntt@v0.18.1
       - uses: actions/setup-node@v4
         with:
           node-version: latest
