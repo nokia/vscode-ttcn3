@@ -1,6 +1,3 @@
-[![](https://aka.ms/vsls-badge)](https://aka.ms/vsls-gitlens)
-
-
 # TTCN-3 for Visual Studio Code
 
 <img width="40%" align="right" src="images/highlight.png"/>
@@ -15,7 +12,6 @@ to Visual Studio Code. Available features:
 * Jump to Definition for quick navigation.
 * Code completion for a growing number of module defintions.
 * Find references
-* CodeLens for running tests from inside your IDE (experimental).
 * Semantic highlighting (experimental).
 * Automatic formatting (experimental).
 * And more features to come...
@@ -25,15 +21,6 @@ If you find this extension useful, please [write a review](https://marketplace.v
 and [star it on GitHub](https://github.com/nokia/vscode-ttcn3 'Star it on GitHub').
 
 <br clear="right"/>
-
-
-## IntelliSense
-
-IntelliSense is powered by the [ntt language server](https://nokia.github.io/ntt).
-Enable the TTCN-3 language server to use IntelliSense features. ntt updates and installs automatically.
-
-
-<img src="images/vscode-ttcn3-settings.png"/>
 
 
 ## Work in Progress
