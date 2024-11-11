@@ -226,34 +226,19 @@ function config<T>(key: string): T | undefined {
 }
 
 function assetName(): string {
-	const os = getOs();
-	const arch = getArch();
-	return `ntt_${os}_${arch}.tar.gz`;
-}
-
-function getOs(): string {
-	let platform = process.platform.toString();
-	if (platform === 'win32') {
-		return 'windows';
+	const assets: { [key: string]: string } = {
+		'darwin,arm64': 'ntt_darwin_arm64.tar.gz',
+		'darwin,x64': 'ntt_darwin_x86_64.tar.gz',
+		'linux,arm64': 'ntt_linux_arm64.tar.gz',
+		'linux,ia32': 'ntt_linux_i386.tar.gz',
+		'linux,x64': 'ntt_linux_x86_64.tar.gz',
+		'win32,x64': 'ntt_windows_x86_64.zip',
+	};
+	const asset = assets[`${process.platform},${process.arch}`];
+	if (!asset) {
+		throw new Error(`Unsupported platform ${process.platform} ${process.arch}`);
 	}
-	return platform;
-}
-
-function getArch(): string {
-	let arch = process.arch;
-
-	if (arch === 'ia32') {
-		return 'i386';
-	}
-	if (arch === 'x64') {
-		return 'x86_64';
-	}
-	if (arch === 'arm64' && process.platform.toString() === 'darwin') {
-		// On Apple Silicon, install the amd64 version and rely on Rosetta2
-		// until a native build is available.
-		return 'x86_64';
-	}
-	return arch;
+	return asset;
 }
 
 export function deactivate(): Thenable<void> | undefined {
