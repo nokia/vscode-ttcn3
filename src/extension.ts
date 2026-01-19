@@ -150,7 +150,7 @@ async function updateServer(installDir: string, serverAsset: Asset, latestVersio
 	const writer = fs.createWriteStream(downloadDest);
 	response.data.pipe(writer);
 	await new Promise((resolve, reject) => {
-		writer.on('finish', resolve);
+		writer.on('finish', () => resolve());
 		writer.on('error', reject);
 	});
 
