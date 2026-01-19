@@ -73,6 +73,7 @@ jobs:
     permissions:
       contents: write   # REQUIRED for release uploads
     steps:
+      - uses: actions/checkout@v6
       - uses: actions/download-artifact@v7
       - name: Upload VSIX files to GitHub Release
         run: |
