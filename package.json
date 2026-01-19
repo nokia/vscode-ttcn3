@@ -1,175 +1,181 @@
 {
-  "name": "ttcn3",
-  "displayName": "TTCN-3",
-  "description": "Rich TTCN-3 language support for Visual Studio Code",
-  "publisher": "Nokia",
-  "preview": true,
-  "version": "0.11.0",
-  "license": "BSD-3-Clause",
-  "engines": {
-    "vscode": "^1.67.0"
-  },
-  "categories": [
-    "Programming Languages",
-    "Snippets"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nokia/vscode-ttcn3"
-  },
-  "bugs": {
-    "url": "https://github.com/nokia/vscode-ttcn3/issues"
-  },
-  "icon": "images/ttcn3-logo.png",
-  "keywords": [
-    "ttcn-3",
-    "ttcn3",
-    "ttcn",
-    "k3",
-    "ntt"
-  ],
-  "activationEvents": [
-    "workspaceContains:**/*.ttcn*",
-    "workspaceContains:**/package.yml",
-    "onLanguage:ttcn3"
-  ],
-  "main": "./out/extension.js",
-  "contributes": {
-    "languages": [
-      {
-        "id": "ttcn3",
-        "aliases": [
-          "TTCN-3",
-          "ttcn"
-        ],
-        "extensions": [
-          ".ttcn3",
-          ".ttcn",
-          ".ttcnpp"
-        ],
-        "configuration": "./language-configuration.json"
-      },
-      {
-        "id": "ttcn3-out",
-        "aliases": [
-          "TTCN-OUT",
-          "ttcn-out"
-        ]
-      }
-    ],
-    "grammars": [
-      {
-        "language": "ttcn3",
-        "scopeName": "source.ttcn3",
-        "path": "./syntaxes/ttcn3.tmLanguage.json"
-      },
-      {
-        "language": "ttcn3-out",
-        "scopeName": "source.ttcn-out",
-        "path": "./syntaxes/ttcn-out.tmLanguage.json"
-      }
-    ],
-    "snippets": [
-      {
-        "language": "ttcn3",
-        "path": "./snippets/ttcn.tmSnippet.json"
-      }
-    ],
-    "configuration": [
-      {
-        "id": "ttcn3.server",
-        "description": "Hello",
-        "properties": {
-          "ttcn3.server.command": {
-            "order": 10,
-            "type": "string",
-            "description": "Command to start TTCN-3 language server. Leave empty to use the bundled language server."
-          },
-          "ttcn3.server.automaticUpdate": {
-            "order": 20,
-            "type": "boolean",
-            "default": true,
-            "markdownDescription": "Update language server automatically. Note this setting is ignored if `#ttcn3.server.command#` is set."
-          },
-          "ttcn3.server.usePrereleases": {
-            "order": 25,
-            "type": "boolean",
-            "default": false,
-            "markdownDescription": "Use pre-release versions of the language server."
-          },
-          "ttcn3.server.updateServerURL": {
-            "order": 30,
-            "type": "string",
-            "format": "uri",
-            "default": "https://ttcn3.dev/api/v1/ntt",
-            "markdownDescription": "This base URL is used to query the latest version of the TTCN-3 language server (`$URL/releases/latest`). The response must be a JSON object using a [GitHub API response format](https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#get-the-latest-release)."
-          },
-          "ttcn3.server.ignoreCertificateErrors": {
-            "order": 40,
-            "type": "boolean",
-            "default": false,
-            "markdownDescription": "Ignore certificate errors when downloading the TTCN-3 language server. _This setting is **not recommended** for production use, because it makes your system vulnerable to man-in-the-middle attacks._"
-          },
-          "ttcn3.server.toolsPath": {
-            "order": 60,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": [],
-            "description": "Additional search paths for TTCN-3 tools, such as k3 runtime. The paths are used to search for executables in the order they are specified."
-          }
-        }
-      }
-    ],
-    "commands": [
-      {
-        "command": "ttcn3.languageServer.restart",
-        "title": "Restart language server",
-        "category": "TTCN-3"
-      },
-      {
-        "command": "ttcn3.languageServer.status",
-        "title": "Show language server status",
-        "category": "TTCN-3"
-      },
-      {
-        "command": "ttcn3.languageServer.debug.toggle",
-        "title": "Toggle language server debug mode",
-        "category": "TTCN-3"
-      }
-    ],
-    "configurationDefaults": {
-      "[ttcn3]": {
-        "editor.formatOnSave": false
-      }
-    }
-  },
-  "scripts": {
-    "vscode:prepublish": "npx js-yaml syntaxes/ttcn3.tmLanguage.yaml > syntaxes/ttcn3.tmLanguage.json && npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
-  },
-  "dependencies": {
-    "decompress": "^4.2.1",
-    "http-proxy-agent": "^7.0.2",
-    "https-proxy-agent": "^7.0.6",
-    "semver": "^7.6.3",
-    "vscode-languageclient": "^8.1.0"
-  },
-  "devDependencies": {
-    "@types/decompress": "^4.2.1",
-    "@types/node": "^22.7.9",
-    "@types/semver": "^7.3.5",
-    "@types/vscode": "^1.67.0",
-    "@types/ws": "^6.0.0",
-    "@vscode/vsce": "^3.6",
-    "js-yaml": "^4.1.1",
-    "typescript": "^4.8.3"
-  },
-  "__metadata": {
-    "id": "bbe93f03-4234-401c-9ee1-e8d5e7c15af5",
-    "publisherDisplayName": "Nokia",
-    "publisherId": "e78726d8-c401-4e08-9f95-def564f872d8"
-  }
+	"name": "ttcn3",
+	"displayName": "TTCN-3",
+	"description": "Rich TTCN-3 language support for Visual Studio Code",
+	"publisher": "Nokia",
+	"preview": true,
+	"version": "0.11.0",
+	"license": "BSD-3-Clause",
+	"engines": {
+		"vscode": "^1.67.0"
+	},
+	"categories": [
+		"Programming Languages",
+		"Snippets"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nokia/vscode-ttcn3"
+	},
+	"bugs": {
+		"url": "https://github.com/nokia/vscode-ttcn3/issues"
+	},
+	"icon": "images/ttcn3-logo.png",
+	"keywords": [
+		"ttcn-3",
+		"ttcn3",
+		"ttcn",
+		"k3",
+		"ntt"
+	],
+	"activationEvents": [
+		"workspaceContains:**/*.ttcn*",
+		"workspaceContains:**/package.yml",
+		"onLanguage:ttcn3"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "ttcn3",
+				"aliases": [
+					"TTCN-3",
+					"ttcn"
+				],
+				"extensions": [
+					".ttcn3",
+					".ttcn",
+					".ttcnpp"
+				],
+				"configuration": "./language-configuration.json"
+			},
+			{
+				"id": "ttcn3-out",
+				"aliases": [
+					"TTCN-OUT",
+					"ttcn-out"
+				]
+			}
+		],
+		"grammars": [
+			{
+				"language": "ttcn3",
+				"scopeName": "source.ttcn3",
+				"path": "./syntaxes/ttcn3.tmLanguage.json"
+			},
+			{
+				"language": "ttcn3-out",
+				"scopeName": "source.ttcn-out",
+				"path": "./syntaxes/ttcn-out.tmLanguage.json"
+			}
+		],
+		"snippets": [
+			{
+				"language": "ttcn3",
+				"path": "./snippets/ttcn.tmSnippet.json"
+			}
+		],
+		"configuration": [
+			{
+				"id": "ttcn3.server",
+				"description": "Hello",
+				"properties": {
+					"ttcn3.server.command": {
+						"order": 10,
+						"type": "string",
+						"description": "Command to start TTCN-3 language server. Leave empty to use the bundled language server."
+					},
+					"ttcn3.server.automaticUpdate": {
+						"order": 20,
+						"type": "boolean",
+						"default": true,
+						"markdownDescription": "Update language server automatically. Note this setting is ignored if `#ttcn3.server.command#` is set."
+					},
+					"ttcn3.server.usePrereleases": {
+						"order": 25,
+						"type": "boolean",
+						"default": false,
+						"markdownDescription": "Use pre-release versions of the language server."
+					},
+					"ttcn3.server.updateServerURL": {
+						"order": 30,
+						"type": "string",
+						"format": "uri",
+						"default": "https://ttcn3.dev/api/v1/ntt",
+						"markdownDescription": "This base URL is used to query the latest version of the TTCN-3 language server (`$URL/releases/latest`). The response must be a JSON object using a [GitHub API response format](https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#get-the-latest-release)."
+					},
+					"ttcn3.server.ignoreCertificateErrors": {
+						"order": 40,
+						"type": "boolean",
+						"default": false,
+						"markdownDescription": "Ignore certificate errors when downloading the TTCN-3 language server. _This setting is **not recommended** for production use, because it makes your system vulnerable to man-in-the-middle attacks._"
+					},
+					"ttcn3.server.toolsPath": {
+						"order": 60,
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"default": [],
+						"description": "Additional search paths for TTCN-3 tools, such as k3 runtime. The paths are used to search for executables in the order they are specified."
+					}
+				}
+			}
+		],
+		"commands": [
+			{
+				"command": "ttcn3.languageServer.restart",
+				"title": "Restart language server",
+				"category": "TTCN-3"
+			},
+			{
+				"command": "ttcn3.languageServer.status",
+				"title": "Show language server status",
+				"category": "TTCN-3"
+			},
+			{
+				"command": "ttcn3.languageServer.debug.toggle",
+				"title": "Toggle language server debug mode",
+				"category": "TTCN-3"
+			}
+		],
+		"configurationDefaults": {
+			"[ttcn3]": {
+				"editor.formatOnSave": false
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npx js-yaml syntaxes/ttcn3.tmLanguage.yaml > syntaxes/ttcn3.tmLanguage.json && npm run package",
+		"compile": "npm run check-types && node esbuild.js",
+		"check-types": "tsc --noEmit",
+		"watch": "npm-run-all -p watch:*",
+		"watch:esbuild": "node esbuild.js --watch",
+		"watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+		"package": "npm run check-types && node esbuild.js --production"
+	},
+	"dependencies": {
+		"decompress": "^4.2.1",
+		"http-proxy-agent": "^7.0.2",
+		"https-proxy-agent": "^7.0.6",
+		"semver": "^7.6.3",
+		"vscode-languageclient": "^8.1.0"
+	},
+	"devDependencies": {
+		"@types/decompress": "^4.2.1",
+		"@types/node": "^22.7.9",
+		"@types/semver": "^7.3.5",
+		"@types/vscode": "^1.67.0",
+		"@types/ws": "^6.0.0",
+		"@vscode/vsce": "^3.6",
+		"esbuild": "^0.27.2",
+		"js-yaml": "^4.1.1",
+		"npm-run-all": "^4.1.5",
+		"typescript": "^4.8.3"
+	},
+	"__metadata": {
+		"id": "bbe93f03-4234-401c-9ee1-e8d5e7c15af5",
+		"publisherDisplayName": "Nokia",
+		"publisherId": "e78726d8-c401-4e08-9f95-def564f872d8"
+	}
 }
