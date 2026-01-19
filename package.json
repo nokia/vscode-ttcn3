@@ -4,7 +4,7 @@
   "description": "Rich TTCN-3 language support for Visual Studio Code",
   "publisher": "Nokia",
   "preview": true,
-  "version": "0.10.3",
+  "version": "0.11.0",
   "license": "BSD-3-Clause",
   "engines": {
     "vscode": "^1.67.0"
@@ -91,12 +91,12 @@
             "default": true,
             "markdownDescription": "Update language server automatically. Note this setting is ignored if `#ttcn3.server.command#` is set."
           },
-	  "ttcn3.server.usePrereleases": {
-	    "order": 25,
-	    "type": "boolean",
-	    "default": false,
-	    "markdownDescription": "Use pre-release versions of the language server."
-	  },
+          "ttcn3.server.usePrereleases": {
+            "order": 25,
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Use pre-release versions of the language server."
+          },
           "ttcn3.server.updateServerURL": {
             "order": 30,
             "type": "string",
@@ -151,9 +151,9 @@
     "watch": "tsc -watch -p ./"
   },
   "dependencies": {
-    "axios": "^1.12.0",
     "decompress": "^4.2.1",
-    "proxy-agent": "^6.4.0",
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.6",
     "semver": "^7.6.3",
     "vscode-languageclient": "^8.1.0"
   },

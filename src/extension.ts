@@ -3,10 +3,13 @@ import * as vscode from 'vscode';
 import * as lsp from 'vscode-languageclient/node';
 import * as path from 'path';
 import * as semver from 'semver';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import * as fs from 'fs';
 import decompress from 'decompress';
-import { ProxyAgent } from 'proxy-agent';
+import * as https from 'https';
+import * as http from 'http';
+import { URL } from 'url';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+import { HttpProxyAgent } from 'http-proxy-agent';
 
 
 let client: lsp.LanguageClient;
@@ -131,40 +134,66 @@ function sanitizeConfiguration() {
 	}
 }
 
-async function updateServer(installDir: string, serverAsset: Asset, latestVersion: string) {
+
+async function updateServer(
+	installDir: string,
+	serverAsset: Asset,
+	latestVersion: string
+) {
 	if (!(await fsExists(installDir))) {
 		await fs.promises.mkdir(installDir, { recursive: true });
 	}
-
 	const url = serverAsset.browser_download_url;
 	outputChannel.appendLine(`Downloading ${url}...`);
-	const response = await fetch(url, {
-		responseType: 'stream',
-		onDownloadProgress: (progressEvent: any) => {
-			const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+	const downloadDest = path.join(installDir, `download-${assetName()}`);
+
+	await downloadToFile(url, downloadDest, (loaded, total) => {
+		if (total > 0) {
+			const percent = Math.round((loaded * 100) / total);
 			status.text = `$(sync~spin) Downloading ${assetName()} ${latestVersion} :: ${percent.toFixed(2)} %`;
 		}
 	});
 
-	const downloadDest = path.join(installDir, `download-${assetName()}`);
-	const writer = fs.createWriteStream(downloadDest);
-	response.data.pipe(writer);
-	await new Promise<void>((resolve, reject) => {
-		writer.on('finish', () => resolve());
-		writer.on('error', reject);
-	});
-
 	status.text = `$(sync~spin) Unpacking...`;
 	await decompress(downloadDest, installDir, {
-		filter: (file: any) => path.basename(file.path) == correctBinname("ntt")
+		filter: (file: any) => path.basename(file.path) === correctBinname("ntt"),
 	});
+
 	await fs.promises.unlink(downloadDest);
+
 	if (isOSUnixoid()) {
-		child_process.exec(`chmod +x ${installDir}/ntt`);
+		child_process.exec(`chmod +x ${path.join(installDir, "ntt")}`);
 	}
+
 	status.text = `$(check) Installed ${latestVersion}`;
 }
 
+async function downloadToFile(
+	url: string,
+	destPath: string,
+	onProgress?: (loaded: number, total: number) => void
+): Promise<void> {
+	const writer = fs.createWriteStream(destPath);
+
+	return new Promise<void>((resolve, reject) => {
+		makeRequest(url, (response) => {
+			const total = parseInt(response.headers['content-length'] || '0', 10);
+			let loaded = 0;
+
+			response.on('data', (chunk: Buffer) => {
+				loaded += chunk.length;
+				if (onProgress) {
+					onProgress(loaded, total);
+				}
+			});
+
+			response.pipe(writer);
+
+			writer.on('finish', () => resolve());
+			writer.on('error', reject);
+		}).catch(reject);
+	});
+}
 
 function getInstalledVersion(nttExecutable: string, options?: child_process.ExecSyncOptions): string {
 	try {
@@ -248,28 +277,121 @@ export function deactivate(): Thenable<void> | undefined {
 	return client.stop();
 }
 
-function fetch<T = any, R = AxiosResponse<T>, D = any>(url: string, conf?: AxiosRequestConfig<D>): Promise<R> {
-	// Axios has an issue with HTTPS requests over HTTP proxies. A custom
-	// agent circumvents this issue.
-	const agent = new ProxyAgent()
-	if (!conf) {
-		conf = {}
-	}
-	conf.proxy = false;
-	conf.httpAgent = agent;
-	conf.httpsAgent = agent;
-	if (config('ttcn3.server.ignoreCertificateErrors')) {
-		conf.httpsAgent.rejectUnauthorized = false;
-	}
 
-	// Some common headers
-	if (!conf.headers) {
-		conf.headers = {}
-	}
-	conf.headers["User-Agent"] = "vscode-ttcn3-ide";
-	conf.headers["Cache-Control"] = "no-cache";
-	conf.headers["Pragma"] = "no-cache";
-	return axios.get(url, conf);
+function makeRequest(
+	url: string,
+	onResponse: (response: http.IncomingMessage) => void
+): Promise<void> {
+	return new Promise<void>((resolve, reject) => {
+		const parsedUrl = new URL(url);
+		const options: https.RequestOptions = {
+			method: 'GET',
+			headers: {
+				'User-Agent': 'vscode-ttcn3-ide',
+				'Cache-Control': 'no-cache',
+				'Pragma': 'no-cache',
+			},
+		};
+
+		// Setup proxy agents: prefer environment variables, fall back to VS Code http.proxy setting
+		let proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy ||
+			process.env.HTTP_PROXY || process.env.http_proxy;
+		if (!proxyUrl) {
+			try {
+				const vscodeProxy = vscode.workspace.getConfiguration('http').get<string>('proxy');
+				if (vscodeProxy) {
+					proxyUrl = vscodeProxy;
+				}
+			} catch (e) {
+				// ignore
+			}
+		}
+
+		// Respect NO_PROXY / no_proxy environment variable
+		const noProxy = process.env.NO_PROXY || process.env.no_proxy || '';
+		function isNoProxy(hostname: string): boolean {
+			if (!noProxy) return false;
+			const parts = noProxy.split(',').map(p => p.trim()).filter(Boolean);
+			for (const p of parts) {
+				if (p === '*') return true;
+				// domain match
+				if (hostname === p) return true;
+				if (p.startsWith('.')) {
+					if (hostname.endsWith(p)) return true;
+				}
+				if (hostname.endsWith('.' + p)) return true;
+			}
+			return false;
+		}
+
+		if (proxyUrl && !isNoProxy(parsedUrl.hostname)) {
+			if (parsedUrl.protocol === 'https:') {
+				options.agent = new HttpsProxyAgent(proxyUrl);
+			} else {
+				options.agent = new HttpProxyAgent(proxyUrl);
+			}
+		}
+
+		// Handle certificate errors if configured
+		if (config('ttcn3.server.ignoreCertificateErrors')) {
+			options.rejectUnauthorized = false;
+		}
+
+		const protocol = parsedUrl.protocol === 'https:' ? https : http;
+
+		const request = protocol.request(parsedUrl, options, (response) => {
+			// Handle redirects
+			if (response.statusCode === 301 || response.statusCode === 302 ||
+				response.statusCode === 303 || response.statusCode === 307 ||
+				response.statusCode === 308) {
+				const redirectUrl = response.headers.location;
+				if (redirectUrl) {
+					response.resume(); // Consume response to free up memory
+					makeRequest(redirectUrl, onResponse).then(resolve).catch(reject);
+					return;
+				}
+			}
+
+			if (response.statusCode !== 200) {
+				reject(new Error(`HTTP ${response.statusCode}: ${response.statusMessage}`));
+				return;
+			}
+
+			onResponse(response);
+			resolve();
+		});
+
+		// Set a timeout so requests don't hang behind captive/corporate proxies
+		const timeoutMs = config<number>('ttcn3.server.requestTimeout') || 15000;
+		request.setTimeout(timeoutMs, () => {
+			request.destroy(new Error(`Request timed out after ${timeoutMs} ms`));
+		});
+
+		request.on('error', reject);
+		request.end();
+	});
+}
+
+async function fetch<T = any>(url: string): Promise<{ data: T; headers: http.IncomingHttpHeaders }> {
+	return new Promise<{ data: T; headers: http.IncomingHttpHeaders }>((resolve, reject) => {
+		makeRequest(url, (response) => {
+			let data = '';
+			const headers = response.headers;
+
+			response.on('data', (chunk) => {
+				data += chunk;
+			});
+
+			response.on('end', () => {
+				try {
+					const parsed = JSON.parse(data);
+					resolve({ data: parsed, headers });
+				} catch (err) {
+					reject(err);
+				}
+			});
+		}).catch(reject);
+	});
 }
 
 export interface Release {
