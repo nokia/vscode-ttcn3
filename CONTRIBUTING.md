@@ -52,6 +52,8 @@ request being accepted:
 
 ## Release the extension
 
+Do not forget to update the version in package.json!
+
 1. [Draft a new release](https://github.com/nokia/vscode-ttcn3/releases/new).
 2. Enter the version tag (e.g. v0.10.3)
 3. Fill out remaining information
