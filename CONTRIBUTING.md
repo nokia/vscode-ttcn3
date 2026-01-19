@@ -52,13 +52,15 @@ request being accepted:
 
 ## Release the extension
 
-1. When releasing the extension, don't forget to create a git tag with the version
-number and update this version number in the file `package.json`.
-2. Run `vsce package` to create a vsix file.
-3. Log into the [marketplace](https://marketplace.visualstudio.com/)
-4. Click on "Publish extensions"
-5. Click on "..." behing the extension name and choose "Update"
+1. [Draft a new release](https://github.com/nokia/vscode-ttcn3/releases/new).
+2. Enter the version tag (e.g. v0.10.3)
+3. Fill out remaining information
+4. Press "Publish release"
 
+Note: Automatic releasing requires a Azure DevOps Personal Access Token as the
+secret variable `VSCE_PAT`.
+
+These tokens have a limited validity, you might have to create a new one.
 
 
 ## Issue and Pull Request Labels
