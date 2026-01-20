@@ -52,8 +52,6 @@ request being accepted:
 
 ## Release the extension
 
-Do not forget to update the version in package.json!
-
 1. [Draft a new release](https://github.com/nokia/vscode-ttcn3/releases/new).
 2. Enter the version tag (e.g. v0.10.3)
 3. Fill out remaining information
@@ -64,7 +62,7 @@ secret variable `VSCE_PAT`.
 
 These tokens have a limited validity, you might have to create a new one.
 
-
+The version is derived from the tag name, you don't need to increase it manually.
 ## Issue and Pull Request Labels
 
 Labels help us track and manage issues and pull requests.
