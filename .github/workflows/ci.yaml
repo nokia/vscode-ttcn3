@@ -85,3 +85,8 @@ jobs:
           npx vsce publish --packagePath $(find . -name "*.vsix")
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      - name: Publish to OpenVSX
+        run: |
+          npx ovsx publish --packagePath $(find . -name "*.vsix")
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
